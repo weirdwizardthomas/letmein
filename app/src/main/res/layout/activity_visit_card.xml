@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    tools:context=".activities.VisitCard">
+    tools:context=".activities.list_cards.VisitCard">
 
     <ImageView
         android:id="@+id/visitCard_image"

@@ -1,4 +1,4 @@
-package com.via_android.letmein.activities;
+package com.via_android.letmein.activities.list_cards;
 
 import androidx.appcompat.app.AppCompatActivity;
 
