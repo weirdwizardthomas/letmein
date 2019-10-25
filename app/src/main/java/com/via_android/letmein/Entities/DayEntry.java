@@ -4,10 +4,20 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class DayEntry {
+    private Timestamp date;
     private List<Visit> visits;
 
-    public DayEntry(List<Visit> visits) {
+    public DayEntry(Timestamp date, List<Visit> visits) {
+        this.date = date;
         this.visits = visits;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     public List<Visit> getVisits() {
