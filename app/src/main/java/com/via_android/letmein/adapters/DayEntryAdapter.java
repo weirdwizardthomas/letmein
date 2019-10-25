@@ -1,4 +1,4 @@
-package com.via_android.letmein.Adapters;
+package com.via_android.letmein.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.via_android.letmein.Entities.DayEntry;
-import com.via_android.letmein.Entities.Visit;
+import com.via_android.letmein.entities.DayEntry;
 import com.via_android.letmein.R;
 
 import java.text.DateFormat;

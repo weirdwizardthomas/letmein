@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    tools:context=".VisitCard">
+    tools:context=".activities.VisitCard">
 
     <ImageView
         android:id="@+id/visitCard_image"
@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
         android:text="Tomas"
         app:layout_constraintStart_toEndOf="@+id/vertical_bar"
         app:layout_constraintTop_toBottomOf="@+id/visitCard_time" />
