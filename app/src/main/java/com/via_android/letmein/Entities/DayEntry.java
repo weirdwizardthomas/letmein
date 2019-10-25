@@ -4,27 +4,21 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class DayEntry {
-    private List<Member> members;
-    private Timestamp timestamp;
+    private List<Visit> visits;
 
-    public DayEntry(List<Member> members, Timestamp timestamp) {
-        this.members = members;
-        this.timestamp = timestamp;
+    public DayEntry(List<Visit> visits) {
+        this.visits = visits;
     }
 
-    public List<Member> getMembers() {
-        return members;
+    public List<Visit> getVisits() {
+        return visits;
     }
 
-    public void setMembers(List<Member> members) {
-        this.members = members;
+    public void setVisits(List<Visit> visits) {
+        this.visits = visits;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void addVisit(Visit visit) {
+        visits.add(visit);
     }
 }

@@ -5,28 +5,26 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    tools:context=".MemberCard">
+    tools:context=".VisitCard">
 
     <ImageView
-        android:id="@+id/memberCard_picture"
+        android:id="@+id/visitCard_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/memberCard_name"
+        android:id="@+id/visitCard_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Tomas"
         app:layout_constraintStart_toEndOf="@+id/vertical_bar"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/visitCard_time" />
 
     <View
         android:id="@+id/vertical_bar"
@@ -34,20 +32,28 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/memberCard_picture"
+        app:layout_constraintStart_toEndOf="@+id/visitCard_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/memberCard_role"
+        android:id="@+id/visitCard_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:text="postman"
         app:layout_constraintStart_toEndOf="@+id/vertical_bar"
-        app:layout_constraintTop_toBottomOf="@+id/memberCard_name" />
+        app:layout_constraintTop_toBottomOf="@+id/visitCard_name" />
+
+    <TextView
+        android:id="@+id/visitCard_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="25.10.2019"
+        app:layout_constraintStart_toEndOf="@+id/visitCard_name"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
