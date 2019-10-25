@@ -14,6 +14,6 @@
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_plus_black_24dp" />
+        app:srcCompat="@drawable/ic_plus_white_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
