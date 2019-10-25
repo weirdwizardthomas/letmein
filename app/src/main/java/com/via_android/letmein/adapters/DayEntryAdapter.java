@@ -39,6 +39,7 @@ public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHo
     public void onBindViewHolder(@NonNull DayEntryAdapter.ViewHolder holder, int position) {
         DayEntry dayEntry = data.get(position);
 
+        //TODO make universal, extract constant
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         holder.date.setText(format.format(dayEntry.getDate()));
 
