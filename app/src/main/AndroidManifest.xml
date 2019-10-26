@@ -9,18 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.list_cards.MemberCard"></activity>
-        <activity android:name=".activities.MembersAdministration" />
-        <activity android:name=".activities.EntryHistory" />
-        <activity android:name=".activities.list_cards.DayEntriesCard" />
-        <activity android:name=".activities.list_cards.VisitCard" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".AddMember"></activity>
+        <activity android:name=".activities.list_cards.MemberCard" />
+        <activity android:name=".activities.MembersAdministration">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.EntryHistory" />
+        <activity android:name=".activities.list_cards.DayEntriesCard" />
+        <activity android:name=".activities.list_cards.VisitCard" />
+        <activity android:name=".activities.MainActivity"></activity>
     </application>
 
 </manifest>
