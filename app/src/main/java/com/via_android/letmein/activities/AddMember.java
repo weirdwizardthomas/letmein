@@ -1,8 +1,10 @@
-package com.via_android.letmein;
+package com.via_android.letmein.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.via_android.letmein.R;
 
 public class AddMember extends AppCompatActivity {
 
