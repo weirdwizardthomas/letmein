@@ -28,8 +28,13 @@ public class EntryHistory extends AppCompatActivity {
         daysList = findViewById(R.id.visits_recycler_view);
         daysList.hasFixedSize();
         daysList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        List<DayEntry> dayEntries = new ArrayList<>();
 
+        daysAdapter = new DayEntryAdapter(this, mockupData());
+        daysList.setAdapter(daysAdapter);
+    }
+
+    private List<DayEntry> mockupData() {
+        List<DayEntry> dayEntries = new ArrayList<>();
 
         Member member = new Member("Tomas Koristka", "Owner", R.mipmap.profile_icon_placeholder);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -40,9 +45,7 @@ public class EntryHistory extends AppCompatActivity {
 
         for (int i = 0; i < 5; ++i)
             dayEntries.add(new DayEntry(timestamp, visits));
-
-        daysAdapter = new DayEntryAdapter(this, dayEntries);
-        daysList.setAdapter(daysAdapter);
+        return dayEntries;
     }
 
 }
