@@ -1,10 +1,10 @@
-package com.via_android.letmein.activities.list_cards;
+package com.via.letmein.activities.list_cards;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.via_android.letmein.R;
+import com.via.letmein.R;
 
 public class DayEntriesCard extends AppCompatActivity {
 

@@ -1,15 +1,13 @@
-package com.via_android.letmein.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.via.letmein.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.via_android.letmein.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.via.letmein.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.via_android.letmein.activities;
+package com.via.letmein.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.via_android.letmein.R;
-import com.via_android.letmein.adapters.MemberAdapter;
-import com.via_android.letmein.entities.Member;
+import com.via.letmein.R;
+import com.via.letmein.adapters.MemberAdapter;
+import com.via.letmein.entities.Member;
 
 import java.util.ArrayList;
 import java.util.List;

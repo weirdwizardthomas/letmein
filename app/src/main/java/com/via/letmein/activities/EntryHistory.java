@@ -1,4 +1,4 @@
-package com.via_android.letmein.activities;
+package com.via.letmein.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.via_android.letmein.R;
-import com.via_android.letmein.adapters.DayEntryAdapter;
-import com.via_android.letmein.entities.DayEntry;
-import com.via_android.letmein.entities.Member;
-import com.via_android.letmein.entities.Visit;
+import com.via.letmein.R;
+import com.via.letmein.adapters.DayEntryAdapter;
+import com.via.letmein.entities.DayEntry;
+import com.via.letmein.entities.Member;
+import com.via.letmein.entities.Visit;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.via_android.letmein.entities;
+package com.via.letmein.entities;
 
 import java.sql.Timestamp;
 

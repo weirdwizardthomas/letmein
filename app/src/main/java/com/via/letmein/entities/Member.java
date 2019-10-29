@@ -1,4 +1,4 @@
-package com.via_android.letmein.entities;
+package com.via.letmein.entities;
 public class Member {
 
     private String name;

@@ -1,4 +1,4 @@
-package com.via_android.letmein.adapters;
+package com.via.letmein.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.via_android.letmein.R;
-import com.via_android.letmein.entities.Member;
+import com.via.letmein.R;
+import com.via.letmein.entities.Member;
 
 import java.util.List;
 

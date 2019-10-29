@@ -1,4 +1,4 @@
-package com.via_android.letmein;
+package com.via.letmein;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.via_android.letmein", appContext.getPackageName());
+        assertEquals("com.via.letmein", appContext.getPackageName());
     }
 }

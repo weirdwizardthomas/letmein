@@ -1,4 +1,4 @@
-package com.via_android.letmein;
+package com.via.letmein;
 
 import org.junit.Test;
 

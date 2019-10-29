@@ -1,4 +1,4 @@
-package com.via_android.letmein.adapters;
+package com.via.letmein.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.via_android.letmein.entities.DayEntry;
-import com.via_android.letmein.R;
+import com.via.letmein.entities.DayEntry;
+import com.via.letmein.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,14 +39,20 @@ public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHo
     public void onBindViewHolder(@NonNull DayEntryAdapter.ViewHolder holder, int position) {
         DayEntry dayEntry = data.get(position);
 
+        setupDate(holder, dayEntry);
+        setupRecyclerView(holder, dayEntry);
+    }
+
+    private void setupDate(@NonNull ViewHolder holder, DayEntry dayEntry) {
         //TODO make universal, extract constant
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         holder.date.setText(format.format(dayEntry.getDate()));
+    }
 
+    private void setupRecyclerView(@NonNull ViewHolder holder, DayEntry dayEntry) {
         holder.visitsList.hasFixedSize();
         holder.visitsList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.visitsList.setAdapter(new VisitAdapter(dayEntry.getVisits()));
-
     }
 
     @Override
@@ -55,6 +61,7 @@ public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView date;
         RecyclerView visitsList;
 
@@ -62,7 +69,6 @@ public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHo
             super(itemView);
             date = itemView.findViewById(R.id.dayEntries_date);
             visitsList = itemView.findViewById(R.id.dayEntries_recyclerView);
-
         }
     }
 }
