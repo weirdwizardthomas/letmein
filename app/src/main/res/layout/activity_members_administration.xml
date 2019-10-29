@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingSnack"
+        android:id="@+id/membersAdministration_addMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -12,8 +12,14 @@
         android:layout_marginBottom="20dp"
         android:clickable="true"
         android:focusable="true"
+        android:onClick="onClickAddMemberFloatingButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_plus_white_24dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/membersAdministration_membersList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
