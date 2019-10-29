@@ -39,7 +39,7 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         holder.name.setText(member.getName());
         holder.role.setText(member.getRole());
 
-        //Extracts hours and minutes from the timestamp
+        //TODO Extracts hours and minutes from the timestamp
         holder.time.setText(visit.getTimestamp().toString().substring(11, 16));
     }
 
