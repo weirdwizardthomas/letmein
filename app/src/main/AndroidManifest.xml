@@ -11,12 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity
+            android:name=".NavigationDrawer"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activities.LockScreen" />
         <activity android:name=".activities.AddMember" />
         <activity android:name=".activities.list_cards.MemberCard" />
-        <activity android:name=".activities.MembersAdministration">
-
-        </activity>
+        <activity android:name=".activities.MembersAdministration"></activity>
         <activity android:name=".activities.EntryHistory" />
         <activity android:name=".activities.list_cards.DayEntriesCard" />
         <activity android:name=".activities.list_cards.VisitCard" />
