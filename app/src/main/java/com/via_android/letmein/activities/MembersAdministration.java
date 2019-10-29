@@ -43,4 +43,10 @@ public class MembersAdministration extends AppCompatActivity {
         return data;
 
     }
+
+    public void onClickAddMemberFloatingButton(View view) {
+        Intent intent = new Intent(this, AddMember.class);
+        startActivity(intent);
+    }
+
 }
