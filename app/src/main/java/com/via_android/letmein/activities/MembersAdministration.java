@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MembersAdministration extends AppCompatActivity {
+
     private RecyclerView membersList;
     private RecyclerView.Adapter membersAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
