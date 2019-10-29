@@ -22,16 +22,20 @@ public class AddMember extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_member);
 
+        roleSpinner = findViewById(R.id.addMember_selectRoleSpinner);
+
+        ArrayAdapter<String> rolesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mockupData());
+        roleSpinner.setAdapter(rolesAdapter);
+        rolesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    }
+
+    private List<String> mockupData() {
         final List<String> roles = new ArrayList<>();
         roles.add("Member");
         roles.add("Owner");
         roles.add("Postman");
         roles.add("Cleaning lady");
-
-        roleSpinner = findViewById(R.id.addMember_selectRoleSpinner);
-        ArrayAdapter<String> rolesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roles);
-        roleSpinner.setAdapter(rolesAdapter);
-        rolesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return roles;
     }
 
 
