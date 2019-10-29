@@ -15,6 +15,7 @@ import com.via_android.letmein.entities.Member;
 import java.util.List;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
+
     private List<Member> data;
 
     public MemberAdapter(List<Member> data) {
