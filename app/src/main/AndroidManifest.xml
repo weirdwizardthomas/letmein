@@ -15,7 +15,6 @@
             android:name=".NavigationDrawer"
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.LockScreen" />
         <activity android:name=".activities.AddMember" />
         <activity android:name=".activities.list_cards.MemberCard" />
         <activity android:name=".activities.MembersAdministration"></activity>
