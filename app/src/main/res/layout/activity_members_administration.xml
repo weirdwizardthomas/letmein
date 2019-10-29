@@ -15,7 +15,7 @@
         android:onClick="onClickAddMemberFloatingButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_plus_white_24dp" />
+        app:srcCompat="@drawable/ic_account_plus_white_24dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/membersAdministration_membersList"
