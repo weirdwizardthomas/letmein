@@ -16,6 +16,7 @@ import com.via_android.letmein.R;
 import java.util.List;
 
 public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
+
     private List<Visit> data;
 
     public VisitAdapter(List<Visit> data) {

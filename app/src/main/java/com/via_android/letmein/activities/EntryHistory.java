@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntryHistory extends AppCompatActivity {
+
     RecyclerView daysList;
     RecyclerView.Adapter daysAdapter;
 

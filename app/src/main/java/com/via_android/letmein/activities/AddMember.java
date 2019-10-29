@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddMember extends AppCompatActivity {
+
     private Spinner roleSpinner;
 
     @Override

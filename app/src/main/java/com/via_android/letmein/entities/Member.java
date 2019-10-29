@@ -1,5 +1,6 @@
 package com.via_android.letmein.entities;
 public class Member {
+
     private String name;
     private String role;
     private int imageID;

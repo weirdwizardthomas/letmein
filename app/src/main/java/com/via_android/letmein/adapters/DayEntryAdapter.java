@@ -18,9 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHolder> {
+
     private List<DayEntry> data;
     private Context context;
-
 
     public DayEntryAdapter(Context context, List<DayEntry> data) {
         this.data = data;

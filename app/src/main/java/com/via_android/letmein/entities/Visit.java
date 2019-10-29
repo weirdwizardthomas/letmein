@@ -3,6 +3,7 @@ package com.via_android.letmein.entities;
 import java.sql.Timestamp;
 
 public class Visit {
+
     private Member member;
     private Timestamp timestamp;
 

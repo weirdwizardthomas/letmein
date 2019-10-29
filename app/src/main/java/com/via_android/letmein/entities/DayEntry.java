@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class DayEntry {
+
     private Timestamp date;
     private List<Visit> visits;
 
