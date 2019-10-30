@@ -14,36 +14,39 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddMember extends Fragment {
 
-    private ArrayAdapter<String> roleAdapter;
-    private AddMemberViewModel viewModel;
+    private ArrayAdapter<String> roleSpinnerAdapter;
+    private AddMemberViewModel addMemberViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_add_member, container, false);
-        viewModel = ViewModelProviders.of(this).get(AddMemberViewModel.class);
 
+        initialiseViewModel();
         initaliseRoleAdapter();
         initialiseRoleSpinner(root);
 
         return root;
     }
 
-    private void initaliseRoleAdapter() {
-        List<String> roles = viewModel.getRoles().getValue();
+    public void initialiseViewModel() {
+        addMemberViewModel = ViewModelProviders.of(this).get(AddMemberViewModel.class);
+    }
 
-        roleAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, roles);
-        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    private void initaliseRoleAdapter() {
+        List<String> roles = addMemberViewModel.getRoles().getValue();
+
+        roleSpinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, roles);
+        roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
     private void initialiseRoleSpinner(View view) {
         Spinner roleSpinner = view.findViewById(R.id.addMember_selectRoleSpinner);
-        roleSpinner.setAdapter(roleAdapter);
+        roleSpinner.setAdapter(roleSpinnerAdapter);
     }
 
 

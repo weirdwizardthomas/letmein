@@ -16,18 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
-import com.via.letmein.ui.add_member.AddMemberViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdministrationFragment extends Fragment {
 
-    private RecyclerView membersList;
+    private RecyclerView membersRecyclerView;
     private RecyclerView.Adapter membersAdapter;
-    private FloatingActionButton addMemberFloatingActionButton;
-    private AdministrationViewModel viewModel;
 
+    private AdministrationViewModel administrationViewModel;
+    private FloatingActionButton addMemberFloatingActionButton;
 
     public AdministrationFragment() {
     }
@@ -46,11 +44,11 @@ public class AdministrationFragment extends Fragment {
     }
 
     public void initialiseViewModel() {
-        viewModel = ViewModelProviders.of(this).get(AdministrationViewModel.class);
+        administrationViewModel = ViewModelProviders.of(this).get(AdministrationViewModel.class);
     }
 
     public void initialiseAdapter() {
-        List<Member> members = viewModel.getData().getValue();
+        List<Member> members = administrationViewModel.getData().getValue();
         membersAdapter = new MemberAdapter(members);
     }
 
@@ -66,10 +64,10 @@ public class AdministrationFragment extends Fragment {
     }
 
     private void initialiseMemberRecyclerView(View root) {
-        membersList = root.findViewById(R.id.membersAdministration_membersList);
-        membersList.hasFixedSize();
-        membersList.setAdapter(membersAdapter);
-        membersList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        membersRecyclerView = root.findViewById(R.id.membersAdministration_membersList);
+        membersRecyclerView.hasFixedSize();
+        membersRecyclerView.setAdapter(membersAdapter);
+        membersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
 

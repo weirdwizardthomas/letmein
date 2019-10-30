@@ -13,20 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.via.letmein.R;
-import com.via.letmein.ui.administration.Member;
 import com.via.letmein.ui.history.day_entry.DayEntry;
 import com.via.letmein.ui.history.day_entry.DayEntryAdapter;
-import com.via.letmein.ui.history.visit.Visit;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
-    private RecyclerView recycler;
-    private RecyclerView.Adapter adapter;
-    private HistoryViewModel viewModel;
+    private RecyclerView dayEntryRecyclerView;
+    private RecyclerView.Adapter dayEntryAdapter;
+    private HistoryViewModel historyViewModel;
 
     public HistoryFragment() {
     }
@@ -44,19 +40,19 @@ public class HistoryFragment extends Fragment {
     }
 
     public void initialiseAdapter() {
-        List<DayEntry> dummy = viewModel.getData().getValue();
-        adapter = new DayEntryAdapter(getContext(), dummy);
+        List<DayEntry> dummy = historyViewModel.getData().getValue();
+        dayEntryAdapter = new DayEntryAdapter(getContext(), dummy);
     }
 
     public void initialiseViewModel() {
-        viewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+        historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
     }
 
     private void initialiseDaysRecyclerView(View root) {
-        recycler = root.findViewById(R.id.visits_recycler_view);
-        recycler.hasFixedSize();
-        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recycler.setAdapter(adapter);
+        dayEntryRecyclerView = root.findViewById(R.id.visits_recycler_view);
+        dayEntryRecyclerView.hasFixedSize();
+        dayEntryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        dayEntryRecyclerView.setAdapter(dayEntryAdapter);
     }
 
 }
