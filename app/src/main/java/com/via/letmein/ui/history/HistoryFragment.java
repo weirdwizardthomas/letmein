@@ -3,6 +3,7 @@ package com.via.letmein.ui.history;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,9 @@ import android.view.ViewGroup;
 
 import com.via.letmein.R;
 import com.via.letmein.ui.administration.Member;
+import com.via.letmein.ui.history.day_entry.DayEntry;
+import com.via.letmein.ui.history.day_entry.DayEntryAdapter;
+import com.via.letmein.ui.history.visit.Visit;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -20,8 +24,9 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
-    private RecyclerView daysList;
-    private RecyclerView.Adapter daysAdapter;
+    private RecyclerView recycler;
+    private RecyclerView.Adapter adapter;
+    private HistoryViewModel viewModel;
 
     public HistoryFragment() {
     }
@@ -30,34 +35,28 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
-        daysAdapter = new DayEntryAdapter(getContext(), mockupData());
 
+        initialiseViewModel();
+        initialiseAdapter();
         initialiseDaysRecyclerView(root);
 
         return root;
     }
 
-    private void initialiseDaysRecyclerView(View root) {
-        daysList = root.findViewById(R.id.visits_recycler_view);
-        daysList.hasFixedSize();
-        daysList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        daysList.setAdapter(daysAdapter);
+    public void initialiseAdapter() {
+        List<DayEntry> dummy = viewModel.getData().getValue();
+        adapter = new DayEntryAdapter(getContext(), dummy);
     }
 
+    public void initialiseViewModel() {
+        viewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+    }
 
-    private List<DayEntry> mockupData() {
-        List<DayEntry> dayEntries = new ArrayList<>();
-
-        Member member = new Member("Tomas Koristka", "Owner", R.mipmap.profile_icon_placeholder);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        List<Visit> visits = new ArrayList<>();
-        for (int i = 0; i < 20; ++i)
-            visits.add(new Visit(member, timestamp));
-
-        for (int i = 0; i < 5; ++i)
-            dayEntries.add(new DayEntry(timestamp, visits));
-        return dayEntries;
+    private void initialiseDaysRecyclerView(View root) {
+        recycler = root.findViewById(R.id.visits_recycler_view);
+        recycler.hasFixedSize();
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recycler.setAdapter(adapter);
     }
 
 }

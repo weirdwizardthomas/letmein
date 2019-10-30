@@ -29,13 +29,14 @@ public class LiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_live, container, false);
 
+        //TODO set up a live feed from the server
         liveView = root.findViewById(R.id.liveView_videoView);
         acceptButton = root.findViewById(R.id.liveView_acceptButton);
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //TODO send a request to the server
             }
         });
 

@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
 
@@ -19,37 +20,30 @@ import java.util.List;
 public class AddMember extends Fragment {
 
     private ArrayAdapter<String> roleAdapter;
+    private AddMemberViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_add_member, container, false);
+        viewModel = ViewModelProviders.of(this).get(AddMemberViewModel.class);
 
-        initialiseRoleSpinner(root);
         initaliseRoleAdapter();
+        initialiseRoleSpinner(root);
 
         return root;
     }
 
     private void initaliseRoleAdapter() {
-        roleAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, mockupData());
+        List<String> roles = viewModel.getRoles().getValue();
+
+        roleAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, roles);
         roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
     private void initialiseRoleSpinner(View view) {
         Spinner roleSpinner = view.findViewById(R.id.addMember_selectRoleSpinner);
         roleSpinner.setAdapter(roleAdapter);
-    }
-
-
-    //TODO create a viewmodel and extract this
-    private List<String> mockupData() {
-        final List<String> roles = new ArrayList<>();
-        roles.add("Member");
-        roles.add("Owner");
-        roles.add("Postman");
-        roles.add("Cleaning lady");
-        return roles;
     }
 
 

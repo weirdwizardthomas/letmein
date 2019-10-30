@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
+import com.via.letmein.ui.add_member.AddMemberViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class AdministrationFragment extends Fragment {
     private RecyclerView membersList;
     private RecyclerView.Adapter membersAdapter;
     private FloatingActionButton addMemberFloatingActionButton;
+    private AdministrationViewModel viewModel;
+
 
     public AdministrationFragment() {
     }
@@ -32,12 +36,22 @@ public class AdministrationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_administration, container, false);
-        membersAdapter = new MemberAdapter(mockupData());
 
+        initialiseViewModel();
+        initialiseAdapter();
         initialiseMemberRecyclerView(root);
         initialiseAddMemberButton(root);
 
         return root;
+    }
+
+    public void initialiseViewModel() {
+        viewModel = ViewModelProviders.of(this).get(AdministrationViewModel.class);
+    }
+
+    public void initialiseAdapter() {
+        List<Member> members = viewModel.getData().getValue();
+        membersAdapter = new MemberAdapter(members);
     }
 
     private void initialiseAddMemberButton(View root) {
@@ -58,16 +72,5 @@ public class AdministrationFragment extends Fragment {
         membersList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
-
-    private List<Member> mockupData() {
-        List<Member> data = new ArrayList<>();
-
-        Member member = new Member("Tomas", "Owner", R.mipmap.profile_icon_placeholder);
-        for (int i = 0; i < 30; ++i)
-            data.add(member);
-
-        return data;
-
-    }
 
 }
