@@ -11,22 +11,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".ui.add_member.AddMember" />
+        <activity android:name=".ui.administration.MemberCard" />
+        <activity android:name=".ui.administration.AdministrationFragment" />
+        <activity android:name=".ui.history.HistoryFragment" />
+        <activity android:name=".ui.history.DayEntriesCard" />
+        <activity android:name=".ui.history.VisitCard" />
         <activity
-            android:name=".NavigationDrawer"
+            android:name=".ui.MainActivity"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.AddMember" />
-        <activity android:name=".activities.list_cards.MemberCard" />
-        <activity android:name=".activities.MembersAdministration"></activity>
-        <activity android:name=".activities.EntryHistory" />
-        <activity android:name=".activities.list_cards.DayEntriesCard" />
-        <activity android:name=".activities.list_cards.VisitCard" />
-        <activity android:name=".activities.MainActivity">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
