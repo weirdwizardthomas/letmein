@@ -1,4 +1,6 @@
-package com.via.letmein.ui.history;
+package com.via.letmein.ui.history.day_entry;
+
+import com.via.letmein.ui.history.visit.Visit;
 
 import java.sql.Timestamp;
 import java.util.List;

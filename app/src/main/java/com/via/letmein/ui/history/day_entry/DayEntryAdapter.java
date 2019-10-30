@@ -1,4 +1,4 @@
-package com.via.letmein.ui.history;
+package com.via.letmein.ui.history.day_entry;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
+import com.via.letmein.ui.history.visit.VisitAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

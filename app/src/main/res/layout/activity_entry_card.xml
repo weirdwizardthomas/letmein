@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.history.DayEntriesCard">
+    tools:context=".ui.history.day_entry.DayEntryCard">
 
     <TextView
         android:id="@+id/dayEntries_date"

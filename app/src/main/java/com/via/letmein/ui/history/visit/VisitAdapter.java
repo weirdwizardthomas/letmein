@@ -1,4 +1,4 @@
-package com.via.letmein.ui.history;
+package com.via.letmein.ui.history.visit;
 
 import android.view.LayoutInflater;
 import android.view.View;

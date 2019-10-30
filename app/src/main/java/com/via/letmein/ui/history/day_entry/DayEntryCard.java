@@ -1,4 +1,4 @@
-package com.via.letmein.ui.history;
+package com.via.letmein.ui.history.day_entry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.via.letmein.R;
 
-public class VisitCard extends AppCompatActivity {
+public class DayEntryCard extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visit_card);
+        setContentView(R.layout.activity_entry_card);
     }
 }

@@ -1,4 +1,4 @@
-package com.via.letmein.ui.history;
+package com.via.letmein.ui.history.visit;
 
 import com.via.letmein.ui.administration.Member;
 

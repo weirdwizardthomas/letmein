@@ -15,8 +15,8 @@
         <activity android:name=".ui.administration.MemberCard" />
         <activity android:name=".ui.administration.AdministrationFragment" />
         <activity android:name=".ui.history.HistoryFragment" />
-        <activity android:name=".ui.history.DayEntriesCard" />
-        <activity android:name=".ui.history.VisitCard" />
+        <activity android:name=".ui.history.day_entry.DayEntryCard" />
+        <activity android:name=".ui.history.visit.VisitCard" />
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_navigation_drawer"
