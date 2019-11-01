@@ -18,16 +18,16 @@
             android:title="Live feed" />
     </group>
 
-    <item android:title="Control">
+    <item android:title="Control"> <!--TODO BETTER TITLE-->
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_settings_black_24dp"
                 android:title="Settings" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_help_circle_outline_black_24dp"
+                android:title="Help and feedback" />
         </menu>
     </item>
 
