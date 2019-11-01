@@ -20,7 +20,6 @@
 
     <Button
         android:id="@+id/liveView_acceptButton"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

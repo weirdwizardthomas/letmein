@@ -42,7 +42,6 @@
 
     <Button
         android:id="@+id/addMember_addPictureButton"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -54,7 +53,6 @@
 
     <Button
         android:id="@+id/addMember_addFingerprintButton"
-        style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
