@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.via.letmein">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,16 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.add_member.AddMember" />
-        <activity android:name=".ui.administration.MemberCard" />
-        <activity android:name=".ui.administration.AdministrationFragment" />
-        <activity android:name=".ui.history.HistoryFragment" />
-        <activity android:name=".ui.history.day_entry.DayEntryCard" />
-        <activity android:name=".ui.history.visit.VisitCard" />
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.LockActivity"
+            android:label="Lock">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

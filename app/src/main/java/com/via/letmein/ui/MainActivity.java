@@ -1,39 +1,52 @@
 package com.via.letmein.ui;
 
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
+import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.beautycoder.pflockscreen.PFFLockScreenConfiguration;
+import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment;
+import com.beautycoder.pflockscreen.security.PFResult;
+import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.via.letmein.R;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
+import com.via.letmein.ui.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public static final int PIN_CODE_LENGTH = 4;
     private AppBarConfiguration appBarConfiguration;
+
+    private PFLockScreenFragment.OnPFLockScreenLoginListener loginListener;
+    private PFLockScreenFragment.OnPFLockScreenCodeCreateListener createListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initialiseToolbar();
+        initialiseNavigationBar();
+    }
+
+    private void initialiseToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+    private void initialiseNavigationBar() {
+        DrawerLayout drawer = findViewById(R.id.main_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -42,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_history,
                 R.id.nav_administration,
                 R.id.nav_live,
-                R.id.nav_share,
+                R.id.nav_feedback,
                 R.id.nav_settings)
                 .setDrawerLayout(drawer)
                 .build();
@@ -64,4 +77,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
