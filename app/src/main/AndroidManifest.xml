@@ -22,8 +22,8 @@
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.LockActivity"
-            android:label="Lock">
+            android:name=".ui.lock.LockActivity"
+            android:label="Let me in">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

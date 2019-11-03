@@ -1,4 +1,4 @@
-package com.via.letmein.ui;
+package com.via.letmein.ui.lock;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.beautycoder.pflockscreen.PFFLockScreenConfiguration;
 import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment;
 import com.via.letmein.R;
+import com.via.letmein.ui.MainActivity;
 
 public class LockActivity extends AppCompatActivity {
 

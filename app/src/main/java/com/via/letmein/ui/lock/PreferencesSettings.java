@@ -1,4 +1,4 @@
-package com.via.letmein.ui;
+package com.via.letmein.ui.lock;
 
 import android.content.Context;
 import android.content.SharedPreferences;
