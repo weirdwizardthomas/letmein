@@ -1,19 +1,58 @@
 package com.via.letmein.ui.home;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+import com.via.letmein.R;
+import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.persistence.entity.DayEntry;
+import com.via.letmein.persistence.entity.Visit;
 
-    private MutableLiveData<String> mText;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+public class HomeViewModel extends AndroidViewModel {
+
+    private MutableLiveData<List<Visit>> data;
+
+    public HomeViewModel(@NonNull Application application) {
+        super(application);
+        data = new MutableLiveData<>(mockupData());
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Visit>> getData() {
+        return data;
+    }
+
+    public void setData(List<Visit> data) {
+        this.data.setValue(data);
+    }
+
+    private List<Visit> mockupData() {
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        List<Visit> visits = new ArrayList<>();
+
+        visits.add(new Visit(new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person1", "Owner", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person3", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person1", "Owner", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person1", "Owner", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person2", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person2", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person2", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person3", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person3", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+
+        return visits;
+
     }
 }

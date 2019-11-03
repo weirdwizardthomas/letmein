@@ -31,6 +31,18 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".ui.administration.MemberCard"
+            android:label="MemberCard" />
+        <activity
+            android:name=".ui.history.day_entry.DayEntryCard"
+            android:label="DayEntryCard" />
+        <activity
+            android:name=".ui.history.visit.VisitCard"
+            android:label="VisitCard" />
+        <activity
+            android:name=".ui.home.visit.VisitCard"
+            android:label="HomeVisitCard" />
     </application>
 
 </manifest>

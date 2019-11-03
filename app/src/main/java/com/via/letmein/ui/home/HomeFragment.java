@@ -6,29 +6,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
+import com.via.letmein.persistence.entity.Visit;
+import com.via.letmein.ui.home.visit.HomeVisitAdapter;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    //TODO add control over how many recent entries are shown - number, date range, ... ? - adjustable in settings
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+    private HomeViewModel viewModel;
+    private RecyclerView recentEntriesRecyclerView;
+    private RecyclerView.Adapter recentEntriesAdapter;
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+        initialiseViewModel();
+        initialiseAdapter();
+        initialiseRecyclerView(root);
+
         return root;
+    }
+
+    private void initialiseAdapter() {
+        List<Visit> dummy = viewModel.getData().getValue();
+        recentEntriesAdapter = new HomeVisitAdapter(dummy);
+    }
+
+    private void initialiseViewModel() {
+        viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+    }
+
+    private void initialiseRecyclerView(final View root) {
+        recentEntriesRecyclerView = root.findViewById(R.id.home_recentEntriesRecycler);
+        recentEntriesRecyclerView.hasFixedSize();
+        recentEntriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recentEntriesRecyclerView.setAdapter(recentEntriesAdapter);
+        //TODO set a listener to the entire recycler view
     }
 }
