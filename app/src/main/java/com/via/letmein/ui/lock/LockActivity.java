@@ -16,6 +16,7 @@ public class LockActivity extends AppCompatActivity {
     //TODO ADD OPTION TO RESET PASSWORD IN SETTINGS
     //TODO ADD AN OBSERVER TO THE CODE FILE?
     //TODO ADD CONFIRMATION?
+    //TODO reset pin code input on failure
     public static final int PIN_CODE_LENGTH = 4;
     private PFLockScreenFragment.OnPFLockScreenLoginListener loginListener;
     private PFLockScreenFragment.OnPFLockScreenCodeCreateListener createListener;
