@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/nav_home">
 
     <fragment
         android:id="@+id/nav_home"
@@ -45,6 +45,12 @@
         android:name="com.via.letmein.ui.add_member.AddMember"
         android:label="Add a new member"
         tools:layout="@layout/fragment_add_member" />
+
+    <fragment
+        android:id="@+id/nav_view_member"
+        android:name="com.via.letmein.ui.administration.view_member.ViewMember"
+        android:label="Member details"
+        tools:layout="@layout/fragment_view_member" />
 
 
 </navigation>
