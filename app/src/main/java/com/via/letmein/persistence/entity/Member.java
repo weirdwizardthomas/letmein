@@ -1,6 +1,15 @@
-package com.via.letmein.ui.administration;
+package com.via.letmein.persistence.entity;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.via.letmein.R;
+
+@Entity
 public class Member {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String name;
     private String role;
     private int imageID;
@@ -9,6 +18,14 @@ public class Member {
         this.name = name;
         this.role = role;
         this.imageID = imageID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

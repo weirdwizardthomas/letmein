@@ -10,15 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
+import com.via.letmein.persistence.entity.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
     private List<Member> data;
+    private OnItemClickListener onItemClickListener;
 
-    public MemberAdapter(List<Member> data) {
-        this.data = data;
+    MemberAdapter(OnItemClickListener onItemClickListener) {
+        this.data = new ArrayList<>();
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -42,15 +46,36 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         return data.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    Member getMemberAt(int position) {
+        return data.get(position);
+    }
+
+    void setData(List<Member> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView portrait;
         TextView name;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             portrait = itemView.findViewById(R.id.memberCard_portrait);
             name = itemView.findViewById(R.id.memberCard_name);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            Member item = data.get(getAdapterPosition());
+            onItemClickListener.onItemClick(item);
+        }
+
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Member item);
     }
 }

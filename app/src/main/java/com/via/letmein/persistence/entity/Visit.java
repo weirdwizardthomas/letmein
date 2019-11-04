@@ -1,6 +1,4 @@
-package com.via.letmein.ui.history.visit;
-
-import com.via.letmein.ui.administration.Member;
+package com.via.letmein.persistence.entity;
 
 import java.sql.Timestamp;
 

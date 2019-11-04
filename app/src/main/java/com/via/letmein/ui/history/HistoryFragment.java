@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.via.letmein.R;
-import com.via.letmein.ui.history.day_entry.DayEntry;
+import com.via.letmein.persistence.entity.DayEntry;
 import com.via.letmein.ui.history.day_entry.DayEntryAdapter;
 
 import java.util.List;

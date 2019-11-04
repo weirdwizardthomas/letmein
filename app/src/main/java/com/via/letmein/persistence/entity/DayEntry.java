@@ -1,13 +1,17 @@
-package com.via.letmein.ui.history.day_entry;
+package com.via.letmein.persistence.entity;
 
-import com.via.letmein.ui.history.visit.Visit;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+
 public class DayEntry {
 
+
     private Timestamp date;
+
     private List<Visit> visits;
 
     public DayEntry(Timestamp date, List<Visit> visits) {

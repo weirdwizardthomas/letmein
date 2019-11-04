@@ -1,31 +1,37 @@
 package com.via.letmein.ui.administration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
+import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.ui.administration.view_member.ViewMember;
 
 import java.util.List;
 
-public class AdministrationFragment extends Fragment {
+public class AdministrationFragment extends Fragment implements MemberAdapter.OnItemClickListener {
 
     private RecyclerView membersRecyclerView;
-    private RecyclerView.Adapter membersAdapter;
+    private MemberAdapter membersAdapter;
 
     private AdministrationViewModel administrationViewModel;
-    private FloatingActionButton addMemberFloatingActionButton;
+    private FloatingActionButton addMemberButton;
 
     public AdministrationFragment() {
     }
@@ -39,36 +45,73 @@ public class AdministrationFragment extends Fragment {
         initialiseAdapter();
         initialiseMemberRecyclerView(root);
         initialiseAddMemberButton(root);
-
         return root;
     }
 
-    public void initialiseViewModel() {
+    private void initialiseViewModel() {
         administrationViewModel = ViewModelProviders.of(this).get(AdministrationViewModel.class);
+        administrationViewModel.getAllMembers().observe(this, new Observer<List<Member>>() {
+            @Override
+            public void onChanged(List<Member> members) {
+                membersAdapter.setData(administrationViewModel.getAllMembers().getValue());
+            }
+        });
     }
 
-    public void initialiseAdapter() {
-        List<Member> members = administrationViewModel.getData().getValue();
-        membersAdapter = new MemberAdapter(members);
+    private void initialiseAdapter() {
+        membersAdapter = new MemberAdapter(this);
     }
 
     private void initialiseAddMemberButton(View root) {
-        addMemberFloatingActionButton = root.findViewById(R.id.membersAdministration_addMember);
-        addMemberFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        addMemberButton = root.findViewById(R.id.membersAdministration_addMember);
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 navController.navigate(R.id.nav_add_member);
             }
-        });
+        };
+
+        addMemberButton.setOnClickListener(onClickListener);
     }
 
-    private void initialiseMemberRecyclerView(View root) {
+    private void initialiseMemberRecyclerView(final View root) {
         membersRecyclerView = root.findViewById(R.id.membersAdministration_membersList);
         membersRecyclerView.hasFixedSize();
         membersRecyclerView.setAdapter(membersAdapter);
         membersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                administrationViewModel.delete(membersAdapter.getMemberAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(root.getContext(), "", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(membersRecyclerView);
+
     }
 
+    @Override
+    public void onItemClick(Member item) {
 
+        Bundle extras = new Bundle();
+
+        //TODO consider making Member serialisable and send the Member instance instead?
+        extras.putString("name", item.getName());
+        extras.putString("role", item.getRole());
+        extras.putInt("id", item.getId());
+        extras.putInt("imageID", item.getImageID());
+
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.nav_view_member, extras);
+    }
 }

@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.via.letmein.R;
-import com.via.letmein.ui.administration.Member;
-import com.via.letmein.ui.history.day_entry.DayEntry;
-import com.via.letmein.ui.history.visit.Visit;
+import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.persistence.entity.DayEntry;
+import com.via.letmein.persistence.entity.Visit;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -23,19 +23,7 @@ public class HistoryViewModel extends AndroidViewModel {
     public HistoryViewModel(@NonNull Application application) {
         super(application);
 
-        List<DayEntry> dayEntries = new ArrayList<>();
-
-        Member member = new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        List<Visit> visits = new ArrayList<>();
-        for (int i = 0; i < 20; ++i)
-            visits.add(new Visit(member, timestamp));
-
-        for (int i = 0; i < 5; ++i)
-            dayEntries.add(new DayEntry(timestamp, visits));
-
-        data = new MutableLiveData<>(dayEntries);
+        data = new MutableLiveData<>(mockupData());
     }
 
     public LiveData<List<DayEntry>> getData() {
@@ -51,4 +39,31 @@ public class HistoryViewModel extends AndroidViewModel {
         dummy.add(dayEntry);
         data.setValue(dummy);
     }
+
+    private List<DayEntry> mockupData() {
+        List<DayEntry> dayEntries = new ArrayList<>();
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        List<Visit> visits = new ArrayList<>();
+
+        visits.add(new Visit(new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person1", "Owner", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person3", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person1", "Owner", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person1", "Owner", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person2", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person2", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person2", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person3", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+        visits.add(new Visit(new Member("person3", "Member", R.mipmap.profile_icon_placeholder), timestamp));
+
+
+        for (int i = 0; i < 5; ++i)
+            dayEntries.add(new DayEntry(timestamp, visits));
+        return dayEntries;
+    }
+
 }
