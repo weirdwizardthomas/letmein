@@ -1,0 +1,17 @@
+add outline to the role spinner on addMember
+display recent entries on home screen - day, specific number, day range - click to open the complete history
+notifications - https://developer.android.com/training/notify-user/build-notification
+NICE TO HAVE cropping tool for the rectangular format - https://github.com/ArthurHub/Android-Image-Cropper
+add live data observers - https://developer.android.com/topic/libraries/architecture/livedata#java
+add repository
+add local db
+hook up api
+add pin lock screen - there's a sample! use it
+authentication on door remote unlocking - turn on or off in settings?
+add settings - https://blog.mindorks.com/implementing-preferences-settings-screen-in-android
+swipe to delete members
+save button on addmember screen
+send feedback & help in the menu
+maybe change the sidemenu to the bottom menu?
+
+	
