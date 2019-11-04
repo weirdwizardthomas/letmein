@@ -12,8 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AddMemberViewModel extends AndroidViewModel {
-    private MutableLiveData<List<String>> roles;
 
+    private MutableLiveData<List<String>> roles;
 
     public AddMemberViewModel(@NonNull Application application) {
         super(application);
