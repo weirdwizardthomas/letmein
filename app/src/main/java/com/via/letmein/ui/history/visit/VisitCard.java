@@ -11,6 +11,6 @@ public class VisitCard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visit_card);
+        setContentView(R.layout.card_visit_item);
     }
 }

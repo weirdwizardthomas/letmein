@@ -11,6 +11,6 @@ public class DayEntryCard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry_card);
+        setContentView(R.layout.card_entry_item);
     }
 }
