@@ -51,13 +51,11 @@ public class HomeFragment extends Fragment implements HomeVisitAdapter.OnItemCli
         recentEntriesRecyclerView.hasFixedSize();
         recentEntriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recentEntriesRecyclerView.setAdapter(recentEntriesAdapter);
-        //TODO set a listener to the entire recycler view
     }
 
     @Override
     public void onItemClick() {
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        navController.navigate(R.id.nav_administration);
-
+        navController.navigate(R.id.nav_history);
     }
 }
