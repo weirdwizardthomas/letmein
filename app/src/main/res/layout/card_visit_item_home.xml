@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    tools:context=".ui.home.visit.VisitCard">
+
+    <ImageView
+        android:id="@+id/home_visitCard_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/home_visitCard_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="Tomas"
+        app:layout_constraintStart_toEndOf="@+id/home_vertical_bar"
+        app:layout_constraintTop_toBottomOf="@+id/home_visitCard_time" />
+
+    <View
+        android:id="@+id/home_vertical_bar"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="5dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/home_visitCard_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/home_visitCard_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="postman"
+        app:layout_constraintStart_toEndOf="@+id/home_vertical_bar"
+        app:layout_constraintTop_toBottomOf="@+id/home_visitCard_name" />
+
+    <TextView
+        android:id="@+id/home_visitCard_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="25.10.2019"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
