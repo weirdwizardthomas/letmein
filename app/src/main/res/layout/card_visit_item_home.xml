@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    tools:context=".ui.home.visit.VisitCard">
+    tools:context=".ui.home.visit.VisitCard"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    >
 
-    <ImageView
-        android:id="@+id/home_visitCard_image"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:padding="5dp">
 
-    <TextView
-        android:id="@+id/home_visitCard_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="Tomas"
-        app:layout_constraintStart_toEndOf="@+id/home_vertical_bar"
-        app:layout_constraintTop_toBottomOf="@+id/home_visitCard_time" />
+        <ImageView
+            android:id="@+id/home_visitCard_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <View
-        android:id="@+id/home_vertical_bar"
-        android:layout_width="3dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="5dp"
-        android:background="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/home_visitCard_image"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/home_visitCard_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Tomas"
+            app:layout_constraintStart_toEndOf="@+id/home_vertical_bar"
+            app:layout_constraintTop_toBottomOf="@+id/home_visitCard_time" />
 
-    <TextView
-        android:id="@+id/home_visitCard_role"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:text="postman"
-        app:layout_constraintStart_toEndOf="@+id/home_vertical_bar"
-        app:layout_constraintTop_toBottomOf="@+id/home_visitCard_name" />
+        <View
+            android:id="@+id/home_vertical_bar"
+            android:layout_width="3dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:background="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_visitCard_image"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/home_visitCard_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="25.10.2019"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/home_visitCard_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="postman"
+            app:layout_constraintStart_toEndOf="@+id/home_vertical_bar"
+            app:layout_constraintTop_toBottomOf="@+id/home_visitCard_name" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/home_visitCard_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25.10.2019"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
