@@ -1,6 +1,5 @@
 package com.via.letmein.ui.administration;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
 import com.via.letmein.persistence.entity.Member;
-import com.via.letmein.ui.administration.view_member.ViewMember;
 
 import java.util.List;
+
+import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_ID_KEY;
+import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_IMAGEID_KEY;
+import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_NAME_KEY;
+import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_ROLE_KEY;
 
 public class AdministrationFragment extends Fragment implements MemberAdapter.OnItemClickListener {
 
@@ -106,10 +109,10 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         Bundle extras = new Bundle();
 
         //TODO consider making Member serialisable and send the Member instance instead?
-        extras.putString("name", item.getName());
-        extras.putString("role", item.getRole());
-        extras.putInt("id", item.getId());
-        extras.putInt("imageID", item.getImageID());
+        extras.putString(BUNDLE_NAME_KEY, item.getName());
+        extras.putString(BUNDLE_ROLE_KEY, item.getRole());
+        extras.putInt(BUNDLE_ID_KEY, item.getId());
+        extras.putInt(BUNDLE_IMAGEID_KEY, item.getImageID());
 
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.nav_view_member, extras);
