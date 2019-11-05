@@ -18,9 +18,11 @@ import java.util.List;
 public class HomeVisitAdapter extends RecyclerView.Adapter<HomeVisitAdapter.ViewHolder> {
 
     private List<Visit> data;
+    private OnItemClickListener onItemClickListener;
 
-    public HomeVisitAdapter(List<Visit> data) {
+    public HomeVisitAdapter(List<Visit> data, OnItemClickListener onItemClickListener) {
         this.data = data;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -48,7 +50,7 @@ public class HomeVisitAdapter extends RecyclerView.Adapter<HomeVisitAdapter.View
         return data.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView image;
         TextView name;
         TextView role;
@@ -61,6 +63,17 @@ public class HomeVisitAdapter extends RecyclerView.Adapter<HomeVisitAdapter.View
             name = itemView.findViewById(R.id.home_visitCard_name);
             role = itemView.findViewById(R.id.home_visitCard_role);
             time = itemView.findViewById(R.id.home_visitCard_time);
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onItemClickListener.onItemClick();
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick();
     }
 }

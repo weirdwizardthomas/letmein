@@ -1,42 +1,48 @@
 package com.via.letmein.ui.add_member;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
-import com.via.letmein.ui.MainActivity;
+import com.via.letmein.persistence.entity.Member;
 
 import java.util.List;
 
 public class AddMember extends Fragment {
+    //TODO add a button to upload a custom picture
+
     public static final int PROGRESS_MIN = 0;
-    public static final int SECOND_IN_MILISECONDS = 1000;
     public static final int PROGRESS_MAX = 100;
+    public static final int SECOND_IN_MILISECONDS = 1000;
 
     private ArrayAdapter<String> roleSpinnerAdapter;
+    private Spinner roleSpinner;
     private AddMemberViewModel addMemberViewModel;
     private ProgressBar progressBar;
     private Button addFingerprintButton;
     private Button addPictureButton;
+    private FloatingActionButton floatingActionButton;
     private TextView progressTextView;
-    private View.OnClickListener onClickListener;
+    private TextView nameTextView;
+    private View.OnClickListener onAddCredentialClickListener;
+    private View.OnClickListener onSaveClickListener;
 
     private boolean countdownInProgress;
 
@@ -47,12 +53,17 @@ public class AddMember extends Fragment {
 
         initialiseViewModel();
         initialiseProgressBar(root);
-        initialiseListeners(); //TODO rename to fit better
         initialiseButtons(root);
         initaliseRoleAdapter();
-        initialiseRoleSpinner(root);
+        initaliseInput(root);
 
         return root;
+    }
+
+    private void initaliseInput(View root) {
+        nameTextView = root.findViewById(R.id.addMember_nameInput);
+        roleSpinner = root.findViewById(R.id.addMember_selectRoleSpinner);
+        roleSpinner.setAdapter(roleSpinnerAdapter);
     }
 
     private void initialiseProgressBar(View root) {
@@ -66,7 +77,7 @@ public class AddMember extends Fragment {
     }
 
     private void initialiseListeners() {
-        onClickListener = new View.OnClickListener() {
+        onAddCredentialClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!countdownInProgress)
@@ -76,15 +87,37 @@ public class AddMember extends Fragment {
                 //TODO add a timer to the progress bar & show it
             }
         };
+
+        onSaveClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO send a request
+                //TODO display a notification
+                String name = nameTextView.getText().toString();
+                String role = roleSpinner.getSelectedItem().toString();
+                int imageID = R.mipmap.profile_icon_placeholder;
+
+                addMemberViewModel.insert(new Member(name, role, imageID));
+                Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.popBackStack();
+            }
+        };
     }
 
     private void initialiseButtons(final View root) {
-        //TODO extract listeners to member attributes
+        initialiseListeners(); //TODO rename to fit better
+
         addFingerprintButton = root.findViewById(R.id.addMember_addFingerprintButton);
-        addFingerprintButton.setOnClickListener(onClickListener);
+        addFingerprintButton.setOnClickListener(onAddCredentialClickListener);
 
         addPictureButton = root.findViewById(R.id.addMember_addPictureButton);
-        addPictureButton.setOnClickListener(onClickListener);
+        addPictureButton.setOnClickListener(onAddCredentialClickListener);
+
+        //TODO change to a button on the action bar
+        floatingActionButton = root.findViewById(R.id.addMember_saveMemberButton);
+        floatingActionButton.setOnClickListener(onSaveClickListener);
+
     }
 
     private void initialiseViewModel() {
@@ -96,11 +129,6 @@ public class AddMember extends Fragment {
 
         roleSpinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, roles);
         roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    }
-
-    private void initialiseRoleSpinner(View view) {
-        Spinner roleSpinner = view.findViewById(R.id.addMember_selectRoleSpinner);
-        roleSpinner.setAdapter(roleSpinnerAdapter);
     }
 
     private void startProgressBar(final int seconds) {
@@ -136,14 +164,4 @@ public class AddMember extends Fragment {
         countDownTimer.start();
     }
 
-    public void onSaveButtonClick(View view) {
-        //TODO send a request
-        //TODO display a notification
-        //TODO return from the activity
-          /*
-            accessing spinner's value
-            String dummy = roleSpinner.getSelectedItem().toString();
-            Toast.makeText(this, dummy, Toast.LENGTH_SHORT).show();
-            */
-    }
 }

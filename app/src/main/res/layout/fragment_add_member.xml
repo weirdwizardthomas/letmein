@@ -88,4 +88,16 @@
         app:layout_constraintEnd_toEndOf="@+id/addMember_progressBar"
         app:layout_constraintStart_toStartOf="@+id/addMember_progressBar"
         app:layout_constraintTop_toTopOf="@+id/addMember_progressBar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addMember_saveMemberButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_content_save_white_24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
