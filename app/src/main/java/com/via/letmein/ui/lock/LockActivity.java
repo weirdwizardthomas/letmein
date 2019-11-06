@@ -24,7 +24,7 @@ public class LockActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_lock);
 
         initialiseListeners();
         loadPinLock();
@@ -88,7 +88,7 @@ public class LockActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_layout, fragment)
+                .replace(R.id.lock_layout, fragment)
                 .commit();
     }
 
