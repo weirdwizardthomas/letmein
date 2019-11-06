@@ -26,11 +26,7 @@ import com.via.letmein.ui.home.HomeFragment;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static final int PIN_CODE_LENGTH = 4;
     private AppBarConfiguration appBarConfiguration;
-
-    private PFLockScreenFragment.OnPFLockScreenLoginListener loginListener;
-    private PFLockScreenFragment.OnPFLockScreenCodeCreateListener createListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
