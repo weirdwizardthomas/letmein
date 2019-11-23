@@ -49,7 +49,7 @@ public class HistoryFragment extends Fragment {
     }
 
     private void initialiseDaysRecyclerView(View root) {
-        dayEntryRecyclerView = root.findViewById(R.id.visits_recycler_view);
+        dayEntryRecyclerView = root.findViewById(R.id.visitsRecyclerView);
         dayEntryRecyclerView.hasFixedSize();
         dayEntryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         dayEntryRecyclerView.setAdapter(dayEntryAdapter);

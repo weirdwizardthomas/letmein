@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,7 +39,7 @@ public class AddMember extends Fragment {
     private Button addPictureButton;
     private FloatingActionButton floatingActionButton;
     private TextView progressTextView;
-    private TextView nameTextView;
+    private TextView nameInput;
     private View.OnClickListener onAddCredentialClickListener;
     private View.OnClickListener onSaveClickListener;
 
@@ -61,18 +60,18 @@ public class AddMember extends Fragment {
     }
 
     private void initaliseInput(View root) {
-        nameTextView = root.findViewById(R.id.addMember_nameInput);
-        roleSpinner = root.findViewById(R.id.addMember_selectRoleSpinner);
+        nameInput = root.findViewById(R.id.nameInput);
+        roleSpinner = root.findViewById(R.id.roleSpinner);
         roleSpinner.setAdapter(roleSpinnerAdapter);
     }
 
     private void initialiseProgressBar(View root) {
         countdownInProgress = false;
 
-        progressBar = root.findViewById(R.id.addMember_progressBar);
+        progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        progressTextView = root.findViewById(R.id.addMember_progressTextView);
+        progressTextView = root.findViewById(R.id.progressText);
         progressTextView.setVisibility(View.INVISIBLE);
     }
 
@@ -93,14 +92,13 @@ public class AddMember extends Fragment {
             public void onClick(View v) {
                 //TODO send a request
                 //TODO display a notification
-                String name = nameTextView.getText().toString();
+                String name = nameInput.getText().toString();
                 String role = roleSpinner.getSelectedItem().toString();
                 int imageID = R.mipmap.profile_icon_placeholder;
 
                 addMemberViewModel.insert(new Member(name, role, imageID));
                 Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                navController.popBackStack();
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
             }
         };
     }
@@ -108,14 +106,14 @@ public class AddMember extends Fragment {
     private void initialiseButtons(final View root) {
         initialiseListeners(); //TODO rename to fit better
 
-        addFingerprintButton = root.findViewById(R.id.addMember_addFingerprintButton);
+        addFingerprintButton = root.findViewById(R.id.addFingerprintButton);
         addFingerprintButton.setOnClickListener(onAddCredentialClickListener);
 
-        addPictureButton = root.findViewById(R.id.addMember_addPictureButton);
+        addPictureButton = root.findViewById(R.id.addPictureButton);
         addPictureButton.setOnClickListener(onAddCredentialClickListener);
 
         //TODO change to a button on the action bar
-        floatingActionButton = root.findViewById(R.id.addMember_saveMemberButton);
+        floatingActionButton = root.findViewById(R.id.saveMemberButton);
         floatingActionButton.setOnClickListener(onSaveClickListener);
 
     }

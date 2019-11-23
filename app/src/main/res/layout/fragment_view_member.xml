@@ -7,17 +7,8 @@
     android:padding="10dp"
     tools:context=".ui.view_member.ViewMember">
 
-    <TextView
-        android:id="@+id/viewMember_nameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMember_profileImage" />
-
     <ImageView
-        android:id="@+id/viewMember_profileImage"
+        android:id="@+id/portrait"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,44 +17,54 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/viewMember_nameText"
+        android:id="@+id/nameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/portrait" />
+
+    <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMember_nameLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
 
     <TextView
-        android:id="@+id/viewMember_roleLabel"
+        android:id="@+id/roleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Role"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMember_nameText" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/viewMember_roleText"
+        android:id="@+id/role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMember_roleLabel" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/viewMember_recentEntriesRecyclerView"
-        android:layout_width="409dp"
-        android:layout_height="514dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMember_recentEntriesLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/roleLabel" />
 
     <TextView
-        android:id="@+id/viewMember_recentEntriesLabel"
+        android:id="@+id/recentEntriesLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recent entries"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMember_roleText" />
+        app:layout_constraintTop_toBottomOf="@+id/role" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recentEntriesRecyclerView"
+        android:layout_width="409dp"
+        android:layout_height="514dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recentEntriesLabel" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

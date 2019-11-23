@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment implements HomeVisitAdapter.OnItemCli
     }
 
     private void initialiseRecyclerView(final View root) {
-        recentEntriesRecyclerView = root.findViewById(R.id.home_recentEntriesRecycler);
+        recentEntriesRecyclerView = root.findViewById(R.id.recentEntriesRecyclerView);
         recentEntriesRecyclerView.hasFixedSize();
         recentEntriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recentEntriesRecyclerView.setAdapter(recentEntriesAdapter);

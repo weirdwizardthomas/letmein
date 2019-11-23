@@ -36,10 +36,10 @@ public class ViewMember extends Fragment {
 
         Bundle extras = getArguments();
 
-        imageView = root.findViewById(R.id.viewMember_profileImage);
-        nameView = root.findViewById(R.id.viewMember_nameText);
-        roleView = root.findViewById(R.id.viewMember_roleText);
-        recentEntriesRecyclerView = root.findViewById(R.id.viewMember_recentEntriesRecyclerView);
+        imageView = root.findViewById(R.id.portrait);
+        nameView = root.findViewById(R.id.name);
+        roleView = root.findViewById(R.id.role);
+        recentEntriesRecyclerView = root.findViewById(R.id.recentEntriesRecyclerView);
 
         imageView.setImageResource(extras != null ? extras.getInt(BUNDLE_IMAGEID_KEY) : R.mipmap.profile_icon_placeholder);
         nameView.setText(extras != null ? extras.getString(BUNDLE_NAME_KEY) : "No name found");

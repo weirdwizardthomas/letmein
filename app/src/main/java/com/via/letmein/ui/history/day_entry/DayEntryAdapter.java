@@ -68,8 +68,8 @@ public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHo
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            date = itemView.findViewById(R.id.dayEntries_date);
-            visitsList = itemView.findViewById(R.id.dayEntries_recyclerView);
+            date = itemView.findViewById(R.id.date);
+            visitsList = itemView.findViewById(R.id.entriesRecyclerView);
         }
     }
 }

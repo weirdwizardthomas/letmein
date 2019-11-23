@@ -57,10 +57,10 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            image = itemView.findViewById(R.id.visitCard_image);
-            name = itemView.findViewById(R.id.visitCard_name);
-            role = itemView.findViewById(R.id.visitCard_role);
-            time = itemView.findViewById(R.id.visitCard_time);
+            image = itemView.findViewById(R.id.portrait);
+            name = itemView.findViewById(R.id.name);
+            role = itemView.findViewById(R.id.role);
+            time = itemView.findViewById(R.id.time);
         }
     }
 }

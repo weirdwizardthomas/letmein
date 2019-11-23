@@ -62,8 +62,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            portrait = itemView.findViewById(R.id.memberCard_portrait);
-            name = itemView.findViewById(R.id.memberCard_name);
+            portrait = itemView.findViewById(R.id.portrait);
+            name = itemView.findViewById(R.id.name);
             itemView.setOnClickListener(this);
         }
 

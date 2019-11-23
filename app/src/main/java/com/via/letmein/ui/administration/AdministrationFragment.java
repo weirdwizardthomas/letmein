@@ -66,7 +66,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     }
 
     private void initialiseAddMemberButton(View root) {
-        addMemberButton = root.findViewById(R.id.membersAdministration_addMember);
+        addMemberButton = root.findViewById(R.id.addMemberButton);
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +79,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     }
 
     private void initialiseMemberRecyclerView(final View root) {
-        membersRecyclerView = root.findViewById(R.id.membersAdministration_membersList);
+        membersRecyclerView = root.findViewById(R.id.membersRecyclerView);
         membersRecyclerView.hasFixedSize();
         membersRecyclerView.setAdapter(membersAdapter);
         membersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

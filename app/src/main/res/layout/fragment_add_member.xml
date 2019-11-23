@@ -8,28 +8,17 @@
     tools:context=".ui.add_member.AddMember">
 
     <TextView
-        android:id="@+id/addMember_nameLabel"
+        android:id="@+id/nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/addMember_nameInput"
+        android:labelFor="@id/nameInput"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/addMember_nameInput"
+        app:layout_constraintBottom_toBottomOf="@+id/nameInput"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/addMember_nameInput" />
-
-    <TextView
-        android:id="@+id/addMember_roleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/addMember_roleLabel"
-        android:text="Role"
-        app:layout_constraintBottom_toBottomOf="@+id/addMember_selectRoleSpinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/addMember_selectRoleSpinner" />
-
+        app:layout_constraintTop_toTopOf="@+id/nameInput" />
 
     <EditText
-        android:id="@+id/addMember_nameInput"
+        android:id="@+id/nameInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -37,60 +26,71 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addMember_nameLabel"
+        app:layout_constraintStart_toEndOf="@+id/nameLabel"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/roleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/roleLabel"
+        android:text="Role"
+        app:layout_constraintBottom_toBottomOf="@+id/roleSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/roleSpinner" />
+
+
+    <Spinner
+        android:id="@+id/roleSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/nameInput"
+        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
+
     <Button
-        android:id="@+id/addMember_addPictureButton"
+        android:id="@+id/addPictureButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Add picture"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/addMember_roleLabel"
-        app:layout_constraintTop_toBottomOf="@+id/addMember_selectRoleSpinner" />
+        app:layout_constraintStart_toStartOf="@+id/roleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/roleSpinner" />
 
     <Button
-        android:id="@+id/addMember_addFingerprintButton"
+        android:id="@+id/addFingerprintButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Add fingerprint"
-        app:layout_constraintEnd_toEndOf="@+id/addMember_addPictureButton"
-        app:layout_constraintStart_toStartOf="@+id/addMember_addPictureButton"
-        app:layout_constraintTop_toBottomOf="@+id/addMember_addPictureButton" />
-
-    <Spinner
-        android:id="@+id/addMember_selectRoleSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/addMember_nameInput"
-        app:layout_constraintTop_toBottomOf="@+id/addMember_nameInput" />
+        app:layout_constraintEnd_toEndOf="@+id/addPictureButton"
+        app:layout_constraintStart_toStartOf="@+id/addPictureButton"
+        app:layout_constraintTop_toBottomOf="@+id/addPictureButton" />
 
     <ProgressBar
-        android:id="@+id/addMember_progressBar"
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addMember_addFingerprintButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addFingerprintButton" />
 
     <TextView
-        android:id="@+id/addMember_progressTextView"
+        android:id="@+id/progressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="100sp"
-        app:layout_constraintBottom_toBottomOf="@+id/addMember_progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/addMember_progressBar"
-        app:layout_constraintStart_toStartOf="@+id/addMember_progressBar"
-        app:layout_constraintTop_toTopOf="@+id/addMember_progressBar" />
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="@+id/progressBar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addMember_saveMemberButton"
+        android:id="@+id/saveMemberButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"

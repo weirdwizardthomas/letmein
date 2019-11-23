@@ -7,7 +7,7 @@
     tools:context=".ui.live.LiveFragment">
 
     <VideoView
-        android:id="@+id/liveView_videoView"
+        android:id="@+id/videoView"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginStart="50dp"
@@ -19,12 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/liveView_acceptButton"
+        android:id="@+id/openButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Open door"
-        app:layout_constraintEnd_toEndOf="@+id/liveView_videoView"
-        app:layout_constraintStart_toStartOf="@+id/liveView_videoView"
-        app:layout_constraintTop_toBottomOf="@+id/liveView_videoView" />
+        app:layout_constraintEnd_toEndOf="@+id/videoView"
+        app:layout_constraintStart_toStartOf="@+id/videoView"
+        app:layout_constraintTop_toBottomOf="@+id/videoView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

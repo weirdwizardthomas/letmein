@@ -1,27 +1,20 @@
 package com.via.letmein.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.beautycoder.pflockscreen.PFFLockScreenConfiguration;
-import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment;
-import com.beautycoder.pflockscreen.security.PFResult;
-import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel;
+import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.via.letmein.R;
-import com.via.letmein.ui.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(getApplicationContext(), EnterPinActivity.class);
+        startActivity(intent);
+
         initialiseToolbar();
         initialiseNavigationBar();
     }

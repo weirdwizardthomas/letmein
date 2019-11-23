@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".ui.history.visit.VisitCard">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp">
 
         <ImageView
-            android:id="@+id/visitCard_image"
+            android:id="@+id/portrait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -21,42 +22,42 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/visitCard_name"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="Tomas"
-            app:layout_constraintStart_toEndOf="@+id/vertical_bar"
-            app:layout_constraintTop_toBottomOf="@+id/visitCard_time" />
+            app:layout_constraintStart_toEndOf="@+id/verticalDivider"
+            app:layout_constraintTop_toBottomOf="@+id/time" />
 
         <View
-            android:id="@+id/vertical_bar"
-            android:layout_width="3dp"
+            android:id="@+id/verticalDivider"
+            android:layout_width="1dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:background="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/visitCard_image"
+            app:layout_constraintStart_toEndOf="@+id/portrait"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/visitCard_role"
+            android:id="@+id/role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="postman"
-            app:layout_constraintStart_toEndOf="@+id/vertical_bar"
-            app:layout_constraintTop_toBottomOf="@+id/visitCard_name" />
+            app:layout_constraintStart_toEndOf="@+id/verticalDivider"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
 
         <TextView
-            android:id="@+id/visitCard_time"
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:text="25.10.2019"
-            app:layout_constraintStart_toEndOf="@+id/visitCard_name"
+            app:layout_constraintStart_toEndOf="@+id/name"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,7 @@
         android:padding="5dp">
 
         <ImageView
-            android:id="@+id/memberCard_portrait"
+            android:id="@+id/portrait"
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +24,12 @@
             tools:src="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/memberCard_name"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="Tomas"
-            app:layout_constraintStart_toEndOf="@+id/memberCard_portrait"
+            app:layout_constraintStart_toEndOf="@+id/portrait"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
