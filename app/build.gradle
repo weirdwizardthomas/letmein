@@ -43,4 +43,5 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.1'
     implementation 'com.amirarcane.lock-screen:lockscreen:2.0.0'
     annotationProcessor 'androidx.room:room-compiler:2.2.1'
+    implementation 'androidx.preference:preference:1.1.0'
 }
