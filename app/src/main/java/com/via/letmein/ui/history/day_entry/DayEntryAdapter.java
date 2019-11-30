@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.entity.DayEntry;
+import com.via.letmein.persistence.room.entity.DayEntry;
 import com.via.letmein.ui.history.visit.VisitAdapter;
 
 import java.text.DateFormat;

@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.entity.DayEntry;
+import com.via.letmein.persistence.room.entity.DayEntry;
 import com.via.letmein.ui.history.day_entry.DayEntryAdapter;
 
 import java.util.List;
@@ -39,12 +39,12 @@ public class HistoryFragment extends Fragment {
         return root;
     }
 
-    public void initialiseAdapter() {
+    private void initialiseAdapter() {
         List<DayEntry> dummy = historyViewModel.getData().getValue();
         dayEntryAdapter = new DayEntryAdapter(getContext(), dummy);
     }
 
-    public void initialiseViewModel() {
+    private void initialiseViewModel() {
         historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
     }
 

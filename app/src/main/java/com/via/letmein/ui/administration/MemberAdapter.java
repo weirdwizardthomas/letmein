@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.persistence.pojo.HouseholdMember;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
-    private List<Member> data;
+    private List<HouseholdMember> data;
     private OnItemClickListener onItemClickListener;
 
     MemberAdapter(OnItemClickListener onItemClickListener) {
@@ -35,10 +35,10 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MemberAdapter.ViewHolder holder, int position) {
-        Member member = data.get(position);
-
-        holder.portrait.setImageResource(member.getImageID());
-        holder.name.setText(member.getName());
+        HouseholdMember householdMember = data.get(position);
+        //TODO load a profile image
+        //holder.portrait.setImageResource(householdMember.getImageID());
+        holder.name.setText(householdMember.getName());
     }
 
     @Override
@@ -46,11 +46,11 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         return data.size();
     }
 
-    Member getMemberAt(int position) {
+    public HouseholdMember getMemberAt(int position) {
         return data.get(position);
     }
 
-    void setData(List<Member> data) {
+    void setData(List<HouseholdMember> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -69,13 +69,13 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            Member item = data.get(getAdapterPosition());
+            HouseholdMember item = data.get(getAdapterPosition());
             onItemClickListener.onItemClick(item);
         }
 
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Member item);
+        void onItemClick(HouseholdMember item);
     }
 }

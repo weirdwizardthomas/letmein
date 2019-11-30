@@ -19,15 +19,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
-import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.persistence.api.response.ApiResponse;
+import com.via.letmein.persistence.pojo.HouseholdMember;
 
 import java.util.List;
 
-import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_ID_KEY;
-import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_IMAGEID_KEY;
-import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_NAME_KEY;
-import static com.via.letmein.ui.view_member.ViewMember.BUNDLE_ROLE_KEY;
+import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ID_KEY;
+import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_NAME_KEY;
+import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ROLE_KEY;
 
+/**
+ * Fragment housing all the members and allowing closer inspections of individual members.
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class AdministrationFragment extends Fragment implements MemberAdapter.OnItemClickListener {
 
     private RecyclerView membersRecyclerView;
@@ -36,54 +41,88 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     private AdministrationViewModel administrationViewModel;
     private FloatingActionButton addMemberButton;
 
-    public AdministrationFragment() {
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        administrationViewModel = ViewModelProviders.of(this).get(AdministrationViewModel.class);
         View root = inflater.inflate(R.layout.fragment_administration, container, false);
 
-        initialiseViewModel();
-        initialiseAdapter();
-        initialiseMemberRecyclerView(root);
-        initialiseAddMemberButton(root);
+        initialiseLayout(root);
+        observeData();
         return root;
     }
 
-    private void initialiseViewModel() {
-        administrationViewModel = ViewModelProviders.of(this).get(AdministrationViewModel.class);
-        administrationViewModel.getAllMembers().observe(this, new Observer<List<Member>>() {
+    /**
+     * Set an observer to the data provided by {@see AdministrationViewModel#getAllHouseholdMembers} and pass them to the {@see AdministrationFragment#membersAdapter}.
+     */
+    private void observeData() {
+        administrationViewModel.getAllHouseholdMembers("").observe(this, new Observer<ApiResponse>() {
             @Override
-            public void onChanged(List<Member> members) {
-                membersAdapter.setData(administrationViewModel.getAllMembers().getValue());
+            public void onChanged(ApiResponse response) {
+                if (response != null) {
+
+                    if (!response.isError() && response.getContent() != null)
+                        membersAdapter.setData((List<HouseholdMember>) response.getContent());
+
+                    if (response.isError() && response.getErrorMessage() != null) {
+                        String errorMessage = response.getErrorMessage();
+                        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
 
+
+    /**
+     * Initialises the fragment's layout
+     *
+     * @param root Parent view of the fragment.
+     */
+    private void initialiseLayout(View root) {
+        initialiseAdapter();
+        initialiseMemberRecyclerView(root);
+        initialiseAddMemberButton(root);
+    }
+
+    /**
+     * Initialises {@see AdministrationFragment#membersAdapter}.
+     */
     private void initialiseAdapter() {
         membersAdapter = new MemberAdapter(this);
     }
 
+    /**
+     * Initialises the Add member button.
+     *
+     * @param root Parent view
+     */
     private void initialiseAddMemberButton(View root) {
         addMemberButton = root.findViewById(R.id.addMemberButton);
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+        addMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 navController.navigate(R.id.nav_add_member);
             }
-        };
-
-        addMemberButton.setOnClickListener(onClickListener);
+        });
     }
 
+    /**
+     * Initialises the recycler view of the layout.
+     *
+     * @param root Parent layout.
+     */
     private void initialiseMemberRecyclerView(final View root) {
         membersRecyclerView = root.findViewById(R.id.membersRecyclerView);
         membersRecyclerView.hasFixedSize();
         membersRecyclerView.setAdapter(membersAdapter);
-        membersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
+        membersRecyclerView.setLayoutManager(new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.VERTICAL,
+                false));
+        //Swipe to delete item
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -91,20 +130,24 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
             public boolean onMove(@NonNull RecyclerView recyclerView,
                                   @NonNull RecyclerView.ViewHolder viewHolder,
                                   @NonNull RecyclerView.ViewHolder target) {
-                return false;
+                return false; //no move functionality
             }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                administrationViewModel.delete(membersAdapter.getMemberAt(viewHolder.getAdapterPosition()));
+                HouseholdMember memberToDelete = membersAdapter.getMemberAt(viewHolder.getAdapterPosition());
+                administrationViewModel.delete(memberToDelete);
                 Toast.makeText(root.getContext(), "", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(membersRecyclerView);
 
     }
 
+    /**
+     * Opens {@see MemberProfileFragment} of the clicked on item of the list.
+     */
     @Override
-    public void onItemClick(Member item) {
+    public void onItemClick(HouseholdMember item) {
 
         Bundle extras = new Bundle();
 
@@ -112,7 +155,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         extras.putString(BUNDLE_NAME_KEY, item.getName());
         extras.putString(BUNDLE_ROLE_KEY, item.getRole());
         extras.putInt(BUNDLE_ID_KEY, item.getId());
-        extras.putInt(BUNDLE_IMAGEID_KEY, item.getImageID());
+        //extras.putInt(BUNDLE_IMAGEID_KEY, item.getImageID());
 
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.nav_view_member, extras);

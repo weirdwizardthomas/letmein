@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.persistence.room.entity.Member;
 import com.via.letmein.R;
-import com.via.letmein.persistence.entity.Visit;
+import com.via.letmein.persistence.room.entity.Visit;
 
 import java.util.List;
 

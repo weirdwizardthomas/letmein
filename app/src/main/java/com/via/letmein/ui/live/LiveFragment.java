@@ -13,7 +13,11 @@ import androidx.fragment.app.Fragment;
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.via.letmein.R;
 
-
+/**
+ * Fragment displaying the live feed from the camera and allowing remote door unlocking.
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class LiveFragment extends Fragment {
 
     private static final int REQUEST_CODE = 1;
@@ -34,6 +38,7 @@ public class LiveFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EnterPinActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
+                //todo test where return goes
             }
         });
 

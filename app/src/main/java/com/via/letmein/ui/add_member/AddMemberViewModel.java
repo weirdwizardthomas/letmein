@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.persistence.room.entity.Member;
 import com.via.letmein.persistence.repository.MemberRepository;
 
 import java.util.Arrays;

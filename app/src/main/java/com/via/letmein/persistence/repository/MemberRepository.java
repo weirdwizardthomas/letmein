@@ -5,12 +5,15 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.via.letmein.persistence.dao.MemberDAO;
-import com.via.letmein.persistence.database.Database;
-import com.via.letmein.persistence.entity.Member;
+import com.via.letmein.persistence.room.dao.MemberDAO;
+import com.via.letmein.persistence.room.database.Database;
+import com.via.letmein.persistence.room.entity.Member;
 
 import java.util.List;
 
+/**
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class MemberRepository {
 
     private static MemberRepository instance;

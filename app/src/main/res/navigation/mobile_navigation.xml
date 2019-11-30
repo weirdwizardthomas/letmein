@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.via.letmein.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_history"
+            app:destination="@id/nav_history" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_history"
@@ -21,7 +25,14 @@
         android:id="@+id/nav_administration"
         android:name="com.via.letmein.ui.administration.AdministrationFragment"
         android:label="Administration"
-        tools:layout="@layout/fragment_administration" />
+        tools:layout="@layout/fragment_administration" >
+        <action
+            android:id="@+id/action_nav_administration_to_nav_add_member"
+            app:destination="@id/nav_add_member" />
+        <action
+            android:id="@+id/action_nav_administration_to_nav_view_member"
+            app:destination="@id/nav_view_member" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_live"
@@ -31,21 +42,21 @@
 
     <fragment
         android:id="@+id/nav_feedback"
-        android:name="com.via.letmein.ui.share.ShareFragment"
+        android:name="com.via.letmein.ui.feedback.FeedbackFragment"
         android:label="Share"
-        tools:layout="@layout/fragment_share" />
+        tools:layout="@layout/fragment_feedback" />
 
     <fragment
         android:id="@+id/nav_add_member"
-        android:name="com.via.letmein.ui.add_member.AddMember"
+        android:name="com.via.letmein.ui.add_member.AddMemberFragment"
         android:label="Add a new member"
         tools:layout="@layout/fragment_add_member" />
 
     <fragment
         android:id="@+id/nav_view_member"
-        android:name="com.via.letmein.ui.view_member.ViewMember"
+        android:name="com.via.letmein.ui.member_profile.MemberProfileFragment"
         android:label="Member details"
-        tools:layout="@layout/fragment_view_member" />
+        tools:layout="@layout/fragment_member_profile" />
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.via.letmein.ui.settings.SettingsFragment"

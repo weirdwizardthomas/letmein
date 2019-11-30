@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.entity.Member;
-import com.via.letmein.persistence.entity.Visit;
+import com.via.letmein.persistence.room.entity.Member;
+import com.via.letmein.persistence.room.entity.Visit;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

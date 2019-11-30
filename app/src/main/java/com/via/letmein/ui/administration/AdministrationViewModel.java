@@ -6,38 +6,36 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.via.letmein.persistence.entity.Member;
-import com.via.letmein.persistence.repository.MemberRepository;
+import com.via.letmein.persistence.api.response.ApiResponse;
+import com.via.letmein.persistence.pojo.HouseholdMember;
+import com.via.letmein.persistence.repository.HouseholdMemberRepository;
 
-import java.util.List;
-
+/**
+ * View model of the Administration fragment.
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class AdministrationViewModel extends AndroidViewModel {
-
-    private MemberRepository repository;
+    //todo document
+    private HouseholdMemberRepository repository;
 
     public AdministrationViewModel(@NonNull Application application) {
         super(application);
-        repository = MemberRepository.getInstance(application);
+        repository = HouseholdMemberRepository.getInstance();
     }
 
-    public void insert(Member member) {
-        repository.insert(member);
+    /**
+     * Retrieves data from the repository
+     *
+     * @param sessionId ID of the current session
+     * @return All {@see HouseholdMember} retrieved from the server.
+     */
+    public LiveData<ApiResponse> getAllHouseholdMembers(String sessionId) {
+        return repository.getAllHouseholdMembers(sessionId);
     }
 
-    public void update(Member member) {
-        repository.update(member);
+    //todo document
+    public void delete(HouseholdMember householdMember) {
+        //TODO send a delete request
     }
-
-    public void delete(Member member) {
-        repository.delete(member);
-    }
-
-    public void deleteAll() {
-        repository.deleteAll();
-    }
-
-    public LiveData<List<Member>> getAllMembers() {
-        return repository.getAllMembers();
-    }
-
 }
