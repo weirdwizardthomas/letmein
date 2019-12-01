@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,7 +19,9 @@ import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.via.letmein.R;
 import com.via.letmein.persistence.room.entity.Visit;
-import com.via.letmein.ui.home.visit.HomeVisitAdapter;
+import com.via.letmein.ui.OpenDoorOnClickListener;
+import com.via.letmein.ui.home.visit.VisitAdapter;
+import com.via.letmein.ui.live.LiveFragment;
 
 import java.util.List;
 
@@ -27,7 +30,7 @@ import java.util.List;
  *
  * @author Tomas Koristka: 291129@via.dk
  */
-public class HomeFragment extends Fragment implements HomeVisitAdapter.OnItemClickListener {
+public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickListener {
 
     //TODO add control over how many recent entries are shown - number, date range, ... ? - adjustable in settings
     private static final int REQUEST_CODE = 1;
@@ -42,14 +45,7 @@ public class HomeFragment extends Fragment implements HomeVisitAdapter.OnItemCli
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         openButton = root.findViewById(R.id.openButton);
-        openButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), EnterPinActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
-                //todo test where return goes
-            }
-        });
+        openButton.setOnClickListener(new OpenDoorOnClickListener(this));
 
         initialiseLayout(root);
 
@@ -71,7 +67,7 @@ public class HomeFragment extends Fragment implements HomeVisitAdapter.OnItemCli
      */
     private void initialiseAdapter() {
         List<Visit> dummy = homeViewModel.getData().getValue();
-        recentEntriesAdapter = new HomeVisitAdapter(dummy, this);
+        recentEntriesAdapter = new VisitAdapter(dummy, this);
     }
 
     /**
@@ -91,10 +87,14 @@ public class HomeFragment extends Fragment implements HomeVisitAdapter.OnItemCli
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_CODE:
+            case LiveFragment.PIN_REQUEST_CODE: {
                 if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
+                    Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "REQUEST SENT", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            }
         }
     }
 

@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.api.response.ApiResponse;
 
 /**
  * An activity that handles device registration and pairing with this application.
@@ -68,9 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
                         saveUsername(name);
                         //save the received password
                         savePassword(password);
+                        //set registered to true
                         setRegistered();
 
-                        //exit activity
                         finish();
                     }
 

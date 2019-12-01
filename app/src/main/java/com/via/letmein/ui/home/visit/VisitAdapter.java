@@ -15,26 +15,26 @@ import com.via.letmein.persistence.room.entity.Visit;
 
 import java.util.List;
 
-public class HomeVisitAdapter extends RecyclerView.Adapter<HomeVisitAdapter.ViewHolder> {
+public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
 
     private List<Visit> data;
     private OnItemClickListener onItemClickListener;
 
-    public HomeVisitAdapter(List<Visit> data, OnItemClickListener onItemClickListener) {
+    public VisitAdapter(List<Visit> data, OnItemClickListener onItemClickListener) {
         this.data = data;
         this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
     @Override
-    public HomeVisitAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VisitAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.card_visit_item_home, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeVisitAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VisitAdapter.ViewHolder holder, int position) {
         Visit visit = data.get(position);
         Member member = visit.getMember();
         holder.image.setImageResource(member.getImageID());

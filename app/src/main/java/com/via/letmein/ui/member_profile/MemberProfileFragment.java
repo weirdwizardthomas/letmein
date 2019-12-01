@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.response.ApiResponse;
+import com.via.letmein.persistence.api.ApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;

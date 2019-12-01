@@ -20,14 +20,13 @@ import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.api.response.ApiResponse;
+import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.ui.register.RegisterActivity;
 
 /**
  * Application's main activity.
  */
 public class MainActivity extends AppCompatActivity {
-
 
     private AppBarConfiguration appBarConfiguration;
     private MainActivityViewModel mainActivityViewModel;
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         session.setSessionId((String) apiResponse.getContent());
     }
 
-    private void login() {
+    public void login() {
         Session session = Session.getInstance(getApplicationContext());
         String username = session.getUsername();
         String password = session.getPassword();

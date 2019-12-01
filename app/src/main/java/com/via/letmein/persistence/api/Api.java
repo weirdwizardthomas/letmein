@@ -1,7 +1,5 @@
 package com.via.letmein.persistence.api;
 
-import com.via.letmein.persistence.api.response.ApiResponse;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -15,17 +13,20 @@ import retrofit2.http.Query;
  */
 public interface Api {
 
+    String PASSWORD = "password";
+    String SERIAL_ID = "serial_id";
     String SESSION_ID = "session_id";
+    String USERNAME = "username";
 
     @POST("register")
-    Call<ApiResponse> registerAdministrator(@Query("user_name") String username, @Query("serial_id") String serialNo);
+    Call<ApiResponse> registerAdministrator(@Query(USERNAME) String username, @Query(SERIAL_ID) String serialNo);
 
     @GET("users")
     Call<ApiResponse> getUserList(@Query(SESSION_ID) String sessionId);
 
     @GET("user/{username}/images")
-    Call<ApiResponse> getUserImagesList(@Path("username") String username, @Query(SESSION_ID) String sessionId);
+    Call<ApiResponse> getUserImagesList(@Path(USERNAME) String username, @Query(SESSION_ID) String sessionId);
 
     @GET("login")
-    Call<ApiResponse> loginAdministrator(@Query("user_name") String username, @Query("password") String password);
+    Call<ApiResponse> loginAdministrator(@Query(USERNAME) String username, @Query(PASSWORD) String password);
 }

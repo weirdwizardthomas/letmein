@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.fragment.app.Fragment;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.via.letmein.R;
+import com.via.letmein.ui.OpenDoorOnClickListener;
 
 /**
  * Fragment displaying the live feed from the camera and allowing remote door unlocking.
@@ -20,7 +22,7 @@ import com.via.letmein.R;
  */
 public class LiveFragment extends Fragment {
 
-    private static final int REQUEST_CODE = 1;
+    public static final int PIN_REQUEST_CODE = 1;
 
     private VideoView liveView;
     private Button openButton;
@@ -33,15 +35,7 @@ public class LiveFragment extends Fragment {
         liveView = root.findViewById(R.id.videoView);
         openButton = root.findViewById(R.id.openButton);
 
-        openButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), EnterPinActivity.class);
-                startActivityForResult(intent, REQUEST_CODE);
-                //todo test where return goes
-            }
-        });
-
+        openButton.setOnClickListener(new OpenDoorOnClickListener(this));
         return root;
     }
 
@@ -49,10 +43,14 @@ public class LiveFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_CODE:
+            case PIN_REQUEST_CODE: {
                 if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
+                    Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            }
         }
     }
 }

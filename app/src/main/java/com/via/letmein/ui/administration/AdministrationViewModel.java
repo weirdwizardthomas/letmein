@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.via.letmein.persistence.api.response.ApiResponse;
+import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.pojo.HouseholdMember;
 import com.via.letmein.persistence.repository.HouseholdMemberRepository;
 

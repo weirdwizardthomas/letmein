@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ServiceGenerator;
-import com.via.letmein.persistence.api.response.ApiResponse;
+import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.pojo.HouseholdMember;
 
 import java.util.List;
@@ -22,6 +22,10 @@ import retrofit2.Response;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class HouseholdMemberRepository {
+
+    public static final String ERROR_MISSING_REQUIRED_PARAMETERS = "missing_request_parameters";
+    public static final String ERROR_EXPIRED_SESSION_ID = "expired_session_id";
+    public static final String ERROR_DATABASE_ERROR = "database_error";
 
     /**
      * Single instance of the class.

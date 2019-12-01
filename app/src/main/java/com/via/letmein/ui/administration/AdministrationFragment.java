@@ -19,11 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.response.ApiResponse;
+import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.pojo.HouseholdMember;
+import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.List;
 
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
 import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ID_KEY;
 import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_NAME_KEY;
 import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ROLE_KEY;
@@ -65,15 +69,27 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
                     if (!response.isError() && response.getContent() != null)
                         membersAdapter.setData((List<HouseholdMember>) response.getContent());
 
-                    if (response.isError() && response.getErrorMessage() != null) {
-                        String errorMessage = response.getErrorMessage();
-                        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                    if (response.isError() && response.getErrorMessage() != null)
+                        handleError(response.getErrorMessage());
+
+                }
+            }
+
+            private void handleError(String errorMessage) {
+                switch (errorMessage) {
+                    case ERROR_EXPIRED_SESSION_ID: {
+                        ((MainActivity) getActivity()).login();
+                    }
+                    case ERROR_MISSING_REQUIRED_PARAMETERS: {
+                        Toast.makeText(getContext(), "Missing required parameters", Toast.LENGTH_SHORT).show();
+                    }
+                    case ERROR_DATABASE_ERROR: {
+                        Toast.makeText(getContext(), "Database error", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
     }
-
 
     /**
      * Initialises the fragment's layout

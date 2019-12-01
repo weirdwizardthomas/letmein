@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
+import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
-import com.via.letmein.persistence.api.response.ApiResponse;
 
 import java.util.List;
 
@@ -20,6 +20,11 @@ import retrofit2.Response;
  * Repository for the image URLs of images on the server.
  */
 public class HouseholdMemberImageRepository {
+
+    private static final String ERROR_MISSING_REQUEST_PARAMETERS = "missing_request_parameters";
+    private static final String ERROR_EXPIRED_SESSION_ID = "expired_session_id";
+    private static final String ERROR_DATABASE_ERROR = "database_error";
+
     /**
      * Single instance of the class
      */

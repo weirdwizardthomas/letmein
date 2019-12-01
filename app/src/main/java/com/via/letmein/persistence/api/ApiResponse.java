@@ -1,4 +1,4 @@
-package com.via.letmein.persistence.api.response;
+package com.via.letmein.persistence.api;
 
 import com.google.gson.annotations.Expose;
 
