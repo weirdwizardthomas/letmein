@@ -57,26 +57,23 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void register(final String name, String serialNumber) {
 
-        registerViewModel.register(name, serialNumber).observe(this, new Observer<ApiResponse>() {
-            @Override
-            public void onChanged(ApiResponse apiResponse) {
-                if (apiResponse != null) {
-                    if (!apiResponse.isError() && apiResponse.getContent() != null) {
+        registerViewModel.register(name, serialNumber).observe(this, apiResponse -> {
+            if (apiResponse != null) {
+                if (!apiResponse.isError() && apiResponse.getContent() != null) {
 
-                        String password = (String) apiResponse.getContent();
-                        //save the chosen username
-                        saveUsername(name);
-                        //save the received password
-                        savePassword(password);
-                        //set registered to true
-                        setRegistered();
+                    String password = (String) apiResponse.getContent();
+                    //save the chosen username
+                    saveUsername(name);
+                    //save the received password
+                    savePassword(password);
+                    //set registered to true
+                    setRegistered();
 
-                        finish();
-                    }
+                    finish();
+                }
 
-                    if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
-                        //TODO handle errors
-                    }
+                if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
+                    //TODO handle errors
                 }
             }
         });

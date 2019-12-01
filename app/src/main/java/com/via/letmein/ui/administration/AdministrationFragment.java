@@ -116,12 +116,9 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
      */
     private void initialiseAddMemberButton(View root) {
         addMemberButton = root.findViewById(R.id.addMemberButton);
-        addMemberButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                navController.navigate(R.id.nav_add_member);
-            }
+        addMemberButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+            navController.navigate(R.id.nav_add_member);
         });
     }
 

@@ -18,13 +18,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         Preference preference = preferenceScreen.findPreference("reset_pin");
         if (preference != null)
-            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = EnterPinActivity.getIntent(getContext(), true);
-                    startActivity(intent);
-                    return true;
-                }
+            preference.setOnPreferenceClickListener(preference1 -> {
+                Intent intent = EnterPinActivity.getIntent(getContext(), true);
+                startActivity(intent);
+                return true;
             });
 
     }

@@ -11,13 +11,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.ApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,27 +67,23 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         name.setText(username);
         this.role.setText(role);
 
-        memberProfileViewModel.getImagePaths(username, "").observe(this, new Observer<ApiResponse>() {
+        memberProfileViewModel.getImagePaths(username, "").observe(this, response -> {
+            if (response != null) {
 
-            @Override
-            public void onChanged(ApiResponse response) {
-                if (response != null) {
+                if (!response.isError() && response.getContent() != null) {
+                    List<String> dummy = (List<String>) response.getContent();
+                    List<ImageContainer> tmp = new ArrayList<>();
+                    for (String string : dummy)
+                        tmp.add(new ImageContainer(string));
 
-                    if (!response.isError() && response.getContent() != null) {
-                        List<String> dummy = (List<String>) response.getContent();
-                        List<ImageContainer> tmp = new ArrayList<>();
-                        for (String string : dummy)
-                            tmp.add(new ImageContainer(string));
-
-                        imagesAdapter.setData(tmp);
-                        //todo fetch images
-                    }
-                    if (response.isError() && response.getErrorMessage() != null) {
-                        String errorMessage = response.getErrorMessage();
-                        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-                    }
-
+                    imagesAdapter.setData(tmp);
+                    //todo fetch images
                 }
+                if (response.isError() && response.getErrorMessage() != null) {
+                    String errorMessage = response.getErrorMessage();
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

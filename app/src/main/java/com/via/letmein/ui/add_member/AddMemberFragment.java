@@ -103,28 +103,22 @@ public class AddMemberFragment extends Fragment {
      * Initialises all the listeners.
      */
     private void initialiseListeners() {
-        onAddCredentialClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!countdownInProgress)
-                    startProgressBar(10);
-                //TODO send a request
-            }
+        onAddCredentialClickListener = v -> {
+            if (!countdownInProgress)
+                startProgressBar(10);
+            //TODO send a request
         };
 
-        onSaveClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO send a request
-                //TODO display a notification
-                String name = nameInput.getText().toString();
-                String role = roleSpinner.getSelectedItem().toString();
-                int imageID = R.mipmap.profile_icon_placeholder;
+        onSaveClickListener = v -> {
+            //TODO send a request
+            //TODO display a notification
+            String name = nameInput.getText().toString();
+            String role = roleSpinner.getSelectedItem().toString();
+            int imageID = R.mipmap.profile_icon_placeholder;
 
-                addMemberViewModel.insert(new Member(name, role, imageID));
-                Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
-            }
+            addMemberViewModel.insert(new Member(name, role, imageID));
+            Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
         };
     }
 
@@ -160,7 +154,8 @@ public class AddMemberFragment extends Fragment {
 
     /**
      * Commences & displays the countdown.
-     * @param seconds
+     *
+     * @param seconds Number of seconds to count down to 0.
      */
     private void startProgressBar(final int seconds) {
 

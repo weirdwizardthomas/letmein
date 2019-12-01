@@ -58,18 +58,15 @@ public class MainActivity extends AppCompatActivity {
         String username = session.getUsername();
         String password = session.getPassword();
 
-        mainActivityViewModel.getSessionID(username, password).observe(this, new Observer<ApiResponse>() {
-            @Override
-            public void onChanged(ApiResponse apiResponse) {
-                if (apiResponse != null) {
-                    if (!apiResponse.isError() && apiResponse.getContent() != null) {
-                        saveSessionID(apiResponse);
-                        Toast.makeText(getApplicationContext(), "Logged on", Toast.LENGTH_SHORT).show();
-                    }
+        mainActivityViewModel.getSessionID(username, password).observe(this, apiResponse -> {
+            if (apiResponse != null) {
+                if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                    saveSessionID(apiResponse);
+                    Toast.makeText(getApplicationContext(), "Logged on", Toast.LENGTH_SHORT).show();
+                }
 
-                    if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
-                        //TODO handle errors
-                    }
+                if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
+                    //TODO handle errors
                 }
             }
         });
