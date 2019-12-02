@@ -14,6 +14,8 @@ public class Session {
     private static final String SESSION = "session";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
+    private static final String IP_ADDRESS = "ip_address";
+    private static final String REGISTERED_KEY = "registered";
 
     /**
      * Saving and loading of the session id and username.
@@ -65,4 +67,19 @@ public class Session {
         return preferences.getString(PASSWORD, null);
     }
 
+    public void setIpAddress(String ipAddress) {
+        preferences.edit().putString(IP_ADDRESS, ipAddress).apply();
+    }
+
+    public String getIpAddress() {
+        return preferences.getString(IP_ADDRESS, null);
+    }
+
+    public void setRegistered(boolean registered) {
+        preferences.edit().putBoolean(REGISTERED_KEY, registered).apply();
+    }
+
+    public boolean isRegistered() {
+        return preferences.getBoolean(REGISTERED_KEY, false);
+    }
 }
