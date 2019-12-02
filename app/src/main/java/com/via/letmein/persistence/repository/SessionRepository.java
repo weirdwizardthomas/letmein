@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
+import com.via.letmein.persistence.pojo.request.LoginJson;
+import com.via.letmein.persistence.pojo.request.RegisterJson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,13 +44,13 @@ public class SessionRepository {
         return instance;
     }
 
-    public LiveData<ApiResponse> getRegistration(String username, String serialNumber) {
-        refresh(api.registerAdministrator(username, serialNumber), registrationData);
+    public LiveData<ApiResponse> register(String username, String serialNumber) {
+        refresh(api.registerAdministrator(new RegisterJson(username, serialNumber)), registrationData);
         return registrationData;
     }
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {
-        refresh(api.loginAdministrator(username, password), loginData);
+        refresh(api.loginAdministrator(new LoginJson(username, password)), loginData);
         return loginData;
     }
 
@@ -70,14 +72,12 @@ public class SessionRepository {
                         dummy.setContent(content);
                     }
 
-                    //todo refresh the other one you retard
                     target.setValue(dummy);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
-
             }
         });
 

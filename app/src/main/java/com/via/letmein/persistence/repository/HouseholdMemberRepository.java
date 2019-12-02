@@ -6,9 +6,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
-import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.ApiResponse;
-import com.via.letmein.persistence.pojo.HouseholdMember;
+import com.via.letmein.persistence.api.ServiceGenerator;
+import com.via.letmein.persistence.pojo.request.SessionIdJson;
+import com.via.letmein.persistence.pojo.response.HouseholdMember;
 
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class HouseholdMemberRepository {
      */
     private void refreshUsers(String sessionId) {
 
-        Call<ApiResponse> call = api.getUserList(sessionId);
+        Call<ApiResponse> call = api.getUserList(new SessionIdJson(sessionId));
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override

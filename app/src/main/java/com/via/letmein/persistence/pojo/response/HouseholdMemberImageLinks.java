@@ -1,4 +1,4 @@
-package com.via.letmein.persistence.pojo;
+package com.via.letmein.persistence.pojo.response;
 
 import java.util.List;
 

@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
+import com.via.letmein.persistence.pojo.request.UserListJson;
 
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class HouseholdMemberImageRepository {
      */
     private void refresh(String username, String sessionId) {
 
-        Call<ApiResponse> call = api.getUserImagesList(username, sessionId);
+        Call<ApiResponse> call = api.getUserImagesList(new UserListJson(username, sessionId));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

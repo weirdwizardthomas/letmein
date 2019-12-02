@@ -1,10 +1,14 @@
 package com.via.letmein.persistence.api;
 
+import com.via.letmein.persistence.pojo.request.LoginJson;
+import com.via.letmein.persistence.pojo.request.RegisterJson;
+import com.via.letmein.persistence.pojo.request.SessionIdJson;
+import com.via.letmein.persistence.pojo.request.UserListJson;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * An interface for Retrofit to implement
@@ -13,20 +17,15 @@ import retrofit2.http.Query;
  */
 public interface Api {
 
-    String PASSWORD = "password";
-    String SERIAL_ID = "serial_id";
-    String SESSION_ID = "session_id";
-    String USERNAME = "username";
-
     @POST("register")
-    Call<ApiResponse> registerAdministrator(@Query(USERNAME) String username, @Query(SERIAL_ID) String serialNo);
+    Call<ApiResponse> registerAdministrator(@Body RegisterJson registerJson);
 
     @GET("users")
-    Call<ApiResponse> getUserList(@Query(SESSION_ID) String sessionId);
+    Call<ApiResponse> getUserList(@Body SessionIdJson sessionIdJson);
 
     @GET("user/{username}/images")
-    Call<ApiResponse> getUserImagesList(@Path(USERNAME) String username, @Query(SESSION_ID) String sessionId);
+    Call<ApiResponse> getUserImagesList(@Body UserListJson userListJson);
 
     @GET("login")
-    Call<ApiResponse> loginAdministrator(@Query(USERNAME) String username, @Query(PASSWORD) String password);
+    Call<ApiResponse> loginAdministrator(@Body LoginJson loginJson);
 }
