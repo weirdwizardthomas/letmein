@@ -18,6 +18,6 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
-        return repository.getRegistration(username, serialNumber);
+        return repository.register(username, serialNumber);
     }
 }

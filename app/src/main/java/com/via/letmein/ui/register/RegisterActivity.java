@@ -2,16 +2,15 @@ package com.via.letmein.ui.register;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.ApiResponse;
+import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
 
 /**
@@ -33,17 +32,19 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        //find the ip
+        new IPListenAsyncTask(this).execute();
+
         initialiseLayout();
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = username.getText().toString();
-                String serial = serialNumber.getText().toString();
+        //todo add a textview with the ip address
 
+        registerButton.setOnClickListener(v -> {
+            String name = username.getText().toString();
+            String serial = serialNumber.getText().toString();
+            if (!name.isEmpty()) //TODO show a prompt for non empty username
                 register(name, serial);
-
-            }
         });
 
 
@@ -53,10 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
         username = findViewById(R.id.nameInput);
         serialNumber = findViewById(R.id.serialNumberInput);
         registerButton = findViewById(R.id.registerButton);
+        registerButton.setEnabled(false);
     }
 
     public void register(final String name, String serialNumber) {
-
         registerViewModel.register(name, serialNumber).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
@@ -89,10 +90,20 @@ public class RegisterActivity extends AppCompatActivity {
         session.setPassword(password);
     }
 
-
     private void setRegistered() {
-        SharedPreferences preferences = getSharedPreferences(REGISTRATION_FILE, MODE_PRIVATE);
-        preferences.edit().putBoolean(REGISTERED_KEY, true).apply();
+        Session session = Session.getInstance(getApplicationContext());
+        session.setRegistered(true);
     }
 
+    public void onIpReceived(String s) {
+        saveIPAddress(s);
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    private void saveIPAddress(String ipAddress) {
+        SharedPreferences preferences = getSharedPreferences(REGISTRATION_FILE, MODE_PRIVATE);
+        preferences.edit().putString("ip_address", ipAddress).apply();
+        registerButton.setEnabled(true);
+        ServiceGenerator.BASE_URL = ipAddress;
+    }
 }
