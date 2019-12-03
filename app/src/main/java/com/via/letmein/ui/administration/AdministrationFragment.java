@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.ApiResponse;
-import com.via.letmein.persistence.api.model.HouseholdMember;
+import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.List;

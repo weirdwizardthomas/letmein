@@ -9,7 +9,7 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.api.model.HouseholdMember;
+import com.via.letmein.persistence.model.HouseholdMember;
 
 import java.util.List;
 

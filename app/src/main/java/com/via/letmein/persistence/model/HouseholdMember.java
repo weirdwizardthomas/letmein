@@ -1,4 +1,4 @@
-package com.via.letmein.persistence.api.pojo.response;
+package com.via.letmein.persistence.model;
 
 /**
  * A POJO class representing the household member retrieved from the server.
