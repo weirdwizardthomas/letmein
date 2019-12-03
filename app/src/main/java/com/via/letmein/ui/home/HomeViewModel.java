@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.room.entity.Member;
 import com.via.letmein.persistence.room.entity.Visit;
 

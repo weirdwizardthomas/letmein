@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,13 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.via.letmein.R;
-import com.via.letmein.persistence.room.entity.Visit;
+import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.OpenDoorOnClickListener;
 import com.via.letmein.ui.home.visit.VisitAdapter;
-
-import java.util.List;
 
 /**
  * Fragment showing brief overlook of the app.
@@ -37,7 +35,8 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
     private HomeViewModel homeViewModel;
     private RecyclerView recentEntriesRecyclerView;
     private VisitAdapter recentEntriesAdapter;
-    private ExtendedFloatingActionButton openButton;
+    private Button openButton;
+    private TextView usernameTextView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -66,6 +65,8 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
         recentEntriesRecyclerView.setHasFixedSize(true);
         recentEntriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recentEntriesRecyclerView.setAdapter(recentEntriesAdapter);
+        usernameTextView = root.findViewById(R.id.username);
+        usernameTextView.setText(Session.getInstance(getContext()).getUsername());
     }
 
 
