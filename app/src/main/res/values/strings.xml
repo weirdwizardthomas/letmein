@@ -22,7 +22,7 @@
     <string name="labelIpAddressFound">Found IP Address:</string>
     <string name="labelWelcome">Welcome</string>
     <string name="labelOpenDoor">Open door</string>
-    <string name="labelRegisterHeader">Pair with the product</string>
+    <string name="labelRegisterHeader">Pair with the device</string>
     <string name="labelName">Name</string>
     <string name="labelAdminName">Administrator\'s name</string>
     <string name="labelSerialNo">Serial number</string>
@@ -42,6 +42,7 @@
     <string name="selectRangeToShow">Select range to show:</string>
     <string name="labelUserPortrait">userPortrait</string>
     <string name="labelCheckbox">checkbox</string>
+    <string name="placeholderIpAddress">/10.0.0.1</string>
 
 
 </resources>

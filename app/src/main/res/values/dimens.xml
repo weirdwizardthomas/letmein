@@ -2,4 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="floatingActonButtonOffset">20dp</dimen>
     <dimen name="fragmentBodyPadding">5dp</dimen>
+    <dimen name="viewPadding">5dp</dimen>
+    <dimen name="elevation">4dp</dimen>
 </resources>

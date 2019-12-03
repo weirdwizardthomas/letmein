@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="@dimen/fragmentBodyPadding"
     tools:context=".ui.register.RegisterActivity">
 
     <TextView
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/viewPadding"
         android:text="@string/labelRegisterHeader"
-        android:textSize="40sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/viewPadding"
         android:ems="10"
         android:hint="@string/labelAdminName"
         android:inputType="textPersonName"
@@ -53,7 +53,7 @@
         android:id="@+id/serialIdTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/viewPadding"
         android:ems="10"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
@@ -75,18 +75,19 @@
         android:id="@+id/ipAddressTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:text="@string/placeholderIpAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/serialIdTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTooShortTextView" />
 
     <TextView
         android:id="@+id/nameTooShortTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="@string/username_too_short"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ipAddressTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/serialIdTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
