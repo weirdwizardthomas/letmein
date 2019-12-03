@@ -86,4 +86,20 @@ public class SessionRepository {
 
 
     }
+
+    public void setIpAddress(String ipAddress) {
+        session.setIpAddress(ipAddress);
+    }
+
+    public void setPassword(String password) {
+        session.setPassword(password);
+    }
+
+    public void setRegistered() {
+        session.setRegistered(true);
+    }
+
+    public void setUsername(String username) {
+        session.setUsername(username);
+    }
 }
