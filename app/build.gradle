@@ -62,4 +62,7 @@ dependencies {
     //extended fab
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
+    //vlc
+    implementation 'de.mrmaffen:vlc-android-sdk:3.0.0'
+
 }

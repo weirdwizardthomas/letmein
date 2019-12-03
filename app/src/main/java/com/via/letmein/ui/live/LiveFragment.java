@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.via.letmein.R;
-import com.via.letmein.ui.OpenDoorOnClickListener;
+
+import org.videolan.libvlc.LibVLC;
 
 /**
  * Fragment displaying the live feed from the camera and allowing remote door unlocking.
