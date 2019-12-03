@@ -80,10 +80,10 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
                         ((MainActivity) getActivity()).login();
                     }
                     case ERROR_MISSING_REQUIRED_PARAMETERS: {
-                        Toast.makeText(getContext(), "Missing required parameters", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.missingParameters), Toast.LENGTH_SHORT).show();
                     }
                     case ERROR_DATABASE_ERROR: {
-                        Toast.makeText(getContext(), "Database error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

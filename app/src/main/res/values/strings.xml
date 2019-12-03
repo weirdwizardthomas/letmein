@@ -15,5 +15,9 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="databaseError">Database error. Please try again later</string>
+    <string name="adminAlreadyExists">Administrator already exists.</string>
+    <string name="wrongSerialId">Wrong serial ID.</string>
+    <string name="nameInUse">Name already in use.</string>
+    <string name="missingParameters">Missing required parameters</string>
 
 </resources>
