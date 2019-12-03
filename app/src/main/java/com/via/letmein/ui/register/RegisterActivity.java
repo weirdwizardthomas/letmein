@@ -141,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setEnabled(true);
         //show ip address
         ipAddressTextView.setVisibility(View.VISIBLE);
-        ipAddressTextView.setText("Found IP Address:" + ipAddress);
+        ipAddressTextView.setText(getString(R.string.ipAddressFound) + ipAddress);
     }
 
 

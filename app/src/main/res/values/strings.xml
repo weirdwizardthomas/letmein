@@ -19,5 +19,6 @@
     <string name="wrongSerialId">Wrong serial ID.</string>
     <string name="nameInUse">Name already in use.</string>
     <string name="missingParameters">Missing required parameters</string>
+    <string name="ipAddressFound">Found IP Address:</string>
 
 </resources>
