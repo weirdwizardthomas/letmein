@@ -22,14 +22,14 @@
         android:id="@+id/nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/nameInput"
+        android:labelFor="@id/nameTextView"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/nameInput"
-        app:layout_constraintEnd_toStartOf="@+id/nameInput"
-        app:layout_constraintTop_toTopOf="@+id/nameInput" />
+        app:layout_constraintBottom_toBottomOf="@+id/nameTextView"
+        app:layout_constraintEnd_toStartOf="@+id/nameTextView"
+        app:layout_constraintTop_toTopOf="@+id/nameTextView" />
 
     <EditText
-        android:id="@+id/nameInput"
+        android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -44,14 +44,14 @@
         android:id="@+id/serialNumberLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/serialNumberInput"
+        android:labelFor="@id/serialIdTextView"
         android:text="Serial number"
-        app:layout_constraintBottom_toBottomOf="@+id/serialNumberInput"
-        app:layout_constraintEnd_toStartOf="@+id/serialNumberInput"
-        app:layout_constraintTop_toTopOf="@+id/serialNumberInput" />
+        app:layout_constraintBottom_toBottomOf="@+id/serialIdTextView"
+        app:layout_constraintEnd_toStartOf="@+id/serialIdTextView"
+        app:layout_constraintTop_toTopOf="@+id/serialIdTextView" />
 
     <EditText
-        android:id="@+id/serialNumberInput"
+        android:id="@+id/serialIdTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -60,7 +60,7 @@
         android:text="123456789REAC0987654321"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
     <Button
         android:id="@+id/registerButton"
@@ -70,5 +70,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ipAddressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/serialIdTextView" />
+
+    <TextView
+        android:id="@+id/nameTooShortTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username too short. Please pick a name with at least 5 characters."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ipAddressTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

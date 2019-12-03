@@ -21,4 +21,24 @@ public class RegisterViewModel extends AndroidViewModel {
     public LiveData<ApiResponse> register(String username, String serialNumber) {
         return repository.register(username, serialNumber);
     }
+
+    public RegisterViewModel setIpAddress(String ipAddress) {
+        repository.setIpAddress(ipAddress);
+        return this;
+    }
+
+    public RegisterViewModel setPassword(String password) {
+        repository.setPassword(password);
+        return this;
+    }
+
+    public RegisterViewModel setRegistered() {
+        repository.setRegistered();
+        return this;
+    }
+
+    public RegisterViewModel setUsername(String username) {
+        repository.setUsername(username);
+        return this;
+    }
 }

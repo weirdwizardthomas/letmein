@@ -78,7 +78,7 @@ public class AddMemberFragment extends Fragment {
      * @param root Parent view.
      */
     private void initaliseInput(View root) {
-        nameInput = root.findViewById(R.id.nameInput);
+        nameInput = root.findViewById(R.id.nameTextView);
         roleSpinner = root.findViewById(R.id.roleSpinner);
         roleSpinner.setAdapter(roleSpinnerAdapter);
     }

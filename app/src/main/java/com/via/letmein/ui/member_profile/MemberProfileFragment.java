@@ -84,8 +84,16 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         this.role.setText(role);
 
 
+        profilePicture = root.findViewById(R.id.portrait);
 
-        return root;
+        imageGallery = root.findViewById(R.id.recentEntries);
+        imageGallery.setHasFixedSize(true);
+        imageGallery.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        imagesAdapter = new ImageAdapter(this);
+        imageGallery.setAdapter(imagesAdapter);
+
+        profilePicture.setVisibility(View.GONE);
+        //profilePicture.setImageResource(extras != null ? extras.getInt(BUNDLE_IMAGEID_KEY) : R.mipmap.profile_icon_placeholder);
     }
 
     @Override

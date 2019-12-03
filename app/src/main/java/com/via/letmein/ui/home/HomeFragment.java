@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
 
     private HomeViewModel homeViewModel;
     private RecyclerView recentEntriesRecyclerView;
-    private RecyclerView.Adapter recentEntriesAdapter;
+    private VisitAdapter recentEntriesAdapter;
     private ExtendedFloatingActionButton openButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,26 +59,11 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
      * @param root Parent view
      */
     private void initialiseLayout(View root) {
-        initialiseAdapter();
-        initialiseRecyclerView(root);
-    }
-
-    /**
-     * Initialises the adapter.
-     */
-    private void initialiseAdapter() {
-        List<Visit> dummy = homeViewModel.getData().getValue();
-        recentEntriesAdapter = new VisitAdapter(dummy, this);
-    }
-
-    /**
-     * Initialises the recycler view.
-     *
-     * @param root Parent view
-     */
-    private void initialiseRecyclerView(final View root) {
-        recentEntriesRecyclerView = root.findViewById(R.id.imageGallery);
-        recentEntriesRecyclerView.hasFixedSize();
+        openButton = root.findViewById(R.id.openButton);
+        openButton.setOnClickListener(new OpenDoorOnClickListener(this));
+        recentEntriesAdapter = new VisitAdapter(homeViewModel.getData().getValue(), this);
+        recentEntriesRecyclerView = root.findViewById(R.id.recentEntries);
+        recentEntriesRecyclerView.setHasFixedSize(true);
         recentEntriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recentEntriesRecyclerView.setAdapter(recentEntriesAdapter);
     }

@@ -1,17 +1,26 @@
 package com.via.letmein.ui.register;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.ServiceGenerator;
-import com.via.letmein.persistence.api.Session;
+
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_ADMIN_ALREADY_EXISTS;
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_NAME_ALREADY_IN_USE;
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_SHORT_USERNAME;
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRONG_SERIAL_ID;
 
 /**
  * An activity that handles device registration and pairing with this application.
@@ -19,13 +28,13 @@ import com.via.letmein.persistence.api.Session;
 //todo document
 public class RegisterActivity extends AppCompatActivity {
 
-    public static final String REGISTERED_KEY = "registered";
-    public static final String REGISTRATION_FILE = "registration";
-
-    private EditText username;
-    private EditText serialNumber;
-    private Button registerButton;
     private RegisterViewModel registerViewModel;
+
+    private EditText usernameTextView;
+    private EditText serialIdTextView;
+    private Button registerButton;
+    private TextView ipAddressTextView;
+    private TextView nameTooShortTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,28 +42,50 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //find the ip
-        new IPListenAsyncTask(this).execute();
-
         initialiseLayout();
-
-        //todo add a textview with the ip address
-
-        registerButton.setOnClickListener(v -> {
-            String name = username.getText().toString();
-            String serial = serialNumber.getText().toString();
-            if (!name.isEmpty()) //TODO show a prompt for non empty username
-                register(name, serial);
-        });
-
+        listenForIp();
 
     }
 
+    private void listenForIp() {
+        new IPListenAsyncTask(this).execute();
+    }
+
     private void initialiseLayout() {
-        username = findViewById(R.id.nameInput);
-        serialNumber = findViewById(R.id.serialNumberInput);
+        usernameTextView = findViewById(R.id.nameTextView);
+        usernameTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (nameTooShortTextView.getVisibility() == View.VISIBLE)
+                    nameTooShortTextView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        serialIdTextView = findViewById(R.id.serialIdTextView);
+
+        ipAddressTextView = findViewById(R.id.ipAddressTextView);
+        ipAddressTextView.setVisibility(View.INVISIBLE);
+
+        nameTooShortTextView = findViewById(R.id.nameTooShortTextView);
+        nameTooShortTextView.setVisibility(View.INVISIBLE);
+
         registerButton = findViewById(R.id.registerButton);
         registerButton.setEnabled(false);
+        registerButton.setOnClickListener(v -> {
+            String name = usernameTextView.getText().toString();
+            String serial = serialIdTextView.getText().toString();
+            if (!name.isEmpty()) //TODO show a prompt for non empty usernameTextView
+                register(name, serial);
+        });
     }
 
     public void register(final String name, String serialNumber) {
@@ -63,47 +94,55 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
 
                     String password = (String) apiResponse.getContent();
-                    //save the chosen username
-                    saveUsername(name);
-                    //save the received password
-                    savePassword(password);
-                    //set registered to true
-                    setRegistered();
+
+                    //save the credentials
+                    registerViewModel
+                            .setUsername(name) //save the chosen usernameTextView
+                            .setPassword(password) //save the received password
+                            .setRegistered(); //set registered to true
 
                     finish();
                 }
 
-                if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
-                    //TODO handle errors
-                }
+                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                    handleError(apiResponse.getErrorMessage());
             }
         });
     }
 
-    private void saveUsername(String username) {
-        Session session = Session.getInstance(getApplicationContext());
-        session.setUsername(username);
+    private void handleError(String errorMessage) {
+
+        switch (errorMessage) {
+            case ERROR_SHORT_USERNAME: {
+                usernameTextView.setVisibility(View.VISIBLE);
+            }
+            case ERROR_MISSING_REQUIRED_PARAMETERS: {
+                Log.i("RegisterActivity", "Missing required parameters");
+            }
+            case ERROR_DATABASE_ERROR: {
+                Toast.makeText(this, getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
+            }
+            case ERROR_ADMIN_ALREADY_EXISTS: {
+                Toast.makeText(this, "Administrator already exists.", Toast.LENGTH_SHORT).show();
+            }
+            case ERROR_WRONG_SERIAL_ID: {
+                Toast.makeText(this, "Wrong serial ID.", Toast.LENGTH_SHORT).show();
+            }
+            case ERROR_NAME_ALREADY_IN_USE: {
+                Toast.makeText(this, "Name already in use.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
-    private void savePassword(String password) {
-        Session session = Session.getInstance(getApplicationContext());
-        session.setPassword(password);
-    }
-
-    private void setRegistered() {
-        Session session = Session.getInstance(getApplicationContext());
-        session.setRegistered(true);
-    }
-
-    public void onIpReceived(String s) {
-        saveIPAddress(s);
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
-    private void saveIPAddress(String ipAddress) {
-        SharedPreferences preferences = getSharedPreferences(REGISTRATION_FILE, MODE_PRIVATE);
-        preferences.edit().putString("ip_address", ipAddress).apply();
+    public void onIpReceived(String ipAddress) {
+        //save the ip address
+        registerViewModel.setIpAddress(ipAddress);
+        //allow button clicking
         registerButton.setEnabled(true);
-        ServiceGenerator.BASE_URL = ipAddress;
+        //show ip address
+        ipAddressTextView.setVisibility(View.VISIBLE);
+        ipAddressTextView.setText("Found IP Address:" + ipAddress);
     }
+
+
 }
