@@ -23,6 +23,7 @@ import com.via.letmein.R;
 import com.via.letmein.persistence.room.entity.Member;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Fragment for creation of a new member record.
@@ -86,7 +87,7 @@ public class AddMemberFragment extends Fragment {
     /**
      * Initialises the progress bar that gets shown upon clicking {@see AddMemberFragment#addFingerprintButton} or {@see AddMemberFragment#AddPictureButton}.
      *
-     * @param root
+     * @param root Parent view
      */
     private void initialiseProgressBar(View root) {
         countdownInProgress = false;
@@ -117,7 +118,7 @@ public class AddMemberFragment extends Fragment {
 
             addMemberViewModel.insert(new Member(name, role, imageID));
             Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
+            Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
         };
     }
 
@@ -146,7 +147,7 @@ public class AddMemberFragment extends Fragment {
     private void initaliseRoleAdapter() {
         List<String> roles = addMemberViewModel.getRoles().getValue();
 
-        roleSpinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, roles);
+        roleSpinnerAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, Objects.requireNonNull(roles));
         roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 

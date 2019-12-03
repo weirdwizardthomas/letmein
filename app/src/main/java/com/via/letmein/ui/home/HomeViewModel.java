@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.room.entity.Member;
 import com.via.letmein.persistence.room.entity.Visit;
 
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Visit>> data;
+    private final MutableLiveData<List<Visit>> data;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);

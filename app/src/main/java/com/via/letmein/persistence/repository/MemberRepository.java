@@ -17,8 +17,8 @@ import java.util.List;
 public class    MemberRepository {
 
     private static MemberRepository instance;
-    private MemberDAO memberDAO;
-    private LiveData<List<Member>> allMembers;
+    private final MemberDAO memberDAO;
+    private final LiveData<List<Member>> allMembers;
 
     private MemberRepository(Application application) {
         Database database = Database.getInstance(application);
@@ -54,7 +54,7 @@ public class    MemberRepository {
 
     //TODO rework
     private static class InsertMemberAsyncTask extends AsyncTask<Member, Void, Void> {
-        private MemberDAO memberDAO;
+        private final MemberDAO memberDAO;
 
         public InsertMemberAsyncTask(MemberDAO memberDAO) {
             this.memberDAO = memberDAO;
@@ -68,7 +68,7 @@ public class    MemberRepository {
     }
 
     private static class UpdateMemberAsyncTask extends AsyncTask<Member, Void, Void> {
-        private MemberDAO memberDAO;
+        private final MemberDAO memberDAO;
 
         public UpdateMemberAsyncTask(MemberDAO memberDAO) {
             this.memberDAO = memberDAO;
@@ -82,7 +82,7 @@ public class    MemberRepository {
     }
 
     private static class DeleteMemberAsyncTask extends AsyncTask<Member, Void, Void> {
-        private MemberDAO memberDAO;
+        private final MemberDAO memberDAO;
 
         public DeleteMemberAsyncTask(MemberDAO memberDAO) {
             this.memberDAO = memberDAO;
@@ -96,7 +96,7 @@ public class    MemberRepository {
     }
 
     private static class DeleteAllMembersAsyncTask extends AsyncTask<Void, Void, Void> {
-        private MemberDAO memberDAO;
+        private final MemberDAO memberDAO;
 
         public DeleteAllMembersAsyncTask(MemberDAO memberDAO) {
             this.memberDAO = memberDAO;

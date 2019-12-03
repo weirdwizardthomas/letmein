@@ -9,10 +9,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
-    private static final String TAG = "IPlisten async";
+    private static final String TAG = "IPListen async";
     public static final int PORT = 8085;
     public static final String PAYLOAD = "REAC";
-    private RegisterActivity registerActivity;
+    private final RegisterActivity registerActivity;
 
     public IPListenAsyncTask(RegisterActivity registerActivity) {
         this.registerActivity = registerActivity;
@@ -23,7 +23,7 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
         DatagramSocket socket;
 
         try {
-            //Keep a socket open to listen to all the UDP trafic that is destined for this port
+            //Keep a socket open to listen to all the UDP traffic that is destined for this port
             socket = new DatagramSocket(PORT, InetAddress.getByName("0.0.0.0"));
             socket.setBroadcast(true);
             Log.i(TAG, "starting");
@@ -31,8 +31,8 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
             while (true) {
                 Log.i(TAG, "listening");
                 //Receive a packet
-                byte[] recvBuf = new byte[2048];
-                DatagramPacket packet = new DatagramPacket(recvBuf, recvBuf.length);
+                byte[] receiveBuffer = new byte[2048];
+                DatagramPacket packet = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 socket.receive(packet);
                 //Packet received
                 String payload = new String(packet.getData()).trim();

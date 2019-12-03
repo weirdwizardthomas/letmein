@@ -18,7 +18,7 @@ import com.via.letmein.persistence.repository.HouseholdMemberRepository;
  */
 public class AdministrationViewModel extends AndroidViewModel {
     //todo document
-    private HouseholdMemberRepository repository;
+    private final HouseholdMemberRepository repository;
 
     public AdministrationViewModel(@NonNull Application application) {
         super(application);

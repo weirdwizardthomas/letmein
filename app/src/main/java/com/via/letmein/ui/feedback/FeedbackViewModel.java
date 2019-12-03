@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class FeedbackViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public FeedbackViewModel() {
         mText = new MutableLiveData<>();

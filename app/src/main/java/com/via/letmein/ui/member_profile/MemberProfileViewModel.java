@@ -11,7 +11,7 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.HouseholdMemberImageRepository;
 
 public class MemberProfileViewModel extends AndroidViewModel {
-    private HouseholdMemberImageRepository repository;
+    private final HouseholdMemberImageRepository repository;
 
     public MemberProfileViewModel(@NonNull Application application) {
         super(application);

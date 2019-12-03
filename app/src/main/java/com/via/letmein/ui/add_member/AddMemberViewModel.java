@@ -15,8 +15,8 @@ import java.util.List;
 
 public class AddMemberViewModel extends AndroidViewModel {
 
-    private MemberRepository repository;
-    private MutableLiveData<List<String>> roles;
+    private final MemberRepository repository;
+    private final MutableLiveData<List<String>> roles;
 
     public AddMemberViewModel(@NonNull Application application) {
         super(application);

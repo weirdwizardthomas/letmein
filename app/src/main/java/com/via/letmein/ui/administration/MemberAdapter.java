@@ -18,7 +18,7 @@ import java.util.List;
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
     private List<HouseholdMember> data;
-    private OnItemClickListener onItemClickListener;
+    private final OnItemClickListener onItemClickListener;
 
     MemberAdapter(OnItemClickListener onItemClickListener) {
         this.data = new ArrayList<>();
@@ -57,8 +57,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView portrait;
-        TextView name;
+        final ImageView portrait;
+        final TextView name;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

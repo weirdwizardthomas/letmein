@@ -38,7 +38,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
 
 
     //TODO add edit option (in the toolbar)
-    //TODO add recent entries as a recyclerview list
+    //TODO add recent entries as a recycler view list
 
     @Nullable
     @Override

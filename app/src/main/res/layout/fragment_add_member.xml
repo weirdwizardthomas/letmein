@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/nameTextView"
-        android:text="Name"
+        android:text="@string/labelName"
         app:layout_constraintBottom_toBottomOf="@+id/nameTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nameTextView" />
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="100dp"
+        android:autofillHints=""
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/roleLabel"
-        android:text="Role"
+        android:text="@string/labelRole"
         app:layout_constraintBottom_toBottomOf="@+id/roleSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/roleSpinner" />
@@ -54,7 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Add picture"
+        android:text="@string/labelAddPicture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/roleLabel"
         app:layout_constraintTop_toBottomOf="@+id/roleSpinner" />
@@ -64,7 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Add fingerprint"
+        android:text="@string/labelAddFingerprint"
         app:layout_constraintEnd_toEndOf="@+id/addPictureButton"
         app:layout_constraintStart_toStartOf="@+id/addPictureButton"
         app:layout_constraintTop_toBottomOf="@+id/addPictureButton" />

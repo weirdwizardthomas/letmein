@@ -5,26 +5,25 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.via.letmein.R;
-import com.via.letmein.persistence.room.entity.Member;
 import com.via.letmein.persistence.room.entity.Visit;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class VisitRepository {
 
     private static VisitRepository instance;
-    private MutableLiveData<List<Visit>> allVisits;
+    private final MutableLiveData<List<Visit>> allVisits;
 
     private VisitRepository(Application application) {
 
-        int dayinmili = 86400000;
+        int dayInMiliseconds = 86400000;
         Timestamp timestamp1 = new Timestamp(System.currentTimeMillis());
-        Timestamp timestamp2 = new Timestamp(System.currentTimeMillis() - dayinmili);
-        Timestamp timestamp3 = new Timestamp(System.currentTimeMillis() - dayinmili * 2);
-        Timestamp timestamp4 = new Timestamp(System.currentTimeMillis() + dayinmili);
+        Timestamp timestamp2 = new Timestamp(System.currentTimeMillis() - dayInMiliseconds);
+        Timestamp timestamp3 = new Timestamp(System.currentTimeMillis() - dayInMiliseconds * 2);
+        Timestamp timestamp4 = new Timestamp(System.currentTimeMillis() + dayInMiliseconds);
 
         List<Visit> dummy = new ArrayList<>();
       /*  dummy.add(new Visit(new Member("Tomas Koristka", "Postman", R.mipmap.profile_icon_placeholder), timestamp1));
@@ -51,7 +50,7 @@ public class VisitRepository {
 
     public void insert(Visit visit) {
         List<Visit> dummy = allVisits.getValue();
-        dummy.add(visit);
+        Objects.requireNonNull(dummy).add(visit);
         allVisits.setValue(dummy);
     }
 
@@ -61,13 +60,13 @@ public class VisitRepository {
 
     public void delete(Visit visit) {
         List<Visit> dummy = allVisits.getValue();
-        dummy.remove(visit);
+        Objects.requireNonNull(dummy).remove(visit);
         allVisits.setValue(dummy);
     }
 
     public void deleteAll() {
         List<Visit> dummy = allVisits.getValue();
-        dummy.clear();
+        Objects.requireNonNull(dummy).clear();
         allVisits.setValue(dummy);
     }
 

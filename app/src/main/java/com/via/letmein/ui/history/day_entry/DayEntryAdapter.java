@@ -20,8 +20,8 @@ import java.util.List;
 
 public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHolder> {
 
-    private List<DayEntry> data;
-    private Context context;
+    private final List<DayEntry> data;
+    private final Context context;
 
     public DayEntryAdapter(Context context, List<DayEntry> data) {
         this.data = data;
@@ -63,8 +63,8 @@ public class DayEntryAdapter extends RecyclerView.Adapter<DayEntryAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date;
-        RecyclerView visitsList;
+        final TextView date;
+        final RecyclerView visitsList;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

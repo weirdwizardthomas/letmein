@@ -19,14 +19,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/labelUserPortrait" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="Tomas"
+            android:text="@string/placeholderName"
             app:layout_constraintStart_toEndOf="@+id/verticalDivider"
             app:layout_constraintTop_toBottomOf="@+id/time" />
 
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="postman"
+            android:text="@string/placeholderRole"
             app:layout_constraintStart_toEndOf="@+id/verticalDivider"
             app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -56,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:text="25.10.2019"
+            android:text="@string/placeholderDate"
             app:layout_constraintStart_toEndOf="@+id/name"
             app:layout_constraintTop_toTopOf="parent" />
 

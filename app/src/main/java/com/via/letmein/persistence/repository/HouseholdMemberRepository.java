@@ -36,12 +36,12 @@ public class HouseholdMemberRepository {
     /**
      * Retrieved data.
      */
-    private MutableLiveData<ApiResponse> data;
+    private final MutableLiveData<ApiResponse> data;
 
     /**
      * API to which requests are sent.
      */
-    private Api api;
+    private final Api api;
 
     private HouseholdMemberRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());

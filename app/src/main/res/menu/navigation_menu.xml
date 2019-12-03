@@ -3,19 +3,19 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home" />
+        android:title="@string/menu_home" />
     <item
         android:id="@+id/nav_history"
         android:icon="@drawable/ic_history_black_24dp"
-        android:title="History" />
+        android:title="@string/menu_history" />
     <item
         android:id="@+id/nav_administration"
         android:icon="@drawable/ic_contacts_black_24dp"
-        android:title="Administration" />
+        android:title="@string/menu_administration" />
     <item
         android:id="@+id/nav_live"
         android:icon="@drawable/ic_video_wireless_black_24dp"
-        android:title="Live feed" />
+        android:title="@string/menu_live" />
 
 
 </menu>

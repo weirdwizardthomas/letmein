@@ -33,11 +33,11 @@ public class HouseholdMemberImageRepository {
     /**
      * Retrieved data
      */
-    private MutableLiveData<ApiResponse> data;
+    private final MutableLiveData<ApiResponse> data;
     /**
      * API to which requests are sent.
      */
-    private Api api;
+    private final Api api;
 
     private HouseholdMemberImageRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
 
-    private List<Visit> data;
+    private final List<Visit> data;
 
     public VisitAdapter(List<Visit> data) {
         this.data = data;
@@ -49,10 +49,10 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView name;
-        TextView role;
-        TextView time;
+        final ImageView image;
+        final TextView name;
+        final TextView role;
+        final TextView time;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

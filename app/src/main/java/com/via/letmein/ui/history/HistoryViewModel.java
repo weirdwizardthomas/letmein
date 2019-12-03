@@ -15,6 +15,7 @@ import com.via.letmein.persistence.room.entity.Visit;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HistoryViewModel extends AndroidViewModel {
 
@@ -36,7 +37,7 @@ public class HistoryViewModel extends AndroidViewModel {
 
     public void insert(DayEntry dayEntry) {
         List<DayEntry> dummy = data.getValue();
-        dummy.add(dayEntry);
+        Objects.requireNonNull(dummy).add(dayEntry);
         data.setValue(dummy);
     }
 

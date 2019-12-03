@@ -11,7 +11,7 @@
         android:id="@+id/image"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:contentDescription="Picture taken by the lock's camera"
+        android:contentDescription="@string/labelPicturesTaken"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,5 +26,6 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/check_circle" />
+        app:srcCompat="@drawable/check_circle"
+        android:contentDescription="@string/labelCheckbox" />
 </androidx.constraintlayout.widget.ConstraintLayout>

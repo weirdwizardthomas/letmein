@@ -20,7 +20,7 @@ public class Session {
     /**
      * Saving and loading of the session id and username.
      */
-    private SharedPreferences preferences;
+    private final SharedPreferences preferences;
 
     /**
      * Single instance of the class

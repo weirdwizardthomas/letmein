@@ -14,14 +14,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/labelUserPortrait" />
 
     <TextView
         android:id="@+id/nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/name"
-        android:text="Name"
+        android:text="@string/labelName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/portrait" />
 
@@ -30,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="Tom"
+        android:text="@string/placeholderName"
         app:layout_constraintBottom_toBottomOf="@+id/nameLabel"
         app:layout_constraintStart_toEndOf="@+id/nameLabel"
         app:layout_constraintTop_toTopOf="@+id/nameLabel" />
@@ -40,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/role"
-        android:text="Role"
+        android:text="@string/labelRole"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -49,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="Owner"
+        android:text="@string/placeholderRole"
         app:layout_constraintBottom_toBottomOf="@+id/roleLabel"
         app:layout_constraintStart_toEndOf="@+id/roleLabel"
         app:layout_constraintTop_toTopOf="@+id/roleLabel" />
@@ -58,7 +59,7 @@
         android:id="@+id/imageGalleryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stored pictures"
+        android:text="@string/labelStoredPictures"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/role" />

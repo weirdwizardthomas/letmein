@@ -18,7 +18,7 @@ import java.util.List;
 public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
 
     private List<Visit> data;
-    private OnItemClickListener onItemClickListener;
+    private final OnItemClickListener onItemClickListener;
 
     public VisitAdapter(List<Visit> data, OnItemClickListener onItemClickListener) {
         this.data = data;
@@ -56,10 +56,10 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView image;
-        TextView name;
-        TextView role;
-        TextView time;
+        final ImageView image;
+        final TextView name;
+        final TextView role;
+        final TextView time;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

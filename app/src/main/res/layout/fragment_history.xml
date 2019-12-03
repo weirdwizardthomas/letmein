@@ -11,7 +11,7 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="11.1.2019 - 21.1.2019" />
+        android:text="@string/placeholderDateSpan" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/visitsRecyclerView"

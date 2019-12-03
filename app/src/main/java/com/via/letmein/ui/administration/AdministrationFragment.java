@@ -24,6 +24,7 @@ import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_DATABASE_ERROR;
 import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_EXPIRED_SESSION_ID;
@@ -77,7 +78,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
             private void handleError(String errorMessage) {
                 switch (errorMessage) {
                     case ERROR_EXPIRED_SESSION_ID: {
-                        ((MainActivity) getActivity()).login();
+                        ((MainActivity) Objects.requireNonNull(getActivity())).login();
                     }
                     case ERROR_MISSING_REQUIRED_PARAMETERS: {
                         Toast.makeText(getContext(), getString(R.string.missingParameters), Toast.LENGTH_SHORT).show();
@@ -126,7 +127,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         //Floating button
         addMemberButton = root.findViewById(R.id.addMemberButton);
         addMemberButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+            NavController navController = Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment);
             navController.navigate(R.id.administration_to_add_member);
         });
 
@@ -145,7 +146,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         extras.putInt(BUNDLE_ID_KEY, item.getId());
         //extras.putInt(BUNDLE_IMAGEID_KEY, item.getImageID());
 
-        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment);
         navController.navigate(R.id.administrator_to_member, extras);
     }
 }

@@ -28,9 +28,9 @@ public class SessionRepository {
     public static final String ERROR_WRONG_USER_PASSWORD = "wrong_user_password";
 
     private static SessionRepository instance;
-    private MutableLiveData<ApiResponse> registrationData;
-    private MutableLiveData<ApiResponse> loginData;
-    private Session session;
+    private final MutableLiveData<ApiResponse> registrationData;
+    private final MutableLiveData<ApiResponse> loginData;
+    private final Session session;
 
     private SessionRepository(Session session) {
         this.session = session;

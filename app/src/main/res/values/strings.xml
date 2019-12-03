@@ -1,26 +1,47 @@
 <resources>
     <string name="app_name">Let me in</string>
-    <string name="title_activity_navigation_drawer">NavigationDrawer</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">Main activity</string>
 
+    <!--Menu-->
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_history">History</string>
+    <string name="menu_administration">Administration</string>
+    <string name="menu_live">Live feed</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_help_and_feedback">Help and feedback</string>
+
+    <!--Error messages-->
     <string name="databaseError">Database error. Please try again later</string>
     <string name="adminAlreadyExists">Administrator already exists.</string>
     <string name="wrongSerialId">Wrong serial ID.</string>
     <string name="nameInUse">Name already in use.</string>
     <string name="missingParameters">Missing required parameters</string>
-    <string name="ipAddressFound">Found IP Address:</string>
-    <string name="welcome">Welcome</string>
-    <string name="openDoor">Open door</string>
+    <string name="username_too_short">Username too short. Please pick a name with at least 5 characters.</string>
+
+    <!--Labels-->
+    <string name="labelIpAddressFound">Found IP Address:</string>
+    <string name="labelWelcome">Welcome</string>
+    <string name="labelOpenDoor">Open door</string>
+    <string name="labelRegisterHeader">Pair with the product</string>
+    <string name="labelName">Name</string>
+    <string name="labelAdminName">Administrator\'s name</string>
+    <string name="labelSerialNo">Serial number</string>
+    <string name="labelRegister">Register</string>
+
+    <!--Placeholders-->
+    <string name="placeholderSerialNo">123456789REAC0987654321</string>
+    <string name="placeholderDate">23.10.2019</string>
+    <string name="placeholderName">Tomas</string>
+    <string name="placeholderRole">postman</string>
+    <string name="labelRole">Role</string>
+    <string name="labelAddPicture">Add picture</string>
+    <string name="labelAddFingerprint">Add fingerprint</string>
+    <string name="placeholderDateSpan">11.1.2019 – 21.1.2019</string>
+    <string name="labelStoredPictures">Stored pictures</string>
+    <string name="labelPicturesTaken">Picture taken by the lock\'s camera</string>
+    <string name="selectRangeToShow">Select range to show:</string>
+    <string name="labelUserPortrait">userPortrait</string>
+    <string name="labelCheckbox">checkbox</string>
+
 
 </resources>

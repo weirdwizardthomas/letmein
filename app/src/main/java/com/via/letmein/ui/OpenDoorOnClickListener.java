@@ -10,7 +10,7 @@ import com.amirarcane.lockscreen.activity.EnterPinActivity;
 public class OpenDoorOnClickListener implements View.OnClickListener {
     public static final int PIN_REQUEST_CODE = 1;
 
-    private Fragment parent;
+    private final Fragment parent;
 
     public OpenDoorOnClickListener(Fragment parent) {
         this.parent = parent;

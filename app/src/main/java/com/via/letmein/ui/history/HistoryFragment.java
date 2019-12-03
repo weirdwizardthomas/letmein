@@ -1,5 +1,6 @@
 package com.via.letmein.ui.history;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -23,6 +24,7 @@ import com.via.letmein.persistence.room.entity.DayEntry;
 import com.via.letmein.ui.history.day_entry.DayEntryAdapter;
 
 import java.util.List;
+import java.util.Objects;
 
 public class HistoryFragment extends Fragment {
 
@@ -64,9 +66,10 @@ public class HistoryFragment extends Fragment {
         selectionDates = new Pair<>(weekAgo, today);
     }
 
+    @SuppressLint("SetTextI18n")
     private void initialiseDatePickerButton(View root) {
         openCalendarButton = root.findViewById(R.id.openCalendarButton);
-        openCalendarButton.setText("Select range to show:");
+        openCalendarButton.setText(getString(R.string.selectRangeToShow));
         openCalendarButton.setOnClickListener(v -> picker.show(getChildFragmentManager(), picker.toString()));
     }
 
@@ -74,7 +77,7 @@ public class HistoryFragment extends Fragment {
         picker = setupDateSelectorBuilder().build();
         picker.addOnPositiveButtonClickListener(selection -> {
             selectionDates = selection;
-            openCalendarButton.setText("Select range to show:" + picker.getHeaderText());
+            openCalendarButton.setText(getString(R.string.selectRangeToShow) + picker.getHeaderText());
             //TODO fetch data
         });
     }
@@ -83,7 +86,7 @@ public class HistoryFragment extends Fragment {
         return MaterialDatePicker.Builder
                 .dateRangePicker()
                 .setSelection(selectionDates)
-                .setTheme(resolveOrThrow(getContext(), R.attr.materialCalendarTheme));
+                .setTheme(resolveOrThrow(Objects.requireNonNull(getContext()), R.attr.materialCalendarTheme));
     }
 
     private static int resolveOrThrow(Context context, @AttrRes int attributeResId) throws IllegalArgumentException {

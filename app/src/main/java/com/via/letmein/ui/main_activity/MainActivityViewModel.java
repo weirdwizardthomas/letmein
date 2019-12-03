@@ -12,7 +12,7 @@ import com.via.letmein.persistence.repository.SessionRepository;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
-    private SessionRepository repository;
+    private final SessionRepository repository;
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);

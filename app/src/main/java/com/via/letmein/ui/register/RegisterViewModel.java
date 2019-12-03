@@ -11,7 +11,7 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.SessionRepository;
 
 public class RegisterViewModel extends AndroidViewModel {
-    private SessionRepository repository;
+    private final SessionRepository repository;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);

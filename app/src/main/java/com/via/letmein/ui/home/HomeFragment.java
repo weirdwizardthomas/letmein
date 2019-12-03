@@ -23,6 +23,8 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.OpenDoorOnClickListener;
 import com.via.letmein.ui.home.visit.VisitAdapter;
 
+import java.util.Objects;
+
 /**
  * Fragment showing brief overlook of the app.
  *
@@ -90,7 +92,7 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
      */
     @Override
     public void onItemClick() {
-        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment);
         navController.navigate(R.id.home_to_history);
     }
 }
