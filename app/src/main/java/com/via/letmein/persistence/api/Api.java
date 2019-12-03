@@ -1,14 +1,12 @@
 package com.via.letmein.persistence.api;
 
-import com.via.letmein.persistence.api.pojo.request.LoginJson;
-import com.via.letmein.persistence.api.pojo.request.RegisterJson;
-import com.via.letmein.persistence.api.pojo.request.SessionIdJson;
-import com.via.letmein.persistence.api.pojo.request.UserListJson;
+import com.via.letmein.persistence.api.request.RegisterJson;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * An interface for Retrofit to implement
@@ -21,11 +19,11 @@ public interface Api {
     Call<ApiResponse> registerAdministrator(@Body RegisterJson registerJson);
 
     @GET("users")
-    Call<ApiResponse> getUserList(@Body SessionIdJson sessionIdJson);
+    Call<ApiResponse> getUserList(@Query("session_id") String session_id);
 
     @GET("user/{username}/images")
-    Call<ApiResponse> getUserImagesList(@Body UserListJson userListJson);
+    Call<ApiResponse> getUserImagesList(@Query("user_name") String user_name, @Query("session_id") String session_id);
 
     @GET("login")
-    Call<ApiResponse> loginAdministrator(@Body LoginJson loginJson);
+    Call<ApiResponse> loginAdministrator(@Query("user_name") String user_name, @Query("password") String password);
 }

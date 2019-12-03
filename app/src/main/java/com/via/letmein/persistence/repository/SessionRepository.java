@@ -10,8 +10,7 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.api.pojo.request.LoginJson;
-import com.via.letmein.persistence.api.pojo.request.RegisterJson;
+import com.via.letmein.persistence.api.request.RegisterJson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +52,7 @@ public class SessionRepository {
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
-         refresh(api.loginAdministrator(new LoginJson(username, password)), loginData);
+         refresh(api.loginAdministrator(username, password), loginData);
         return loginData;
     }
 

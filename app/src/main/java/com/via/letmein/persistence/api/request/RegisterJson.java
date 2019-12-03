@@ -1,4 +1,4 @@
-package com.via.letmein.persistence.api.pojo.request;
+package com.via.letmein.persistence.api.request;
 
 public class RegisterJson {
     String user_name;

@@ -9,8 +9,7 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.api.pojo.request.SessionIdJson;
-import com.via.letmein.persistence.api.pojo.response.HouseholdMember;
+import com.via.letmein.persistence.api.model.HouseholdMember;
 
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class HouseholdMemberRepository {
      * @param sessionId current session ID
      */
     private void refreshUsers(String sessionId) {
-        Call<ApiResponse> call = api.getUserList(new SessionIdJson(sessionId));
+        Call<ApiResponse> call = api.getUserList(sessionId);
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override
