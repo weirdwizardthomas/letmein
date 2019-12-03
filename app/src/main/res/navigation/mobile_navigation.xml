@@ -11,7 +11,7 @@
         android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_nav_home_to_nav_history"
+            android:id="@+id/home_to_history"
             app:destination="@id/nav_history" />
     </fragment>
 
@@ -27,10 +27,10 @@
         android:label="Administration"
         tools:layout="@layout/fragment_administration" >
         <action
-            android:id="@+id/action_nav_administration_to_nav_add_member"
+            android:id="@+id/administration_to_add_member"
             app:destination="@id/nav_add_member" />
         <action
-            android:id="@+id/action_nav_administration_to_nav_view_member"
+            android:id="@+id/administrator_to_member"
             app:destination="@id/nav_view_member" />
     </fragment>
 
