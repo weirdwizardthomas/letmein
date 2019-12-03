@@ -115,21 +115,27 @@ public class RegisterActivity extends AppCompatActivity {
         switch (errorMessage) {
             case ERROR_SHORT_USERNAME: {
                 usernameTextView.setVisibility(View.VISIBLE);
+                break;
             }
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
                 Log.i("RegisterActivity", getString(R.string.missingParameters));
+                break;
             }
             case ERROR_DATABASE_ERROR: {
                 Toast.makeText(this, getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
+                break;
             }
             case ERROR_ADMIN_ALREADY_EXISTS: {
                 Toast.makeText(this, getString(R.string.adminAlreadyExists), Toast.LENGTH_SHORT).show();
+                break;
             }
             case ERROR_WRONG_SERIAL_ID: {
                 Toast.makeText(this, getString(R.string.wrongSerialId), Toast.LENGTH_SHORT).show();
+                break;
             }
             case ERROR_NAME_ALREADY_IN_USE: {
                 Toast.makeText(this, getString(R.string.nameInUse), Toast.LENGTH_SHORT).show();
+                break;
             }
         }
     }

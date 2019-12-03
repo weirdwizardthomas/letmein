@@ -95,12 +95,16 @@ public class MainActivity extends AppCompatActivity {
         switch (errorMessage) {
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
                 //TODO ??
+                break;
+
             }
             case ERROR_SHORT_USERNAME: {
                 //TODO ??
+                break;
             }
             case ERROR_WRONG_USER_PASSWORD: {
                 //TODO ??
+                break;
             }
         }
     }
