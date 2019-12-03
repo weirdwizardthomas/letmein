@@ -1,7 +1,6 @@
 package com.via.letmein.ui.main_activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,7 +18,6 @@ import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.ui.register.RegisterActivity;
 
 /**
@@ -28,6 +25,7 @@ import com.via.letmein.ui.register.RegisterActivity;
  */
 public class MainActivity extends AppCompatActivity {
 
+    public static final int REGISTER_REQUEST_CODE = 1;
     private AppBarConfiguration appBarConfiguration;
     private MainActivityViewModel mainActivityViewModel;
 
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         initialiseToolbar();
         initialiseNavigationBar();
 
-        openPin();
+        // openPin();
 
         if (!isRegistered())
             register();
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     //todo change to accept string
     private void saveSessionID(String sessionId) {
         Session session = Session.getInstance(getApplicationContext());
-        session.setSessionId((String) apiResponse.getContent());
+        session.setSessionId(sessionId);
     }
 
     public void login() {
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getSessionID(username, password).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
-                    saveSessionID(apiResponse);
+                    saveSessionID((String) apiResponse.getContent());
                     Toast.makeText(getApplicationContext(), "Logged on", Toast.LENGTH_SHORT).show();
                 }
 
@@ -76,13 +74,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void register() {
         Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REGISTER_REQUEST_CODE);
     }
 
     private boolean isRegistered() {
-        SharedPreferences preferences = getSharedPreferences(RegisterActivity.REGISTRATION_FILE, MODE_PRIVATE);
-        boolean isRegistered = preferences.getBoolean(RegisterActivity.REGISTERED_KEY, false);
-        return isRegistered;
+        Session session = Session.getInstance(getApplicationContext());
+        return session.isRegistered();
     }
 
     /**
@@ -135,6 +132,18 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Check which request we're responding to
+        switch (requestCode) {
+            // Make sure the request was successful
+            case REGISTER_REQUEST_CODE:
+                if (resultCode == RESULT_OK)
+                    login();
+        }
     }
 
 }
