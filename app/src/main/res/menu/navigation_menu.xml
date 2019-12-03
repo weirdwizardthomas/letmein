@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="History" />
+    <item
+        android:id="@+id/nav_administration"
+        android:icon="@drawable/ic_contacts_black_24dp"
+        android:title="Administration" />
+    <item
+        android:id="@+id/nav_live"
+        android:icon="@drawable/ic_video_wireless_black_24dp"
+        android:title="Live feed" />
+
+
+</menu>
