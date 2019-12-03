@@ -15,7 +15,7 @@ public class MemberProfileViewModel extends AndroidViewModel {
 
     public MemberProfileViewModel(@NonNull Application application) {
         super(application);
-        repository = HouseholdMemberImageRepository.getInstance();
+        repository = HouseholdMemberImageRepository.getInstance(Session.getInstance(application));
     }
 
     public LiveData<ApiResponse> getImagePaths(String username, String sessionId) {

@@ -29,29 +29,31 @@ public class SessionRepository {
     public static final String ERROR_WRONG_USER_PASSWORD = "wrong_user_password";
 
     private static SessionRepository instance;
-    private Api api;
     private MutableLiveData<ApiResponse> registrationData;
     private MutableLiveData<ApiResponse> loginData;
+    private Session session;
 
-    private SessionRepository() {
-        api = ServiceGenerator.getApi();
+    private SessionRepository(Session session) {
+        this.session = session;
         registrationData = new MutableLiveData<>(new ApiResponse());
         loginData = new MutableLiveData<>(new ApiResponse());
     }
 
-    public static synchronized SessionRepository getInstance() {
+    public static synchronized SessionRepository getInstance(Session session) {
         if (instance == null)
-            instance = new SessionRepository();
+            instance = new SessionRepository(session);
         return instance;
     }
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
+        Api api = ServiceGenerator.getApi(session.getIpAddress());
         refresh(api.registerAdministrator(new RegisterJson(username, serialNumber)), registrationData);
         return registrationData;
     }
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {
-        refresh(api.loginAdministrator(new LoginJson(username, password)), loginData);
+        Api api = ServiceGenerator.getApi(session.getIpAddress());
+         refresh(api.loginAdministrator(new LoginJson(username, password)), loginData);
         return loginData;
     }
 

@@ -22,7 +22,7 @@ public class AdministrationViewModel extends AndroidViewModel {
 
     public AdministrationViewModel(@NonNull Application application) {
         super(application);
-        repository = HouseholdMemberRepository.getInstance();
+        repository = HouseholdMemberRepository.getInstance(Session.getInstance(application));
     }
 
     /**

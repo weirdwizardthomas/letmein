@@ -16,7 +16,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
-        repository = SessionRepository.getInstance();
+        repository = SessionRepository.getInstance(Session.getInstance(application));
     }
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {

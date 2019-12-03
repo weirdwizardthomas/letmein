@@ -40,8 +40,8 @@ public class HouseholdMemberImageRepository {
      */
     private Api api;
 
-    private HouseholdMemberImageRepository() {
-        api = ServiceGenerator.getApi();
+    private HouseholdMemberImageRepository(Session session) {
+        api = ServiceGenerator.getApi(session.getIpAddress());
         ApiResponse dummy = new ApiResponse();
         data = new MutableLiveData<>(dummy);
     }
@@ -51,9 +51,9 @@ public class HouseholdMemberImageRepository {
      *
      * @return Singleton instance of this class.
      */
-    public static synchronized HouseholdMemberImageRepository getInstance() {
+    public static synchronized HouseholdMemberImageRepository getInstance(Session session) {
         if (instance == null)
-            instance = new HouseholdMemberImageRepository();
+            instance = new HouseholdMemberImageRepository(session);
         return instance;
     }
 

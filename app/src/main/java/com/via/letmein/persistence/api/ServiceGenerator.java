@@ -9,21 +9,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class ServiceGenerator {
-    //Server's api base URL
-    private static final String BASE_URL = "https://9d04a36a-6449-4095-a647-8b62690a2680.mock.pstmn.io/api/";
 
-    private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create());
+    private static final int PORT = 8080;
 
-    private static Retrofit retrofit = retrofitBuilder.build();
+    private static Retrofit getRetrofitInstance(String ipAddress) {
+        String baseUrl = "http:/" + ipAddress + ":" + PORT + "/api/";
+
+        Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create());
+        return retrofitBuilder.build();
+    }
 
     /**
      * Server's API to which requests will be sent.
      */
-    private static Api api = retrofit.create(Api.class);
 
-    public static Api getApi() {
-        return api;
+    public static Api getApi(String baseUrl) {
+        return getRetrofitInstance(baseUrl).create(Api.class);
     }
 }

@@ -44,8 +44,8 @@ public class HouseholdMemberRepository {
      */
     private Api api;
 
-    private HouseholdMemberRepository() {
-        api = ServiceGenerator.getApi();
+    private HouseholdMemberRepository(Session session) {
+        api = ServiceGenerator.getApi(session.getIpAddress());
         ApiResponse dummy = new ApiResponse();
         data = new MutableLiveData<>(dummy);
     }
@@ -55,9 +55,9 @@ public class HouseholdMemberRepository {
      *
      * @return Singleton instance of this class.
      */
-    public static synchronized HouseholdMemberRepository getInstance() {
+    public static synchronized HouseholdMemberRepository getInstance(Session session) {
         if (instance == null)
-            instance = new HouseholdMemberRepository();
+            instance = new HouseholdMemberRepository(session);
         return instance;
     }
 

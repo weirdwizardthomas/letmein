@@ -15,7 +15,7 @@ public class RegisterViewModel extends AndroidViewModel {
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        repository = SessionRepository.getInstance();
+        repository = SessionRepository.getInstance(Session.getInstance(application));
     }
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
