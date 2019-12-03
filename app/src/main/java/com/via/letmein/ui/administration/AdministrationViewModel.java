@@ -7,7 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.via.letmein.persistence.api.ApiResponse;
-import com.via.letmein.persistence.pojo.HouseholdMember;
+import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.api.pojo.response.HouseholdMember;
 import com.via.letmein.persistence.repository.HouseholdMemberRepository;
 
 /**

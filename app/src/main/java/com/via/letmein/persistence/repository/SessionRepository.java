@@ -9,8 +9,9 @@ import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
-import com.via.letmein.persistence.pojo.request.LoginJson;
-import com.via.letmein.persistence.pojo.request.RegisterJson;
+import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.api.pojo.request.LoginJson;
+import com.via.letmein.persistence.api.pojo.request.RegisterJson;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.via.letmein.persistence.pojo.request;
+package com.via.letmein.persistence.api.pojo.request;
 
 public class SessionIdJson {
     String session_id;

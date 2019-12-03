@@ -8,8 +8,9 @@ import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
-import com.via.letmein.persistence.pojo.request.SessionIdJson;
-import com.via.letmein.persistence.pojo.response.HouseholdMember;
+import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.api.pojo.request.SessionIdJson;
+import com.via.letmein.persistence.api.pojo.response.HouseholdMember;
 
 import java.util.List;
 

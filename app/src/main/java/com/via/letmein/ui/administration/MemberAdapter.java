@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.pojo.HouseholdMember;
+import com.via.letmein.persistence.api.pojo.response.HouseholdMember;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,9 @@
 package com.via.letmein.persistence.api;
 
-import com.via.letmein.persistence.pojo.request.LoginJson;
-import com.via.letmein.persistence.pojo.request.RegisterJson;
-import com.via.letmein.persistence.pojo.request.SessionIdJson;
-import com.via.letmein.persistence.pojo.request.UserListJson;
+import com.via.letmein.persistence.api.pojo.request.LoginJson;
+import com.via.letmein.persistence.api.pojo.request.RegisterJson;
+import com.via.letmein.persistence.api.pojo.request.SessionIdJson;
+import com.via.letmein.persistence.api.pojo.request.UserListJson;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
