@@ -96,44 +96,14 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
      * @param root Parent view of the fragment.
      */
     private void initialiseLayout(View root) {
-        initialiseAdapter();
-        initialiseMemberRecyclerView(root);
-        initialiseAddMemberButton(root);
-    }
-
-    /**
-     * Initialises {@see AdministrationFragment#membersAdapter}.
-     */
-    private void initialiseAdapter() {
         membersAdapter = new MemberAdapter(this);
-    }
 
-    /**
-     * Initialises the Add member button.
-     *
-     * @param root Parent view
-     */
-    private void initialiseAddMemberButton(View root) {
-        addMemberButton = root.findViewById(R.id.addMemberButton);
-        addMemberButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-            navController.navigate(R.id.nav_add_member);
-        });
-    }
-
-    /**
-     * Initialises the recycler view of the layout.
-     *
-     * @param root Parent layout.
-     */
-    private void initialiseMemberRecyclerView(final View root) {
+        //Recycler view
         membersRecyclerView = root.findViewById(R.id.membersRecyclerView);
-        membersRecyclerView.hasFixedSize();
+        membersRecyclerView.setHasFixedSize(true);
         membersRecyclerView.setAdapter(membersAdapter);
-        membersRecyclerView.setLayoutManager(new LinearLayoutManager(
-                getContext(),
-                LinearLayoutManager.VERTICAL,
-                false));
+        membersRecyclerView.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         //Swipe to delete item
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 0,
@@ -152,6 +122,13 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
                 administrationViewModel.delete(memberToDelete);
             }
         }).attachToRecyclerView(membersRecyclerView);
+
+        //Floating button
+        addMemberButton = root.findViewById(R.id.addMemberButton);
+        addMemberButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+            navController.navigate(R.id.administration_to_add_member);
+        });
 
     }
 
