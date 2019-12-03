@@ -21,6 +21,5 @@ public class OpenDoorOnClickListener implements View.OnClickListener {
     public void onClick(View v) {
         Intent intent = new Intent(parent.getActivity(), EnterPinActivity.class);
         parent.startActivityForResult(intent, PIN_REQUEST_CODE);
-
     }
 }
