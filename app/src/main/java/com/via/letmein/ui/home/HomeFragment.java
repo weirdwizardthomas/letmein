@@ -90,6 +90,6 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
     @Override
     public void onItemClick() {
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        navController.navigate(R.id.nav_history);
+        navController.navigate(R.id.home_to_history);
     }
 }
