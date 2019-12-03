@@ -37,6 +37,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     private ImageAdapter imagesAdapter;
     private MemberProfileViewModel memberProfileViewModel;
 
+
     //TODO add edit option (in the toolbar)
     //TODO add recent entries as a recyclerview list
 
@@ -46,23 +47,25 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         memberProfileViewModel = ViewModelProviders.of(this).get(MemberProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_member_profile, container, false);
 
+        String username = getArguments() != null ? getArguments().getString(BUNDLE_NAME_KEY) : "";
+
         initialiseLayout(root, getArguments());
-        observeData();
+        observeData(username);
 
         return root;
     }
 
-    private void observeData() {
+    private void observeData(String username) {
         memberProfileViewModel.getImagePaths(username, "").observe(this, response -> {
             if (response != null) {
 
                 if (!response.isError() && response.getContent() != null) {
                     List<String> dummy = (List<String>) response.getContent();
-                    List<ImageContainer> tmp = new ArrayList<>();
+                    List<ImageContainer> imageContainers = new ArrayList<>();
                     for (String string : dummy)
-                        tmp.add(new ImageContainer(string));
+                        imageContainers.add(new ImageContainer(string));
 
-                    imagesAdapter.setData(tmp);
+                    imagesAdapter.setData(imageContainers);
                     //todo fetch images
                 }
                 if (response.isError() && response.getErrorMessage() != null) {
@@ -75,8 +78,9 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     }
 
     private void initialiseLayout(View root, Bundle extras) {
-        username = extras != null ? extras.getString(BUNDLE_NAME_KEY) : "";
+        String username = extras != null ? extras.getString(BUNDLE_NAME_KEY) : "";
         String role = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";
+
         name = root.findViewById(R.id.name);
         this.role = root.findViewById(R.id.role);
 
