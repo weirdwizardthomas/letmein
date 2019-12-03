@@ -136,7 +136,6 @@ public class AddMemberFragment extends Fragment {
         addPictureButton = root.findViewById(R.id.addPictureButton);
         addPictureButton.setOnClickListener(onAddCredentialClickListener);
 
-        //TODO change to a button on the action bar
         floatingActionButton = root.findViewById(R.id.saveMemberButton);
         floatingActionButton.setOnClickListener(onSaveClickListener);
     }

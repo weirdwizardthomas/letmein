@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:padding="@dimen/fragmentBodyPadding"
     tools:context=".ui.add_member.AddMemberFragment">
 
     <TextView
@@ -94,9 +94,11 @@
         android:id="@+id/saveMemberButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/floatingActonButtonOffset"
+        android:layout_marginBottom="@dimen/floatingActonButtonOffset"
         android:clickable="true"
+        android:elevation="4dp"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

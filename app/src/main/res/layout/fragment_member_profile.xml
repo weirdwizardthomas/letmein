@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="@dimen/fragmentBodyPadding"
     tools:context=".ui.member_profile.MemberProfileFragment">
 
     <ImageView
