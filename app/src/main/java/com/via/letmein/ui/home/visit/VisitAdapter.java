@@ -45,6 +45,11 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         holder.time.setText(visit.getTimestamp().toString().substring(11, 16));
     }
 
+    public void setData(List<Visit> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return data.size();
