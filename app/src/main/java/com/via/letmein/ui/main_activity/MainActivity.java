@@ -3,7 +3,6 @@ package com.via.letmein.ui.main_activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +18,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.register.RegisterActivity;
+
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_SHORT_USERNAME;
+import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRONG_USER_PASSWORD;
 
 /**
  * Application's main activity.
@@ -61,15 +64,28 @@ public class MainActivity extends AppCompatActivity {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
                     saveSessionID((String) apiResponse.getContent());
-                    Toast.makeText(getApplicationContext(), "Logged on", Toast.LENGTH_SHORT).show();
                 }
 
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
-                    //TODO handle errors
+                    handleErrors(apiResponse.getErrorMessage());
                 }
             }
         });
 
+    }
+
+    private void handleErrors(String errorMessage) {
+        switch (errorMessage) {
+            case ERROR_MISSING_REQUIRED_PARAMETERS: {
+                //TODO ??
+            }
+            case ERROR_SHORT_USERNAME: {
+                //TODO ??
+            }
+            case ERROR_WRONG_USER_PASSWORD: {
+                //TODO ??
+            }
+        }
     }
 
     private void register() {
