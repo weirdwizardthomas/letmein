@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,7 +22,6 @@ import com.via.letmein.R;
 import com.via.letmein.persistence.room.entity.Visit;
 import com.via.letmein.ui.OpenDoorOnClickListener;
 import com.via.letmein.ui.home.visit.VisitAdapter;
-import com.via.letmein.ui.live.LiveFragment;
 
 import java.util.List;
 
@@ -33,7 +33,6 @@ import java.util.List;
 public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickListener {
 
     //TODO add control over how many recent entries are shown - number, date range, ... ? - adjustable in settings
-    private static final int REQUEST_CODE = 1;
 
     private HomeViewModel homeViewModel;
     private RecyclerView recentEntriesRecyclerView;
@@ -44,12 +43,14 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        openButton = root.findViewById(R.id.openButton);
-        openButton.setOnClickListener(new OpenDoorOnClickListener(this));
-
         initialiseLayout(root);
+        observeData();
 
         return root;
+    }
+
+    private void observeData() {
+        homeViewModel.getData().observe(this, visits -> recentEntriesAdapter.setData(visits));
     }
 
     /**
@@ -87,9 +88,9 @@ public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickLi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case LiveFragment.PIN_REQUEST_CODE: {
+            case OpenDoorOnClickListener.PIN_REQUEST_CODE: {
                 if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
-                    Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "CANCELLED", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "REQUEST SENT", Toast.LENGTH_SHORT).show();
                 }

@@ -45,7 +45,6 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     private AdministrationViewModel administrationViewModel;
     private FloatingActionButton addMemberButton;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -136,7 +135,8 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
                 LinearLayoutManager.VERTICAL,
                 false));
         //Swipe to delete item
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
@@ -150,7 +150,6 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 HouseholdMember memberToDelete = membersAdapter.getMemberAt(viewHolder.getAdapterPosition());
                 administrationViewModel.delete(memberToDelete);
-                Toast.makeText(root.getContext(), "", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(membersRecyclerView);
 
@@ -163,14 +162,13 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     public void onItemClick(HouseholdMember item) {
 
         Bundle extras = new Bundle();
-
-        //TODO consider making Member serialisable and send the Member instance instead?
+        //TODO change to household member
         extras.putString(BUNDLE_NAME_KEY, item.getName());
         extras.putString(BUNDLE_ROLE_KEY, item.getRole());
         extras.putInt(BUNDLE_ID_KEY, item.getId());
         //extras.putInt(BUNDLE_IMAGEID_KEY, item.getImageID());
 
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        navController.navigate(R.id.nav_view_member, extras);
+        navController.navigate(R.id.administrator_to_member, extras);
     }
 }

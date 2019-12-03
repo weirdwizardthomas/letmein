@@ -32,11 +32,14 @@ public class LiveFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_live, container, false);
 
         //TODO set up a live feed from the server
+        initialiseLayout(root);
+        return root;
+    }
+
+    private void initialiseLayout(View root) {
         liveView = root.findViewById(R.id.videoView);
         openButton = root.findViewById(R.id.openButton);
-
-        openButton.setOnClickListener(new OpenDoorOnClickListener(this));
-        return root;
+        //openButton.setOnClickListener(new OpenDoorOnClickListener(this));
     }
 
     @Override

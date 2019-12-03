@@ -76,8 +76,8 @@ public class HouseholdMemberImageRepository {
                     if (!dummy.isError()) {
                         TypeToken<List<String>> responseTypeToken = new TypeToken<List<String>>() {
                         };
-                        List<String> content = gson
-                                .fromJson(gson.toJson(dummy.getContent()), responseTypeToken.getType());
+                        List<String> content =
+                                gson.fromJson(gson.toJson(dummy.getContent()), responseTypeToken.getType());
                         dummy.setContent(content);
                     } else
                         dummy.setContent(0);

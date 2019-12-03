@@ -24,6 +24,7 @@ import java.util.List;
  *
  */
 public class MemberProfileFragment extends Fragment implements ImageAdapter.OnItemClickListener {
+
     public static final String BUNDLE_NAME_KEY = "name";
     public static final String BUNDLE_ROLE_KEY = "role";
     public static final String BUNDLE_IMAGEID_KEY = "imageID";
@@ -45,28 +46,13 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         memberProfileViewModel = ViewModelProviders.of(this).get(MemberProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_member_profile, container, false);
 
-        profilePicture = root.findViewById(R.id.portrait);
-        name = root.findViewById(R.id.name);
-        role = root.findViewById(R.id.role);
+        initialiseLayout(root, getArguments());
+        observeData();
 
-        imageGallery = root.findViewById(R.id.imageGallery);
-        imageGallery.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
-        imageGallery.setLayoutManager(layoutManager);
-        imagesAdapter = new ImageAdapter(this);
-        imageGallery.setAdapter(imagesAdapter);
+        return root;
+    }
 
-        profilePicture.setVisibility(View.GONE);
-        //profilePicture.setImageResource(extras != null ? extras.getInt(BUNDLE_IMAGEID_KEY) : R.mipmap.profile_icon_placeholder);
-
-        Bundle extras = getArguments();
-
-        String username = extras != null ? extras.getString(BUNDLE_NAME_KEY) : "";
-        String role = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";
-
-        name.setText(username);
-        this.role.setText(role);
-
+    private void observeData() {
         memberProfileViewModel.getImagePaths(username, "").observe(this, response -> {
             if (response != null) {
 
@@ -86,6 +72,17 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
 
             }
         });
+    }
+
+    private void initialiseLayout(View root, Bundle extras) {
+        username = extras != null ? extras.getString(BUNDLE_NAME_KEY) : "";
+        String role = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";
+        name = root.findViewById(R.id.name);
+        this.role = root.findViewById(R.id.role);
+
+        name.setText(username);
+        this.role.setText(role);
+
 
 
         return root;

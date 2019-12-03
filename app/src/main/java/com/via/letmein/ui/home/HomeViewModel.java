@@ -21,7 +21,8 @@ public class HomeViewModel extends AndroidViewModel {
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
-        data = new MutableLiveData<>(mockupData());
+        data = new MutableLiveData<>(new ArrayList<>());
+        data.setValue(mockupData());
     }
 
     LiveData<List<Visit>> getData() {

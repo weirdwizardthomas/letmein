@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
             login();
     }
 
-    private void saveSessionID(ApiResponse apiResponse) {
+    //todo change to accept string
+    private void saveSessionID(String sessionId) {
         Session session = Session.getInstance(getApplicationContext());
         session.setSessionId((String) apiResponse.getContent());
     }

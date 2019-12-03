@@ -28,30 +28,34 @@ public class HistoryFragment extends Fragment {
 
     public static final int WEEK_IN_MILISECONDS = 604800000;
 
+    private HistoryViewModel historyViewModel;
+
     private RecyclerView dayEntryRecyclerView;
     private RecyclerView.Adapter dayEntryAdapter;
-    private HistoryViewModel historyViewModel;
     private Button openCalendarButton;
     private MaterialDatePicker<Pair<Long, Long>> picker;
     private Pair<Long, Long> selectionDates;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
+        initialiseLayout(root);
+
+        //Open the calendar to pick a custom range
+        picker.show(getChildFragmentManager(), picker.toString());
+
+        return root;
+    }
+
+    private void initialiseLayout(View root) {
         initialiseAdapter();
         initialiseDaysRecyclerView(root);
         setDefaultSelectionDates();
         initialiseDatePicker();
         initialiseDatePickerButton(root);
-
-        picker.show(getChildFragmentManager(), picker.toString());
-
-        return root;
     }
 
     private void setDefaultSelectionDates() {
@@ -71,15 +75,15 @@ public class HistoryFragment extends Fragment {
         picker.addOnPositiveButtonClickListener(selection -> {
             selectionDates = selection;
             openCalendarButton.setText("Select range to show:" + picker.getHeaderText());
+            //TODO fetch data
         });
     }
 
     private MaterialDatePicker.Builder<Pair<Long, Long>> setupDateSelectorBuilder() {
-        final MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder
+        return MaterialDatePicker.Builder
                 .dateRangePicker()
                 .setSelection(selectionDates)
                 .setTheme(resolveOrThrow(getContext(), R.attr.materialCalendarTheme));
-        return builder;
     }
 
     private static int resolveOrThrow(Context context, @AttrRes int attributeResId) throws IllegalArgumentException {
@@ -97,7 +101,7 @@ public class HistoryFragment extends Fragment {
 
     private void initialiseDaysRecyclerView(View root) {
         dayEntryRecyclerView = root.findViewById(R.id.visitsRecyclerView);
-        dayEntryRecyclerView.hasFixedSize();
+        dayEntryRecyclerView.setHasFixedSize(true);
         dayEntryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         dayEntryRecyclerView.setAdapter(dayEntryAdapter);
     }

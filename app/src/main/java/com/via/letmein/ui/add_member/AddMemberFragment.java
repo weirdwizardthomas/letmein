@@ -55,7 +55,6 @@ public class AddMemberFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         addMemberViewModel = ViewModelProviders.of(this).get(AddMemberViewModel.class);
         View root = inflater.inflate(R.layout.fragment_add_member, container, false);
-
         initialiseLayout(root);
 
         return root;
@@ -139,7 +138,6 @@ public class AddMemberFragment extends Fragment {
         //TODO change to a button on the action bar
         floatingActionButton = root.findViewById(R.id.saveMemberButton);
         floatingActionButton.setOnClickListener(onSaveClickListener);
-
     }
 
     /**

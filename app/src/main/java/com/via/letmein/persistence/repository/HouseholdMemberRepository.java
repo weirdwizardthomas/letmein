@@ -78,7 +78,6 @@ public class HouseholdMemberRepository {
      * @param sessionId current session ID
      */
     private void refreshUsers(String sessionId) {
-
         Call<ApiResponse> call = api.getUserList(new SessionIdJson(sessionId));
 
         call.enqueue(new Callback<ApiResponse>() {
