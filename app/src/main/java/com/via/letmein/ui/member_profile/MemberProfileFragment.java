@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,12 +68,18 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
                     //todo fetch images
                 }
                 if (response.isError() && response.getErrorMessage() != null) {
-                    String errorMessage = response.getErrorMessage();
-                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                    handleErrors(response.getErrorMessage());
+
                 }
 
             }
         });
+    }
+
+    private void handleErrors(String errorMessage) {
+        switch(errorMessage){
+
+        }
     }
 
     private void initialiseLayout(View root, Bundle extras) {
