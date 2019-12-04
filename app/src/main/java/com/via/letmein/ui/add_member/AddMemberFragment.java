@@ -1,13 +1,12 @@
 package com.via.letmein.ui.add_member;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +19,16 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
-import com.via.letmein.persistence.room.entity.Member;
+import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_NAME_IN_USE;
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_USERNAME_TOO_SHORT;
 
 /**
  * Fragment for creation of a new member record.
@@ -40,16 +45,11 @@ public class AddMemberFragment extends Fragment {
     private ArrayAdapter<String> roleSpinnerAdapter;
     private Spinner roleSpinner;
     private AddMemberViewModel addMemberViewModel;
-    private ProgressBar progressBar;
-    private Button addFingerprintButton;
-    private Button addPictureButton;
+    private Button addCredentials;
     private FloatingActionButton floatingActionButton;
-    private TextView progressTextView;
     private TextView nameInput;
-    private View.OnClickListener onAddCredentialClickListener;
     private View.OnClickListener onSaveClickListener;
 
-    private boolean countdownInProgress;
 
     @Nullable
     @Override
@@ -67,7 +67,6 @@ public class AddMemberFragment extends Fragment {
      * @param root Parent view of the fragment.
      */
     private void initialiseLayout(View root) {
-        initialiseProgressBar(root);
         initialiseButtons(root);
         initaliseRoleAdapter();
         initaliseInput(root);
@@ -84,42 +83,31 @@ public class AddMemberFragment extends Fragment {
         roleSpinner.setAdapter(roleSpinnerAdapter);
     }
 
-    /**
-     * Initialises the progress bar that gets shown upon clicking {@see AddMemberFragment#addFingerprintButton} or {@see AddMemberFragment#AddPictureButton}.
-     *
-     * @param root Parent view
-     */
-    private void initialiseProgressBar(View root) {
-        countdownInProgress = false;
 
-        progressBar = root.findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
-
-        progressTextView = root.findViewById(R.id.progressText);
-        progressTextView.setVisibility(View.INVISIBLE);
-    }
-
-    /**
-     * Initialises all the listeners.
-     */
-    private void initialiseListeners() {
-        onAddCredentialClickListener = v -> {
-            if (!countdownInProgress)
-                startProgressBar(10);
-            //TODO send a request
-        };
-
-        onSaveClickListener = v -> {
-            //TODO send a request
-            //TODO display a notification
-            String name = nameInput.getText().toString();
-            String role = roleSpinner.getSelectedItem().toString();
-            int imageID = R.mipmap.profile_icon_placeholder;
-
-            addMemberViewModel.insert(new Member(name, role, imageID));
-            Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
-        };
+    private void handleErrors(String errorMessage) {
+        switch (errorMessage) {
+            case ERROR_EXPIRED_SESSION_ID: {
+                ((MainActivity) Objects.requireNonNull(getActivity())).login();
+                break;
+            }
+            case ERROR_MISSING_REQUIRED_PARAMETERS: {
+                Log.i("AddMemberFragment", ERROR_MISSING_REQUIRED_PARAMETERS);
+                break;
+            }
+            case ERROR_USERNAME_TOO_SHORT: {
+                //todo add a textview? or a snackbar
+                Toast.makeText(getContext(), "Username too short", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case ERROR_NAME_IN_USE: {
+                //todo same as above
+                Toast.makeText(getContext(), "Username already in use", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case ERROR_DATABASE_ERROR: {
+                Toast.makeText(getContext(), "Database error", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
@@ -128,16 +116,21 @@ public class AddMemberFragment extends Fragment {
      * @param root Parent view
      */
     private void initialiseButtons(final View root) {
-        initialiseListeners();
 
-        addFingerprintButton = root.findViewById(R.id.addFingerprintButton);
-        addFingerprintButton.setOnClickListener(onAddCredentialClickListener);
+        addCredentials = root.findViewById(R.id.addFingerprintButton);
+        addCredentials.setOnClickListener(v -> {
 
-        addPictureButton = root.findViewById(R.id.addPictureButton);
-        addPictureButton.setOnClickListener(onAddCredentialClickListener);
+        });
 
         floatingActionButton = root.findViewById(R.id.saveMemberButton);
-        floatingActionButton.setOnClickListener(onSaveClickListener);
+        floatingActionButton.setOnClickListener(v -> {
+            String name = nameInput.getText().toString();
+            String role = roleSpinner.getSelectedItem().toString();
+
+            addMemberViewModel.createUser(name, role);
+            Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
+        });
     }
 
     /**
@@ -148,44 +141,6 @@ public class AddMemberFragment extends Fragment {
 
         roleSpinnerAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, Objects.requireNonNull(roles));
         roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    }
-
-    /**
-     * Commences & displays the countdown.
-     *
-     * @param seconds Number of seconds to count down to 0.
-     */
-    private void startProgressBar(final int seconds) {
-
-        final int[] elapsed = {PROGRESS_MIN};
-        final int total = seconds * SECOND_IN_MILISECONDS;
-        CountDownTimer countDownTimer = new CountDownTimer(total, SECOND_IN_MILISECONDS) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                int progress = (int) ((total - millisUntilFinished) / (total));
-                elapsed[0]++;
-                int remaining = seconds - elapsed[0];
-
-                progressBar.setProgress(progress);
-                progressTextView.setText(Integer.toString(remaining));
-            }
-
-            @Override
-            public void onFinish() {
-                progressBar.setProgress(PROGRESS_MAX);
-                progressTextView.setText(Integer.toString(PROGRESS_MAX));
-                progressBar.setVisibility(View.INVISIBLE);
-                progressTextView.setVisibility(View.INVISIBLE);
-                countdownInProgress = false; //unlock the countdown
-            }
-        };
-
-        progressBar.setProgress(PROGRESS_MIN);
-        progressBar.setVisibility(View.VISIBLE);
-        progressTextView.setVisibility(View.VISIBLE);
-        countdownInProgress = true; //lock the countdown progress
-        countDownTimer.start();
     }
 
 }

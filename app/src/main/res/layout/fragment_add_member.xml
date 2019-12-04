@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
     <Button
-        android:id="@+id/addPictureButton"
+        android:id="@+id/addFingerprintButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/viewPadding"
@@ -58,36 +58,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/roleLabel"
         app:layout_constraintTop_toBottomOf="@+id/roleSpinner" />
-
-    <Button
-        android:id="@+id/addFingerprintButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/viewPadding"
-        android:text="@string/labelAddFingerprint"
-        app:layout_constraintEnd_toEndOf="@+id/addPictureButton"
-        app:layout_constraintStart_toStartOf="@+id/addPictureButton"
-        app:layout_constraintTop_toBottomOf="@+id/addPictureButton" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addFingerprintButton" />
-
-    <TextView
-        android:id="@+id/progressText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="100sp"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveMemberButton"

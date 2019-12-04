@@ -1,5 +1,6 @@
 package com.via.letmein.persistence.repository;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
@@ -9,6 +10,7 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.api.request.CreateMemberJson;
 import com.via.letmein.persistence.model.HouseholdMember;
 
 import java.util.List;
@@ -27,6 +29,8 @@ public class HouseholdMemberRepository {
     public static final String ERROR_MISSING_REQUIRED_PARAMETERS = "missing_request_parameters";
     public static final String ERROR_EXPIRED_SESSION_ID = "expired_session_id";
     public static final String ERROR_DATABASE_ERROR = "database_error";
+    public static final String ERROR_USERNAME_TOO_SHORT = "short_username_length";
+    public static final String ERROR_NAME_IN_USE = "name_already_in_use";
 
     /**
      * Single instance of the class.
@@ -34,9 +38,11 @@ public class HouseholdMemberRepository {
     private static HouseholdMemberRepository instance;
 
     /**
-     * Retrieved data.
+     * Retrieved memberListLiveData.
      */
-    private final MutableLiveData<ApiResponse> data;
+    private final MutableLiveData<ApiResponse> memberListLiveData;
+
+    private final MutableLiveData<ApiResponse> createMemberLiveData;
 
     /**
      * API to which requests are sent.
@@ -45,8 +51,8 @@ public class HouseholdMemberRepository {
 
     private HouseholdMemberRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        ApiResponse dummy = new ApiResponse();
-        data = new MutableLiveData<>(dummy);
+        memberListLiveData = new MutableLiveData<>(new ApiResponse());
+        createMemberLiveData = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -68,7 +74,7 @@ public class HouseholdMemberRepository {
      */
     public MutableLiveData<ApiResponse> getAllHouseholdMembers(String sessionId) {
         refreshUsers(sessionId);
-        return data;
+        return memberListLiveData;
     }
 
     /**
@@ -99,7 +105,7 @@ public class HouseholdMemberRepository {
                         dummy.setContent(responseList);
                     }
                     //save the value
-                    data.setValue(dummy);
+                    memberListLiveData.setValue(dummy);
                 }
             }
 
@@ -109,5 +115,41 @@ public class HouseholdMemberRepository {
             }
         });
 
+    }
+
+    public LiveData<ApiResponse> createMember(String name, String role, String sessionId) {
+        refreshCreateUser(name, role, sessionId);
+        return createMemberLiveData;
+    }
+
+    private void refreshCreateUser(String name, String role, String sessionId) {
+        Call<ApiResponse> call = api.createUser(new CreateMemberJson(name, role, sessionId));
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+
+                    Gson gson = new GsonBuilder().create();
+
+                    //Check for error & resolve
+                    if (dummy.isError())
+                        dummy.setContent(0);
+                    else {
+                        TypeToken<Integer> responseTypeToken = new TypeToken<Integer>() {
+                        };
+                        Integer responseInteger = gson.fromJson(gson.toJson(dummy.getContent()), responseTypeToken.getType());
+                        dummy.setContent(responseInteger);
+                    }
+                    //save the value
+                    createMemberLiveData.setValue(dummy);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+            }
+        });
     }
 }
