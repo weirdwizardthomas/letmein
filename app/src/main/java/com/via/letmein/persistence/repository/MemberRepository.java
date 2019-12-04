@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Tomas Koristka: 291129@via.dk
  */
-public class    MemberRepository {
+public class MemberRepository {
 
     private static MemberRepository instance;
     private final MemberDAO memberDAO;

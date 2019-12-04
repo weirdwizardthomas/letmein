@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.register.RegisterActivity;
@@ -66,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             login();
     }
 
-    //todo change to accept string
     private void saveSessionID(String sessionId) {
         Session session = Session.getInstance(getApplicationContext());
         session.setSessionId(sessionId);
@@ -79,13 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivityViewModel.getSessionID(username, password).observe(this, apiResponse -> {
             if (apiResponse != null) {
-                if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                if (!apiResponse.isError() && apiResponse.getContent() != null)
                     saveSessionID((String) apiResponse.getContent());
-                }
 
-                if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
+                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                     handleErrors(apiResponse.getErrorMessage());
-                }
+
             }
         });
 
@@ -99,11 +99,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
             case ERROR_SHORT_USERNAME: {
-                //TODO ??
+                //todo snackbar
+                Toast.makeText(this, "The username is too short!", Toast.LENGTH_SHORT).show();
                 break;
             }
             case ERROR_WRONG_USER_PASSWORD: {
-                //TODO ??
+                //TODO ?? wipe and start over again
                 break;
             }
         }

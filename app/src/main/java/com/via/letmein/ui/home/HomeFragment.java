@@ -31,8 +31,7 @@ import java.util.Objects;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class HomeFragment extends Fragment implements VisitAdapter.OnItemClickListener {
-
-    //TODO add control over how many recent entries are shown - number, date range, ... ? - adjustable in settings
+    //todo show last 7 days
 
     private HomeViewModel homeViewModel;
     private RecyclerView recentEntriesRecyclerView;
