@@ -25,7 +25,8 @@ android {
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io'
+        }
         jcenter()
 
     }
@@ -61,7 +62,7 @@ dependencies {
 
     //extended fab
     implementation 'com.google.android.material:material:1.2.0-alpha02'
-    //vlc
-    implementation 'de.mrmaffen:vlc-android-sdk:3.0.0'
 
+    //vlc
+    implementation 'org.videolan.android:libvlc-all:3.1.12'
 }

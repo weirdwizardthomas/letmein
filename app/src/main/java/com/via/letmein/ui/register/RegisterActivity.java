@@ -83,7 +83,10 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(v -> {
             String name = usernameTextView.getText().toString();
             String serial = serialIdTextView.getText().toString();
-            if (!name.isEmpty()) //TODO show a prompt for non empty usernameTextView
+            if (name.isEmpty())
+                Toast.makeText(this, "Name cannot be empty.", Toast.LENGTH_SHORT).show();
+
+            if (!name.isEmpty())
                 register(name, serial);
         });
     }

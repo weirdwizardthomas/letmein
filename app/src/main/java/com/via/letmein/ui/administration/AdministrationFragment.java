@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.ApiResponse;
+import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.ui.main_activity.MainActivity;
 
@@ -61,38 +62,36 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
      * Set an observer to the data provided by {@see AdministrationViewModel#getAllHouseholdMembers} and pass them to the {@see AdministrationFragment#membersAdapter}.
      */
     private void observeData() {
-        administrationViewModel.getAllHouseholdMembers("").observe(this, new Observer<ApiResponse>() {
-            @Override
-            public void onChanged(ApiResponse response) {
-                if (response != null) {
+        String sessionId = Session.getInstance(getContext()).getSessionId();
+        administrationViewModel.getAllHouseholdMembers(sessionId).observe(this, response -> {
+            if (response != null) {
 
-                    if (!response.isError() && response.getContent() != null)
-                        membersAdapter.setData((List<HouseholdMember>) response.getContent());
+                if (!response.isError() && response.getContent() != null)
+                    membersAdapter.setData((List<HouseholdMember>) response.getContent());
 
-                    if (response.isError() && response.getErrorMessage() != null)
-                        handleError(response.getErrorMessage());
+                if (response.isError() && response.getErrorMessage() != null)
+                    handleError(response.getErrorMessage());
 
-                }
-            }
-
-            private void handleError(String errorMessage) {
-                switch (errorMessage) {
-                    case ERROR_EXPIRED_SESSION_ID: {
-                        ((MainActivity) Objects.requireNonNull(getActivity())).login();
-                        Toast.makeText(getContext(), "Attempting to log in", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    case ERROR_MISSING_REQUIRED_PARAMETERS: {
-                        Toast.makeText(getContext(), getString(R.string.missingParameters), Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    case ERROR_DATABASE_ERROR: {
-                        Toast.makeText(getContext(), getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }
             }
         });
+    }
+
+    private void handleError(String errorMessage) {
+        switch (errorMessage) {
+            case ERROR_EXPIRED_SESSION_ID: {
+                ((MainActivity) Objects.requireNonNull(getActivity())).login();
+                Toast.makeText(getContext(), "Attempting to log in", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case ERROR_MISSING_REQUIRED_PARAMETERS: {
+                Toast.makeText(getContext(), getString(R.string.missingParameters), Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case ERROR_DATABASE_ERROR: {
+                Toast.makeText(getContext(), getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
     }
 
     /**

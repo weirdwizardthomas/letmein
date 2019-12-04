@@ -41,8 +41,7 @@ public class HouseholdMemberImageRepository {
 
     private HouseholdMemberImageRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        ApiResponse dummy = new ApiResponse();
-        data = new MutableLiveData<>(dummy);
+        data = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
