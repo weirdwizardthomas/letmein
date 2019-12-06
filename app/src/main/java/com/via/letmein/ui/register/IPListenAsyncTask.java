@@ -12,10 +12,11 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
     private static final String TAG = "IPListen async";
     public static final int PORT = 8085;
     public static final String PAYLOAD = "REAC";
-    private final RegisterActivity registerActivity;
 
-    public IPListenAsyncTask(RegisterActivity registerActivity) {
-        this.registerActivity = registerActivity;
+    private onTaskCompleted onTaskCompletedListener;
+
+    public IPListenAsyncTask(IPListenAsyncTask.onTaskCompleted onTaskCompletedListener) {
+        this.onTaskCompletedListener = onTaskCompletedListener;
     }
 
     @Override
@@ -49,6 +50,10 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        registerActivity.onIpReceived(s);
+        onTaskCompletedListener.onTaskCompleted(s);
+    }
+
+    public interface onTaskCompleted {
+        void onTaskCompleted(String ipAddress);
     }
 }

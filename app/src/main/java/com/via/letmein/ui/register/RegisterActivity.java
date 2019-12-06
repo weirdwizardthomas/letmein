@@ -25,7 +25,7 @@ import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRO
 /**
  * An activity that handles device registration and pairing with this application.
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements IPListenAsyncTask.onTaskCompleted {
 
     private RegisterViewModel registerViewModel;
 
@@ -98,7 +98,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Registers a new administrator on the server
-     * @param name username of the administrator
+     *
+     * @param name     username of the administrator
      * @param serialId Serial number of the device
      */
     public void register(final String name, String serialId) {
@@ -125,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Handles error responses from the server
+     *
      * @param errorMessage Error message received from the server
      */
     private void handleError(String errorMessage) {
@@ -159,9 +161,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * Stores the received ip address of the server
+     *
      * @param ipAddress The ip address of the server
      */
-    public void onIpReceived(String ipAddress) {
+    @Override
+    public void onTaskCompleted(String ipAddress) {
         //save the ip address
         registerViewModel.setIpAddress(ipAddress);
         //allow button clicking
@@ -169,7 +173,6 @@ public class RegisterActivity extends AppCompatActivity {
         //show ip address
         ipAddressTextView.setVisibility(View.VISIBLE);
         ipAddressTextView.setText(getString(R.string.labelIpAddressFound) + ipAddress);
+
     }
-
-
 }
