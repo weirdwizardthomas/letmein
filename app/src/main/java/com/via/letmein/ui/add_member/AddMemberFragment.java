@@ -94,12 +94,13 @@ public class AddMemberFragment extends Fragment {
                 break;
             }
             case ERROR_NAME_IN_USE: {
-                //todo same as above
+                //todo add a textview? or a snackbar
                 Toast.makeText(getContext(), "Username already in use", Toast.LENGTH_SHORT).show();
                 break;
             }
             case ERROR_DATABASE_ERROR: {
                 Toast.makeText(getContext(), "Database error", Toast.LENGTH_SHORT).show();
+                break;
             }
         }
     }
