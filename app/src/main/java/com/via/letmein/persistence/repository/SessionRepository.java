@@ -101,4 +101,12 @@ public class SessionRepository {
     public void setUsername(String username) {
         session.setUsername(username);
     }
+
+    public void setSessionID(String sessionID) {
+        session.setSessionId(sessionID);
+    }
+
+    public void wipeSession() {
+        session.wipeSession();
+    }
 }
