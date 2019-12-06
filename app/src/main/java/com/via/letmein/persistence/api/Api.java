@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -41,4 +42,13 @@ public interface Api {
 
     @GET("video")
     Call<ApiResponse> getStreamUrl(@Query(SESSION_ID) String sessionId);
+
+    @GET("logs")
+    Call<ApiResponse> getLog(@Query(SESSION_ID) String sessionId);
+
+    @GET("notifications")
+    Call<ApiResponse> getNotificationLog(@Query(SESSION_ID) String sessionId);
+
+    @PUT("notification")
+    Call<ApiResponse> markNotificationAsRead();
 }
