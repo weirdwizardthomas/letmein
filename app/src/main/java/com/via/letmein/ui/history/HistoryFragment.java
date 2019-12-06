@@ -96,7 +96,6 @@ public class HistoryFragment extends Fragment {
                 .setTheme(resolveOrThrow(Objects.requireNonNull(getContext()), R.attr.materialCalendarTheme));
     }
 
-
     private static int resolveOrThrow(Context context, @AttrRes int attributeResId) throws IllegalArgumentException {
         TypedValue typedValue = new TypedValue();
         if (context.getTheme().resolveAttribute(attributeResId, typedValue, true))
