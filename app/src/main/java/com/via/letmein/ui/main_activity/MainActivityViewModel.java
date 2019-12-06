@@ -23,4 +23,14 @@ public class MainActivityViewModel extends AndroidViewModel {
         return repository.getSessionID(username, password);
     }
 
+    public void setSessionID(String sessionID) {
+        repository.setSessionID(sessionID);
+    }
+
+    /**
+     * Removes all session related data
+     */
+    public void wipeSession() {
+        repository.wipeSession();
+    }
 }

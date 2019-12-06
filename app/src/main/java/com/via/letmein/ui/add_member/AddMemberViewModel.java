@@ -14,16 +14,17 @@ import com.via.letmein.persistence.repository.HouseholdMemberRepository;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Viewmodel for {@see AddMemberFragment}
+ */
 public class AddMemberViewModel extends AndroidViewModel {
 
     private final HouseholdMemberRepository repository;
     private final MutableLiveData<List<String>> roles;
-    private Session session;
 
     public AddMemberViewModel(@NonNull Application application) {
         super(application);
-        session = Session.getInstance(application);
-        repository = HouseholdMemberRepository.getInstance(session);
+        repository = HouseholdMemberRepository.getInstance(Session.getInstance(application));
 
         List<String> dummy = Arrays.asList("Member", "Owner", "Postman", "Cleaning lady");
         roles = new MutableLiveData<>();
@@ -35,8 +36,15 @@ public class AddMemberViewModel extends AndroidViewModel {
         return roles;
     }
 
-    //todo get sessionID from the activity instead?
-    public LiveData<ApiResponse> createUser(String name, String role) {
-        return repository.createMember(name, role, session.getSessionId());
+    /**
+     * Creates a new household member and saves it to the server
+     *
+     * @param name      Name of the new member
+     * @param role      Assigned role of the new member
+     * @param sessionId Current session's id
+     * @return Observable data for response checking and error handling
+     */
+    public LiveData<ApiResponse> createMember(String name, String role, String sessionId) {
+        return repository.createMember(name, role, sessionId);
     }
 }

@@ -17,7 +17,7 @@ import com.via.letmein.persistence.repository.HouseholdMemberRepository;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class AdministrationViewModel extends AndroidViewModel {
-    //todo document
+
     private final HouseholdMemberRepository repository;
 
     public AdministrationViewModel(@NonNull Application application) {
@@ -35,8 +35,4 @@ public class AdministrationViewModel extends AndroidViewModel {
         return repository.getAllHouseholdMembers(sessionId);
     }
 
-    //todo document
-    public void delete(HouseholdMember householdMember) {
-        //TODO send a delete request
-    }
 }

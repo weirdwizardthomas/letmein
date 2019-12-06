@@ -43,7 +43,6 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
 
     private RecyclerView membersRecyclerView;
     private MemberAdapter membersAdapter;
-
     private AdministrationViewModel administrationViewModel;
     private FloatingActionButton addMemberButton;
 
@@ -76,11 +75,15 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         });
     }
 
+    /**
+     * Handles error messages from the server
+     * @param errorMessage Error message received from the server to be processed
+     */
     private void handleError(String errorMessage) {
         switch (errorMessage) {
             case ERROR_EXPIRED_SESSION_ID: {
                 ((MainActivity) Objects.requireNonNull(getActivity())).login();
-                Toast.makeText(getContext(), "Attempting to log in", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Loging in", Toast.LENGTH_SHORT).show();
                 break;
             }
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
@@ -123,7 +126,6 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 HouseholdMember memberToDelete = membersAdapter.getMemberAt(viewHolder.getAdapterPosition());
-                administrationViewModel.delete(memberToDelete);
             }
         }).attachToRecyclerView(membersRecyclerView);
 

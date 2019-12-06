@@ -25,6 +25,12 @@ public class LiveViewModel extends AndroidViewModel {
         return lockRepository.openDoor(sessionId);
     }
 
+    /**
+     * Gets the Url on which the camera feed is streamed
+     *
+     * @param sessionId Current session's id
+     * @return Observable Live data for responses
+     */
     public LiveData<ApiResponse> getStreamUrl(String sessionId) {
         return cameraStreamRepository.getStreamUrl(sessionId);
     }

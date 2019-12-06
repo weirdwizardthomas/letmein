@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.ui.main_activity.MainActivity;
 
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
@@ -25,6 +26,9 @@ import org.videolan.libvlc.MediaPlayer;
 import org.videolan.libvlc.util.VLCVideoLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
+import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_EXPIRED_SESSION_ID;
 
 /**
  * Fragment displaying the live feed from the camera and allowing remote door unlocking.
@@ -42,7 +46,6 @@ public class LiveFragment extends Fragment {
     private LibVLC libVLC;
     private VLCVideoLayout vlcVideoLayout;
     private MediaPlayer mediaPlayer;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,7 +118,7 @@ public class LiveFragment extends Fragment {
             media.release();
             mediaPlayer.play();
         } catch (Exception e) {
-
+            //todo figure this shit out - attaching and detaching when swapping fragments causes crashes
         }
     }
 
@@ -124,6 +127,9 @@ public class LiveFragment extends Fragment {
         vlcVideoLayout = root.findViewById(R.id.videoView);
         openButton = root.findViewById(R.id.openButton);
         openButton.setOnClickListener(v -> {
+            //authenticate
+            openPin();
+            //make the call
             liveViewModel
                     .openDoor(Session.getInstance(getContext()).getSessionId())
                     .observe(this, apiResponse -> {
@@ -139,7 +145,26 @@ public class LiveFragment extends Fragment {
         });
     }
 
+    /**
+     * Opens the application's pin lock screen
+     */
+    private void openPin() {
+        Intent intent = new Intent(getContext(), EnterPinActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Handles error responses from the server
+     * @param errorMessage Error response to be handled
+     */
     private void handleErrors(String errorMessage) {
+
+        switch (errorMessage) {
+            case ERROR_EXPIRED_SESSION_ID: {
+                ((MainActivity) Objects.requireNonNull(getActivity())).login();
+            }
+        }
+
         Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
     }
 
@@ -149,7 +174,7 @@ public class LiveFragment extends Fragment {
         switch (requestCode) {
             case PIN_REQUEST_CODE: {
                 if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
-                    Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Request cancelled", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
                 }

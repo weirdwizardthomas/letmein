@@ -1,7 +1,11 @@
 package com.via.letmein.ui.main_activity;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,9 +22,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.service.NotificationService;
 import com.via.letmein.ui.register.RegisterActivity;
 
 import static com.via.letmein.persistence.repository.SessionRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
@@ -33,6 +37,8 @@ import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRO
 public class MainActivity extends AppCompatActivity {
 
     public static final int REGISTER_REQUEST_CODE = 1;
+    private static final String TAG = "MainActivity";
+
     private AppBarConfiguration appBarConfiguration;
     private MainActivityViewModel mainActivityViewModel;
 
@@ -42,35 +48,30 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         setContentView(R.layout.activity_main);
         initialiseToolbar();
+        initialiseNavigation();
 
+        //todo reenable
+        // openPin();
+
+        if (isRegistered())
+            login();
+        else
+            register();
+
+    }
+
+    private void initialiseNavigation() {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,
                 R.id.nav_history,
                 R.id.nav_administration,
-                R.id.nav_live,
-                R.id.nav_feedback,
-                R.id.nav_settings)
+                R.id.nav_live)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-
-        // openPin();
-
-        if (!isRegistered())
-            register();
-
-        if (isRegistered())
-            login();
-    }
-
-    private void saveSessionID(String sessionId) {
-        Session session = Session.getInstance(getApplicationContext());
-        session.setSessionId(sessionId);
     }
 
     public void login() {
@@ -80,41 +81,72 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivityViewModel.getSessionID(username, password).observe(this, apiResponse -> {
             if (apiResponse != null) {
-                if (!apiResponse.isError() && apiResponse.getContent() != null)
-                    saveSessionID((String) apiResponse.getContent());
+                if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                    mainActivityViewModel.setSessionID((String) apiResponse.getContent());
+                    startNotificationListening();
+                }
 
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                     handleErrors(apiResponse.getErrorMessage());
 
             }
         });
-
     }
 
+    /**
+     * Starts a {@See NotificationService} background service to listen for server's notifications
+     */
+    private void startNotificationListening() {
+        ComponentName componentName = new ComponentName(this, NotificationService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setPeriodic(900000)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPersisted(true)
+                .build();
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS)
+            Log.i("Notifications", "Job scheduled");
+        else
+            Log.i("Notifications", "Job scheduling failed");
+    }
+
+    /**
+     * Handles error responses from the server
+     * @param errorMessage Error response to be handled
+     */
     private void handleErrors(String errorMessage) {
         switch (errorMessage) {
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
-                //TODO ??
+                Log.i(TAG, ERROR_MISSING_REQUIRED_PARAMETERS);
                 break;
-
             }
             case ERROR_SHORT_USERNAME: {
                 //todo snackbar
-                Toast.makeText(this, "The username is too short!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.messageUsernameTooShort), Toast.LENGTH_SHORT).show();
                 break;
             }
             case ERROR_WRONG_USER_PASSWORD: {
-                //TODO ?? wipe and start over again
+                mainActivityViewModel.wipeSession();
+                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.registerActivity);
+                finish();
                 break;
             }
         }
     }
 
+    /**
+     * Opens {@see RegisterActivity} for new administrator's registration
+     */
     private void register() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivityForResult(intent, REGISTER_REQUEST_CODE);
     }
 
+    /**
+     * Determines whether an administrator has already been paired and registered
+     * @return true if is registered, false otherwise
+     */
     private boolean isRegistered() {
         Session session = Session.getInstance(getApplicationContext());
         return session.isRegistered();
@@ -136,9 +168,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    /**
-     * Initialises the bottom navigation menu
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

@@ -36,10 +36,6 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     private ImageAdapter imagesAdapter;
     private MemberProfileViewModel memberProfileViewModel;
 
-
-    //TODO add edit option (in the toolbar)
-    //TODO add recent entries as a recycler view list
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,12 +72,21 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         });
     }
 
+    /**
+     * Handles server's error messages
+     * @param errorMessage Error message to be handled
+     */
     private void handleErrors(String errorMessage) {
         switch(errorMessage){
 
         }
     }
 
+    /**
+     * Initialises the fragment's layout
+     * @param root
+     * @param extras
+     */
     private void initialiseLayout(View root, Bundle extras) {
         String username = extras != null ? extras.getString(BUNDLE_NAME_KEY) : "";
         String role = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";

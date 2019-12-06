@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.List;
@@ -38,18 +39,12 @@ import static com.via.letmein.persistence.repository.HouseholdMemberRepository.E
 public class AddMemberFragment extends Fragment {
     //TODO add a button to upload a custom picture
 
-    private static final int PROGRESS_MIN = 0;
-    private static final int PROGRESS_MAX = 100;
-    private static final int SECOND_IN_MILISECONDS = 1000;
-
     private ArrayAdapter<String> roleSpinnerAdapter;
     private Spinner roleSpinner;
     private AddMemberViewModel addMemberViewModel;
     private Button addCredentials;
     private FloatingActionButton floatingActionButton;
     private TextView nameInput;
-    private View.OnClickListener onSaveClickListener;
-
 
     @Nullable
     @Override
@@ -82,7 +77,6 @@ public class AddMemberFragment extends Fragment {
         roleSpinner = root.findViewById(R.id.roleSpinner);
         roleSpinner.setAdapter(roleSpinnerAdapter);
     }
-
 
     private void handleErrors(String errorMessage) {
         switch (errorMessage) {
@@ -127,7 +121,7 @@ public class AddMemberFragment extends Fragment {
             String name = nameInput.getText().toString();
             String role = roleSpinner.getSelectedItem().toString();
 
-            addMemberViewModel.createUser(name, role);
+            addMemberViewModel.createMember(name, role, Session.getInstance(getContext()).getSessionId());
             Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
             Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
         });

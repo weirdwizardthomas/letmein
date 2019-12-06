@@ -25,7 +25,6 @@ import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRO
 /**
  * An activity that handles device registration and pairing with this application.
  */
-//todo document
 public class RegisterActivity extends AppCompatActivity {
 
     private RegisterViewModel registerViewModel;
@@ -47,10 +46,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Starts a background task that listens to network's broadcast to find the locking device
+     */
     private void listenForIp() {
         new IPListenAsyncTask(this).execute();
     }
 
+    /**
+     * Initialises layout's components.
+     */
     private void initialiseLayout() {
         usernameTextView = findViewById(R.id.nameTextView);
         usernameTextView.addTextChangedListener(new TextWatcher() {
@@ -91,8 +96,13 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void register(final String name, String serialNumber) {
-        registerViewModel.register(name, serialNumber).observe(this, apiResponse -> {
+    /**
+     * Registers a new administrator on the server
+     * @param name username of the administrator
+     * @param serialId Serial number of the device
+     */
+    public void register(final String name, String serialId) {
+        registerViewModel.register(name, serialId).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
 
@@ -113,6 +123,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Handles error responses from the server
+     * @param errorMessage Error message received from the server
+     */
     private void handleError(String errorMessage) {
 
         switch (errorMessage) {
@@ -143,6 +157,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Stores the received ip address of the server
+     * @param ipAddress The ip address of the server
+     */
     public void onIpReceived(String ipAddress) {
         //save the ip address
         registerViewModel.setIpAddress(ipAddress);
