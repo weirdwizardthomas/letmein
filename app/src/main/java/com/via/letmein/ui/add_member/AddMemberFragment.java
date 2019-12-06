@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
@@ -37,13 +36,13 @@ import static com.via.letmein.persistence.repository.HouseholdMemberRepository.E
  * @author Tomas Koristka: 291129@via.dk
  */
 public class AddMemberFragment extends Fragment {
-    //TODO add a button to upload a custom picture
+    //TODO nice to have add a button to upload a custom picture
 
     private ArrayAdapter<String> roleSpinnerAdapter;
     private Spinner roleSpinner;
     private AddMemberViewModel addMemberViewModel;
-    private Button addCredentials;
-    private FloatingActionButton floatingActionButton;
+    private Button addFaceAndFingerprintButton;
+    private FloatingActionButton saveMemberFloatingActionButton;
     private TextView nameInput;
 
     @Nullable
@@ -112,19 +111,32 @@ public class AddMemberFragment extends Fragment {
      */
     private void initialiseButtons(final View root) {
 
-        addCredentials = root.findViewById(R.id.addFingerprintButton);
-        addCredentials.setOnClickListener(v -> {
-
+        addFaceAndFingerprintButton = root.findViewById(R.id.addFingerprintButton);
+        addFaceAndFingerprintButton.setOnClickListener(v -> {
+            //todo send request to the server to take pictures and fingerprints
         });
 
-        floatingActionButton = root.findViewById(R.id.saveMemberButton);
-        floatingActionButton.setOnClickListener(v -> {
+        saveMemberFloatingActionButton = root.findViewById(R.id.saveMemberButton);
+        saveMemberFloatingActionButton.setOnClickListener(v -> {
             String name = nameInput.getText().toString();
             String role = roleSpinner.getSelectedItem().toString();
 
-            addMemberViewModel.createMember(name, role, Session.getInstance(getContext()).getSessionId());
-            Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
+            addMemberViewModel
+                    .createMember(name, role, Session.getInstance(getContext()).getSessionId())
+                    .observe(this, apiResponse -> {
+                        if (apiResponse != null) {
+
+                            if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                                Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
+                                // Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
+                            }
+
+                            if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                                handleErrors(apiResponse.getErrorMessage());
+                        }
+                    });
+
+
         });
     }
 
