@@ -82,4 +82,11 @@ public class Session {
     public boolean isRegistered() {
         return preferences.getBoolean(REGISTERED_KEY, false);
     }
+
+    /**
+     * Removes all stored records of the sesssion
+     */
+    public void wipeSession() {
+        preferences.edit().clear().apply();
+    }
 }

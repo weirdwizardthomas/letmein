@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/menu_home" />
+        android:id="@+id/nav_live"
+        android:icon="@drawable/ic_video_wireless_black_24dp"
+        android:title="@string/menu_live" />
     <item
         android:id="@+id/nav_history"
         android:icon="@drawable/ic_history_black_24dp"
@@ -12,10 +12,6 @@
         android:id="@+id/nav_administration"
         android:icon="@drawable/ic_contacts_black_24dp"
         android:title="@string/menu_administration" />
-    <item
-        android:id="@+id/nav_live"
-        android:icon="@drawable/ic_video_wireless_black_24dp"
-        android:title="@string/menu_live" />
 
 
 </menu>
