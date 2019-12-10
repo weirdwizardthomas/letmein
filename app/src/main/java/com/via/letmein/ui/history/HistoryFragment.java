@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.Log;
 import com.via.letmein.ui.main_activity.MainActivity;
 
@@ -82,7 +83,7 @@ public class HistoryFragment extends Fragment {
     }
 
     private void getLogs() {
-        historyViewModel.getVisits("1", selectionDates).observe(this, apiResponse -> {
+        historyViewModel.getVisits(Session.getInstance(getContext()).getSessionId(), selectionDates).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null)
                     dailyLogAdapter.setData((List<Log>) apiResponse.getContent());
