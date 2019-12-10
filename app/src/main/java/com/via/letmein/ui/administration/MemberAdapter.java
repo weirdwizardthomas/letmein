@@ -1,5 +1,6 @@
 package com.via.letmein.ui.administration;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +10,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.HouseholdMember;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.via.letmein.persistence.api.ServiceGenerator.PORT;
+
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
     private List<HouseholdMember> data;
+    private Context context;
     private final OnItemClickListener onItemClickListener;
 
-    MemberAdapter(OnItemClickListener onItemClickListener) {
+    MemberAdapter(Context context, OnItemClickListener onItemClickListener) {
+        this.context = context;
         this.data = new ArrayList<>();
         this.onItemClickListener = onItemClickListener;
     }
@@ -36,9 +43,25 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull MemberAdapter.ViewHolder holder, int position) {
         HouseholdMember householdMember = data.get(position);
-        //TODO load a profile image
-        //holder.portrait.setImageResource(householdMember.getImageID());
         holder.name.setText(householdMember.getName());
+        String url = new StringBuilder()
+                .append("http:/")
+                .append(Session.getInstance(context).getIpAddress())
+                .append(":")
+                .append(PORT)
+                .append(householdMember.getProfilePhoto())
+                .append("?session_id=")
+                .append(Session.getInstance(context).getSessionId())
+                .toString();
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.profile_icon_placeholder_background)
+                .into(holder.portrait);
+       /* Picasso.get()
+                .load("https://image.shutterstock.com/image-vector/woman-avatar-isolated-on-white-260nw-1472212124.jpg")
+                .placeholder(R.drawable.profile_icon_placeholder_background)
+                .into(holder.portrait);*/
+
     }
 
     @Override

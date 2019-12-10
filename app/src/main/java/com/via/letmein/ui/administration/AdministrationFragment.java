@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,6 +74,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
 
     /**
      * Handles error messages from the server
+     *
      * @param errorMessage Error message received from the server to be processed
      */
     private void handleError(String errorMessage) {
@@ -101,7 +101,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
      * @param root Parent view of the fragment.
      */
     private void initialiseLayout(View root) {
-        membersAdapter = new MemberAdapter(this);
+        membersAdapter = new MemberAdapter(getContext(), this);
 
         //Recycler view
         membersRecyclerView = root.findViewById(R.id.membersRecyclerView);
@@ -109,7 +109,8 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         membersRecyclerView.setAdapter(membersAdapter);
         membersRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        //Swipe to delete item
+
+       /* //Swipe to delete item
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -125,7 +126,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 HouseholdMember memberToDelete = membersAdapter.getMemberAt(viewHolder.getAdapterPosition());
             }
-        }).attachToRecyclerView(membersRecyclerView);
+        }).attachToRecyclerView(membersRecyclerView);*/
 
         //Floating button
         addMemberButton = root.findViewById(R.id.addMemberButton);
