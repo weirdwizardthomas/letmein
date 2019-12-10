@@ -13,53 +13,30 @@ public class HouseholdMember {
     /**
      * Relative URL path (from the base url) to the picture
      */
-    private String picturePath;
+    private String profilePhoto;
 
-    public HouseholdMember(int id, boolean isAdministrator, String name, String role, String picturePath) {
+    public HouseholdMember(int id, boolean isAdministrator, String name, String role, String profilePhoto) {
         this.id = id;
         this.isAdministrator = isAdministrator;
         this.name = name;
         this.role = role;
-        this.picturePath = picturePath;
+        this.profilePhoto = profilePhoto;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public String getProfilePhoto() {
+        return profilePhoto;
     }
 
-    public String getPicturePath() {
-        return picturePath;
-    }
-
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
-    }
-
-    public boolean isAdministrator() {
-        return isAdministrator;
-    }
-
-    public void setAdministrator(boolean administrator) {
-        isAdministrator = administrator;
-    }
 }

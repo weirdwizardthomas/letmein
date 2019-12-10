@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REGISTER_REQUEST_CODE = 1;
     private static final String TAG = "MainActivity";
+    public static final int INTERVAL_MILLIS = 900000;
+    public static final int JOB_ID = 123;
 
     private AppBarConfiguration appBarConfiguration;
     private MainActivityViewModel mainActivityViewModel;
@@ -52,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         openPin();
 
-        if (isRegistered())
+    /*    if (isRegistered())
             login();
         else
-            register();
+            register();*/
 
     }
 
@@ -97,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void startNotificationListening() {
         ComponentName componentName = new ComponentName(this, NotificationService.class);
-        JobInfo info = new JobInfo.Builder(123, componentName)
-                .setPeriodic(900000)
+        JobInfo info = new JobInfo.Builder(JOB_ID, componentName)
+                .setPeriodic(INTERVAL_MILLIS)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
                 .build();

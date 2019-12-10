@@ -24,5 +24,4 @@ public class HistoryViewModel extends AndroidViewModel {
         return repository.getVisits(sessionId, dateRange);
     }
 
-
 }

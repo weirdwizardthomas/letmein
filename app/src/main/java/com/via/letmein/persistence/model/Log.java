@@ -17,6 +17,7 @@ public class Log {
     private static final String PROMOTED_TO_ADMINISTRATOR = "Promoted to administrator.";
     private static final String DOOR_ACCESS = "Door access.";
     private static final String PRETTY_INFO_DEFAULT = "";
+    private static final String DATE_TIME_DELIMITER = " ";
 
     private int logID;
     private int userID;
@@ -58,7 +59,6 @@ public class Log {
         return info;
     }
 
-
     public Timestamp getTimestamp(String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         Date parsedDate = null;
@@ -72,13 +72,9 @@ public class Log {
 
     public String getHours(String format) {
         String timestamp = getTimestamp(format).toString();
-        int startingIndex = timestamp.indexOf(DATE_TIME_DELIMITER());
+        int startingIndex = timestamp.indexOf(DATE_TIME_DELIMITER);
         int endingIndex = timestamp.lastIndexOf(TIME_DELIMITER);
         return timestamp.substring(startingIndex, endingIndex);
-    }
-
-    private String DATE_TIME_DELIMITER() {
-        return " ";
     }
 
     public String getInfoPretty() {
