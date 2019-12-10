@@ -92,7 +92,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         String role = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";
 
         name = root.findViewById(R.id.name);
-        this.role = root.findViewById(R.id.role);
+        this.role = root.findViewById(R.id.action);
 
         name.setText(username);
         this.role.setText(role);

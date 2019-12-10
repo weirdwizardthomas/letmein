@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ServiceGenerator {
 
-    private static final int PORT = 8080;
+    public static final int PORT = 8080;
 
     private static Retrofit getRetrofitInstance(String ipAddress) {
         String baseUrl = "http:/" + ipAddress + ":" + PORT + "/api/";
@@ -19,6 +19,16 @@ public class ServiceGenerator {
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create());
         return retrofitBuilder.build();
+    }
+
+    public static final String MOCKUP_ADDRESS = "https://9d04a36a-6449-4095-a647-8b62690a2680.mock.pstmn.io/api/";
+
+    public static Api getMockupApi() {
+        return new Retrofit.Builder()
+                .baseUrl(MOCKUP_ADDRESS)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(Api.class);
     }
 
     /**

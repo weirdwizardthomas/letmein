@@ -40,13 +40,13 @@
         android:id="@+id/roleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@id/role"
+        android:labelFor="@id/action"
         android:text="@string/labelRole"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/role"
+        android:id="@+id/action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/viewPadding"
@@ -62,7 +62,7 @@
         android:text="@string/labelStoredPictures"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/role" />
+        app:layout_constraintTop_toBottomOf="@+id/action" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recentEntries"

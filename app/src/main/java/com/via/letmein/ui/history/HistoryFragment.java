@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.via.letmein.R;
-import com.via.letmein.ui.history.day_entry.DayEntryAdapter;
+import com.via.letmein.persistence.model.Log;
+import com.via.letmein.ui.main_activity.MainActivity;
 
+import java.util.List;
 import java.util.Objects;
 
 public class HistoryFragment extends Fragment {
@@ -30,7 +32,7 @@ public class HistoryFragment extends Fragment {
     private HistoryViewModel historyViewModel;
 
     private RecyclerView dayEntryRecyclerView;
-    private RecyclerView.Adapter dayEntryAdapter;
+    private DailyLogAdapter dailyLogAdapter;
     private Button openCalendarButton;
     private MaterialDatePicker<Pair<Long, Long>> picker;
     private Pair<Long, Long> selectionDates;
@@ -42,9 +44,7 @@ public class HistoryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
         initialiseLayout(root);
-
-        //Open the calendar to pick a custom range
-        picker.show(getChildFragmentManager(), picker.toString());
+        getLogs();
 
         return root;
     }
@@ -55,24 +55,56 @@ public class HistoryFragment extends Fragment {
      * @param root Parent element of the layout
      */
     private void initialiseLayout(View root) {
-        dayEntryAdapter = new DayEntryAdapter(getContext(), historyViewModel.getData().getValue());
+        dailyLogAdapter = new DailyLogAdapter(getContext());
         dayEntryRecyclerView = root.findViewById(R.id.visitsRecyclerView);
         dayEntryRecyclerView.setHasFixedSize(true);
         dayEntryRecyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(),
                 LinearLayoutManager.VERTICAL,
                 false));
-        dayEntryRecyclerView.setAdapter(dayEntryAdapter);
+        dayEntryRecyclerView.setAdapter(dailyLogAdapter);
         setDefaultSelectionDates();
+
         picker = setupDateSelectorBuilder().build();
         picker.addOnPositiveButtonClickListener(selection -> {
             selectionDates = selection;
-            openCalendarButton.setText(getString(R.string.selectRangeToShow) + picker.getHeaderText());
-            //TODO fetch data
+            StringBuilder calendarButtonText = new StringBuilder()
+                    .append(getString(R.string.selectRangeToShow))
+                    .append(picker.getHeaderText());
+            openCalendarButton.setText(calendarButtonText.toString());
+            getLogs();
         });
         openCalendarButton = root.findViewById(R.id.openCalendarButton);
         openCalendarButton.setText(getString(R.string.selectRangeToShow));
         openCalendarButton.setOnClickListener(v -> picker.show(getChildFragmentManager(), picker.toString()));
+
+
+    }
+
+    private void getLogs() {
+        historyViewModel.getVisits("1", selectionDates).observe(this, apiResponse -> {
+            if (apiResponse != null) {
+                if (!apiResponse.isError() && apiResponse.getContent() != null)
+                    dailyLogAdapter.setData((List<Log>) apiResponse.getContent());
+                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                    handleErrors(apiResponse.getErrorMessage());
+            }
+        });
+    }
+
+    private void handleErrors(String errorMessage) {
+        switch (errorMessage) {
+            case "missing_request_parameters": {
+                break;
+            }
+            case "expired_session_id": {
+                ((MainActivity) getActivity()).login();
+                break;
+            }
+            case "database_error": {
+                break;
+            }
+        }
     }
 
     /**
@@ -80,8 +112,7 @@ public class HistoryFragment extends Fragment {
      */
     private void setDefaultSelectionDates() {
         long today = MaterialDatePicker.todayInUtcMilliseconds();
-        long weekAgo = today - WEEK_IN_MILISECONDS;
-        selectionDates = new Pair<>(weekAgo, today);
+        selectionDates = new Pair<>(today - WEEK_IN_MILISECONDS, today);
     }
 
     /**

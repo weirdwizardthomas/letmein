@@ -1,37 +1,41 @@
 package com.via.letmein.persistence.repository;
 
-import android.util.Pair;
-
+import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.model.Log;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VisitRepository2 {
+public class LogRepository {
 
-    private static VisitRepository2 instance;
+    private static LogRepository instance;
 
     private final Api api;
 
     private MutableLiveData<ApiResponse> data;
 
-    private VisitRepository2(Session session) {
-        api = ServiceGenerator.getApi(session.getIpAddress());
+    private LogRepository(Session session) {
+        // api = ServiceGenerator.getApi(session.getIpAddress());
+        api = ServiceGenerator.getMockupApi();
         data = new MutableLiveData<>(new ApiResponse());
     }
 
-    public static synchronized VisitRepository2 getInstance(Session session) {
+    public static synchronized LogRepository getInstance(Session session) {
         if (instance == null)
-            instance = new VisitRepository2(session);
+            instance = new LogRepository(session);
         return instance;
     }
 
@@ -45,20 +49,23 @@ public class VisitRepository2 {
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                ApiResponse dummy = response.body();
-                Gson gson = new GsonBuilder().create();
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+                    Gson gson = new GsonBuilder().create();
 
-                //Check for error & resolve
-                if (dummy.isError())
-                    dummy.setContent(0);
-                else {
-                   /* TypeToken<?> responseTypeToken = new TypeToken<?>() {
-                    };
-                    ? token = gson.fromJson(gson.toJson(dummy.getContent()), responseTypeToken.getType());
-                    dummy.setContent(token);
-                */
+                    //Check for error & resolve
+                    if (dummy.isError())
+                        dummy.setContent(0);
+                    else {
+                        TypeToken<List<Log>> responseTypeToken = new TypeToken<List<Log>>() {
+                        };
+                        List<Log> token = gson.fromJson(
+                                gson.toJson(dummy.getContent()),
+                                responseTypeToken.getType());
+                        dummy.setContent(token);
+                    }
+                    data.setValue(dummy);
                 }
-                data.setValue(dummy);
             }
 
             @Override

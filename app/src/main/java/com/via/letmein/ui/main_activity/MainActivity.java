@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
         //todo reenable
         // openPin();
 
-        if (isRegistered())
+      /*  if (isRegistered())
             login();
         else
-            register();
+            register();*/
 
     }
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Starts a {@See NotificationService} background service to listen for server's notifications
+     * Starts a {@see NotificationService} background service to listen for server's notifications
      */
     private void startNotificationListening() {
         ComponentName componentName = new ComponentName(this, NotificationService.class);
@@ -104,15 +104,13 @@ public class MainActivity extends AppCompatActivity {
                 .setPersisted(true)
                 .build();
         JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        int resultCode = scheduler.schedule(info);
-        if (resultCode == JobScheduler.RESULT_SUCCESS)
-            Log.i("Notifications", "Job scheduled");
-        else
-            Log.i("Notifications", "Job scheduling failed");
+        int resultCode = scheduler != null ? scheduler.schedule(info) : JobScheduler.RESULT_FAILURE;
+        Log.i("Notifications", resultCode == JobScheduler.RESULT_SUCCESS ? "Job scheduled" : "Job scheduling failed");
     }
 
     /**
      * Handles error responses from the server
+     *
      * @param errorMessage Error response to be handled
      */
     private void handleErrors(String errorMessage) {
@@ -145,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Determines whether an administrator has already been paired and registered
+     *
      * @return true if is registered, false otherwise
      */
     private boolean isRegistered() {

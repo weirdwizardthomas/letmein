@@ -57,12 +57,17 @@ dependencies {
     implementation 'com.amirarcane.lock-screen:lockscreen:2.0.0'
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
+
+    //retrofit picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //extended fab
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
     //vlc
     implementation 'org.videolan.android:libvlc-all:3.1.12'
+
+
 }

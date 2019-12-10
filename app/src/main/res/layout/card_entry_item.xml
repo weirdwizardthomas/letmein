@@ -6,15 +6,14 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/fragmentBodyPadding"
     android:layout_marginTop="@dimen/fragmentBodyPadding"
-    android:layout_marginEnd="@dimen/fragmentBodyPadding"
-    tools:context=".ui.history.day_entry.DayEntryCard">
+    android:layout_marginEnd="@dimen/fragmentBodyPadding">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/timestampTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/placeholderDate"
@@ -22,10 +21,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/entriesRecyclerView"
+            android:id="@+id/logsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date" />
+            app:layout_constraintTop_toBottomOf="@+id/timestampTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
