@@ -1,5 +1,6 @@
 package com.via.letmein.ui.member_profile;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.Session;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.via.letmein.persistence.api.Api.ADDRESS_PORT_DELIMITER;
+import static com.via.letmein.persistence.api.Api.HTTP;
+import static com.via.letmein.persistence.api.Api.PARAMETER_DELIMITER;
+import static com.via.letmein.persistence.api.Api.PORT;
+import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
+import static com.via.letmein.persistence.api.Api.SESSION_ID;
 
 /**
  * Adapter for the pictures of the HouseholdMember.
@@ -20,9 +30,11 @@ import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     private List<ImageContainer> data;
     private final OnItemClickListener onItemClickListener;
+    private final Context context;
 
-    public ImageAdapter(OnItemClickListener onItemClickListener) {
+    public ImageAdapter(OnItemClickListener onItemClickListener, Context context) {
         this.onItemClickListener = onItemClickListener;
+        this.context = context;
         data = new ArrayList<>();
     }
 
@@ -30,8 +42,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return data;
     }
 
-    public void setData(List<ImageContainer> data) {
-        this.data = data;
+    public void setData(List<String> paths) {
+
+        data = new ArrayList<>();
+        for (String imagePath : paths)
+            data.add(new ImageContainer(imagePath));
+
         notifyDataSetChanged();
     }
 
@@ -45,7 +61,24 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ImageAdapter.ViewHolder holder, int position) {
-        ImageContainer dummy = data.get(position);
+        ImageContainer imageContainer = data.get(position);
+
+        String url = new StringBuilder()
+                .append(HTTP)
+                .append(Session.getInstance(context).getIpAddress())
+                .append(ADDRESS_PORT_DELIMITER)
+                .append(PORT)
+                .append(imageContainer.getPath())
+                .append(QUERY_DELIMITER)
+                .append(SESSION_ID)
+                .append(PARAMETER_DELIMITER)
+                .append(Session.getInstance(context).getSessionId())
+                .toString();
+
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.profile_icon_placeholder_background)
+                .into(holder.image);
     }
 
     @Override

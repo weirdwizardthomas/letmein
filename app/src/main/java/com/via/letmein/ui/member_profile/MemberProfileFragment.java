@@ -15,13 +15,21 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.ui.main_activity.MainActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.via.letmein.persistence.api.Api.ADDRESS_PORT_DELIMITER;
+import static com.via.letmein.persistence.api.Api.HTTP;
+import static com.via.letmein.persistence.api.Api.PARAMETER_DELIMITER;
+import static com.via.letmein.persistence.api.Api.PORT;
+import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
+import static com.via.letmein.persistence.api.Api.SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
 import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
@@ -31,19 +39,17 @@ import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARA
  */
 public class MemberProfileFragment extends Fragment implements ImageAdapter.OnItemClickListener {
 
-    public static final String BUNDLE_NAME_KEY = "name";
-    public static final String BUNDLE_ROLE_KEY = "role";
-    public static final String BUNDLE_IMAGEID_KEY = "imageID";
-    public static final String BUNDLE_ID_KEY = "id";
+    public static final String BUNDLE_MEMBER_KEY = "MEMBER";
+    public static final int GRID_SPAN = 3;
 
     private static final String TAG = "MemberProfile";
-    public static final int GRID_SPAN = 3;
 
     private ImageView profilePicture;
     private TextView name;
     private TextView role;
     private RecyclerView imageGallery;
-    private ImageAdapter imagesAdapter;
+    private ImageAdapter imageAdapter;
+
     private MemberProfileViewModel memberProfileViewModel;
 
     @Nullable
@@ -52,31 +58,45 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         memberProfileViewModel = ViewModelProviders.of(this).get(MemberProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_member_profile, container, false);
 
-        String username = getArguments() != null ? getArguments().getString(BUNDLE_NAME_KEY) : "";
+        if (getArguments() != null)
+            memberProfileViewModel.setHouseholdMember((HouseholdMember) getArguments().getSerializable(BUNDLE_MEMBER_KEY));
 
         initialiseLayout(root, getArguments());
-        getImages(username);
+        getProfilePicture();
+        getImages();
 
         return root;
     }
 
-    private void getImages(String username) {
-        memberProfileViewModel.getImagePaths(username, "").observe(this, response -> {
+    //todo can generalise by passing the path & the target image view - maybe even extend imageView?
+    private void getProfilePicture() {
+        String url = new StringBuilder()
+                .append(HTTP)
+                .append(Session.getInstance(getContext()).getIpAddress())
+                .append(ADDRESS_PORT_DELIMITER)
+                .append(PORT)
+                .append(memberProfileViewModel.getHouseholdMember().getProfilePhoto())
+                .append(QUERY_DELIMITER)
+                .append(SESSION_ID)
+                .append(PARAMETER_DELIMITER)
+                .append(Session.getInstance(getContext()).getSessionId())
+                .toString();
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.profile_icon_placeholder_background)
+                .into(profilePicture);
+
+    }
+
+    private void getImages() {
+        memberProfileViewModel.getImagePaths("").observe(this, response -> {
             if (response != null) {
 
-                if (!response.isError() && response.getContent() != null) {
-                    List<String> dummy = (List<String>) response.getContent();
-                    List<ImageContainer> imageContainers = new ArrayList<>();
-                    for (String string : dummy)
-                        imageContainers.add(new ImageContainer(string));
+                if (!response.isError() && response.getContent() != null)
+                    imageAdapter.setData((List<String>) response.getContent());
 
-                    imagesAdapter.setData(imageContainers);
-                    //todo fetch images
-                }
-                if (response.isError() && response.getErrorMessage() != null) {
+                if (response.isError() && response.getErrorMessage() != null)
                     handleErrors(response.getErrorMessage());
-
-                }
 
             }
         });
@@ -111,26 +131,22 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
      * @param extras
      */
     private void initialiseLayout(View root, Bundle extras) {
-        String username = extras != null ? extras.getString(BUNDLE_NAME_KEY) : "";
-        String userRole = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";
 
         name = root.findViewById(R.id.name);
         role = root.findViewById(R.id.action);
 
-        name.setText(username);
-        role.setText(userRole);
-
+        name.setText(memberProfileViewModel.getHouseholdMember().getName());
+        role.setText(memberProfileViewModel.getHouseholdMember().getRole());
 
         profilePicture = root.findViewById(R.id.portrait);
+
 
         imageGallery = root.findViewById(R.id.recentEntries);
         imageGallery.setHasFixedSize(true);
         imageGallery.setLayoutManager(new GridLayoutManager(getContext(), GRID_SPAN));
-        imagesAdapter = new ImageAdapter(this);
-        imageGallery.setAdapter(imagesAdapter);
+        imageAdapter = new ImageAdapter(this, getContext());
+        imageGallery.setAdapter(imageAdapter);
 
-        profilePicture.setVisibility(View.GONE);
-        //profilePicture.setImageResource(extras != null ? extras.getInt(BUNDLE_IMAGEID_KEY) : R.mipmap.profile_icon_placeholder);
     }
 
     @Override

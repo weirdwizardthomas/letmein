@@ -20,6 +20,7 @@ import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.ui.main_activity.MainActivity;
+import com.via.letmein.ui.member_profile.MemberProfileFragment;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,9 +28,6 @@ import java.util.Objects;
 import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
 import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ID_KEY;
-import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_NAME_KEY;
-import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ROLE_KEY;
 
 /**
  * Fragment housing all the members and allowing closer inspections of individual members.
@@ -144,10 +142,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     public void onItemClick(HouseholdMember item) {
 
         Bundle extras = new Bundle();
-        extras.putString(BUNDLE_NAME_KEY, item.getName());
-        extras.putString(BUNDLE_ROLE_KEY, item.getRole());
-        extras.putInt(BUNDLE_ID_KEY, item.getId());
-        //extras.putInt(BUNDLE_IMAGEID_KEY, item.getImageID());
+        extras.putSerializable(MemberProfileFragment.BUNDLE_MEMBER_KEY, item);
 
         NavController navController = Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment);
         navController.navigate(R.id.administrator_to_member, extras);

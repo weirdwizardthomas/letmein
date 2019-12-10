@@ -1,20 +1,20 @@
 package com.via.letmein.ui.member_profile;
 
 public class ImageContainer {
-    private String description;
+    private String path;
     private boolean isSelected;
 
-    public ImageContainer(String description) {
-        this.description = description;
+    public ImageContainer(String path) {
+        this.path = path;
         this.isSelected = false;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPath() {
+        return path;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public boolean isSelected() {

@@ -22,10 +22,6 @@ import retrofit2.Response;
  */
 public class HouseholdMemberImageRepository {
 
-    private static final String ERROR_MISSING_REQUEST_PARAMETERS = "missing_request_parameters";
-    private static final String ERROR_EXPIRED_SESSION_ID = "expired_session_id";
-    private static final String ERROR_DATABASE_ERROR = "database_error";
-
     /**
      * Single instance of the class
      */

@@ -45,7 +45,6 @@ public class HouseholdMemberRepository {
 
     private HouseholdMemberRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        //api = ServiceGenerator.getMockupApi();
         memberListLiveData = new MutableLiveData<>(new ApiResponse());
         createMemberLiveData = new MutableLiveData<>(new ApiResponse());
     }

@@ -32,7 +32,6 @@ public class LogRepository {
 
     private LogRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        //api = ServiceGenerator.getMockupApi();
         data = new MutableLiveData<>(new ApiResponse());
     }
 

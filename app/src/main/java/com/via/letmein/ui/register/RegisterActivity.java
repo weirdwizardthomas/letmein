@@ -138,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                 break;
             }
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
-                Log.d(TAG, getString(R.string.missingParameters));
+                Log.d(TAG, ERROR_MISSING_REQUIRED_PARAMETERS);
                 break;
             }
             case ERROR_DATABASE_ERROR: {

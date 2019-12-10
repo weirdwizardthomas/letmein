@@ -18,7 +18,12 @@ import com.via.letmein.persistence.model.HouseholdMember;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.via.letmein.persistence.api.ServiceGenerator.PORT;
+import static com.via.letmein.persistence.api.Api.ADDRESS_PORT_DELIMITER;
+import static com.via.letmein.persistence.api.Api.HTTP;
+import static com.via.letmein.persistence.api.Api.PARAMETER_DELIMITER;
+import static com.via.letmein.persistence.api.Api.PORT;
+import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
+import static com.via.letmein.persistence.api.Api.SESSION_ID;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
@@ -45,12 +50,14 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         HouseholdMember householdMember = data.get(position);
         holder.name.setText(householdMember.getName());
         String url = new StringBuilder()
-                .append("http:/")
+                .append(HTTP)
                 .append(Session.getInstance(context).getIpAddress())
-                .append(":")
+                .append(ADDRESS_PORT_DELIMITER)
                 .append(PORT)
                 .append(householdMember.getProfilePhoto())
-                .append("?session_id=")
+                .append(QUERY_DELIMITER)
+                .append(SESSION_ID)
+                .append(PARAMETER_DELIMITER)
                 .append(Session.getInstance(context).getSessionId())
                 .toString();
         Picasso.get()

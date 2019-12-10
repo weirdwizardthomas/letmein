@@ -8,17 +8,28 @@ import androidx.lifecycle.LiveData;
 
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.persistence.repository.HouseholdMemberImageRepository;
 
 public class MemberProfileViewModel extends AndroidViewModel {
     private final HouseholdMemberImageRepository repository;
+    private HouseholdMember householdMember;
 
     public MemberProfileViewModel(@NonNull Application application) {
         super(application);
         repository = HouseholdMemberImageRepository.getInstance(Session.getInstance(application));
+        householdMember = new HouseholdMember();
     }
 
-    public LiveData<ApiResponse> getImagePaths(String username, String sessionId) {
-        return repository.getImagePaths(username, sessionId);
+    public LiveData<ApiResponse> getImagePaths(String sessionId) {
+        return repository.getImagePaths(householdMember.getName(), sessionId);
+    }
+
+    public HouseholdMember getHouseholdMember() {
+        return householdMember;
+    }
+
+    public void setHouseholdMember(HouseholdMember householdMember) {
+        this.householdMember = householdMember;
     }
 }

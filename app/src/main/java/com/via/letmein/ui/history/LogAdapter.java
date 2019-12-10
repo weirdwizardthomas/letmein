@@ -17,7 +17,12 @@ import com.via.letmein.persistence.model.Log;
 
 import java.util.List;
 
-import static com.via.letmein.persistence.api.ServiceGenerator.PORT;
+import static com.via.letmein.persistence.api.Api.ADDRESS_PORT_DELIMITER;
+import static com.via.letmein.persistence.api.Api.HTTP;
+import static com.via.letmein.persistence.api.Api.PARAMETER_DELIMITER;
+import static com.via.letmein.persistence.api.Api.PORT;
+import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
+import static com.via.letmein.persistence.api.Api.SESSION_ID;
 
 public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
 
@@ -52,18 +57,19 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
             .load("https://image.shutterstock.com/image-vector/woman-avatar-isolated-on-white-260nw-1472212124.jpg")
              .placeholder(R.drawable.profile_icon_placeholder_background)
              .into(holder.image);
-
          */
 
         //construct the url path
         //looks something like this: 'http://192.137.81.144:8080/api/user/image/0?session_id=asghaljbgl2'
         String url = new StringBuilder()
-                .append("http:/")
+                .append(HTTP)
                 .append(Session.getInstance(context).getIpAddress())
-                .append(":")
+                .append(ADDRESS_PORT_DELIMITER)
                 .append(PORT)
                 .append(log.getProfilePhoto())
-                .append("?session_id=")
+                .append(QUERY_DELIMITER)
+                .append(SESSION_ID)
+                .append(PARAMETER_DELIMITER)
                 .append(Session.getInstance(context).getSessionId())
                 .toString();
         Picasso.get()
