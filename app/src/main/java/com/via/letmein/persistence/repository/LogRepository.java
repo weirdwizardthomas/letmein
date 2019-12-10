@@ -11,11 +11,12 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.model.Log;
+import com.via.letmein.persistence.model.LoggedAction;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,7 +29,7 @@ public class LogRepository {
 
     private final Api api;
 
-    private MutableLiveData<ApiResponse> data;
+    private final MutableLiveData<ApiResponse> data;
 
     private LogRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
@@ -47,7 +48,7 @@ public class LogRepository {
     }
 
     private void refresh(String sessionId, Pair<Long, Long> dateRange) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         Pair<Timestamp, Timestamp> timestampRange = new Pair<>(
                 new Timestamp(dateRange.first),
                 new Timestamp(dateRange.second));
@@ -55,8 +56,8 @@ public class LogRepository {
 
         Call<ApiResponse> call = api.getLog(
                 sessionId,
-                sdf.format(timestampRange.first),
-                sdf.format(timestampRange.second));
+                sdf.format(Objects.requireNonNull(timestampRange.first)),
+                sdf.format(Objects.requireNonNull(timestampRange.second)));
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -69,9 +70,9 @@ public class LogRepository {
                     if (dummy.isError())
                         dummy.setContent(0);
                     else {
-                        TypeToken<List<Log>> responseTypeToken = new TypeToken<List<Log>>() {
+                        TypeToken<List<LoggedAction>> responseTypeToken = new TypeToken<List<LoggedAction>>() {
                         };
-                        List<Log> token = gson.fromJson(
+                        List<LoggedAction> token = gson.fromJson(
                                 gson.toJson(dummy.getContent()),
                                 responseTypeToken.getType());
                         dummy.setContent(token);

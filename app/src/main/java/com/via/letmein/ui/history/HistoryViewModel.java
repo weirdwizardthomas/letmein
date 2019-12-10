@@ -13,7 +13,7 @@ import com.via.letmein.persistence.repository.LogRepository;
 
 public class HistoryViewModel extends AndroidViewModel {
 
-    private LogRepository repository;
+    private final LogRepository repository;
 
     public HistoryViewModel(@NonNull Application application) {
         super(application);

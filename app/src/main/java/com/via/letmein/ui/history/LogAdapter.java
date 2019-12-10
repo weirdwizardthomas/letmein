@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.model.Log;
+import com.via.letmein.persistence.model.LoggedAction;
 
 import java.util.List;
 
@@ -26,10 +26,10 @@ import static com.via.letmein.persistence.api.Api.SESSION_ID;
 
 public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
 
-    private final List<Log> data;
+    private final List<LoggedAction> data;
     private final Context context;
 
-    public LogAdapter(List<Log> data, Context context) {
+    public LogAdapter(List<LoggedAction> data, Context context) {
         this.data = data;
         this.context = context;
     }
@@ -44,11 +44,11 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull LogAdapter.ViewHolder holder, int position) {
-        Log log = data.get(position);
+        LoggedAction loggedAction = data.get(position);
 
-        holder.name.setText(log.getName());
-        holder.action.setText(log.getInfoPretty());
-        holder.time.setText(log.getHours(Log.DATE_FORMAT_FULL));
+        holder.name.setText(loggedAction.getName());
+        holder.action.setText(loggedAction.getInfoPretty());
+        holder.time.setText(loggedAction.getHours(LoggedAction.DATE_FORMAT_FULL));
 
 
         /*
@@ -61,17 +61,15 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.ViewHolder> {
 
         //construct the url path
         //looks something like this: 'http://192.137.81.144:8080/api/user/image/0?session_id=asghaljbgl2'
-        String url = new StringBuilder()
-                .append(HTTP)
-                .append(Session.getInstance(context).getIpAddress())
-                .append(ADDRESS_PORT_DELIMITER)
-                .append(PORT)
-                .append(log.getProfilePhoto())
-                .append(QUERY_DELIMITER)
-                .append(SESSION_ID)
-                .append(PARAMETER_DELIMITER)
-                .append(Session.getInstance(context).getSessionId())
-                .toString();
+        String url = HTTP +
+                Session.getInstance(context).getIpAddress() +
+                ADDRESS_PORT_DELIMITER +
+                PORT +
+                loggedAction.getProfilePhoto() +
+                QUERY_DELIMITER +
+                SESSION_ID +
+                PARAMETER_DELIMITER +
+                Session.getInstance(context).getSessionId();
         Picasso.get()
                 .load(url)
                 .placeholder(R.drawable.profile_icon_placeholder_background)

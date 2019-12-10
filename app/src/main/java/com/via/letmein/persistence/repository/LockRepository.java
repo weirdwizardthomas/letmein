@@ -10,6 +10,8 @@ import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +63,7 @@ public class LockRepository {
                 Gson gson = new GsonBuilder().create();
 
                 //Check for error & resolve
-                if (dummy.isError())
+                if (Objects.requireNonNull(dummy).isError())
                     dummy.setContent(0);
                 else
                     dummy.setContent("");

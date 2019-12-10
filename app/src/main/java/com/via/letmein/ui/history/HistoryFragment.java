@@ -2,11 +2,13 @@ package com.via.letmein.ui.history;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
@@ -20,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.model.Log;
+import com.via.letmein.persistence.model.LoggedAction;
 import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.List;
@@ -33,6 +35,7 @@ import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARA
 public class HistoryFragment extends Fragment {
 
     public static final int WEEK_IN_MILISECONDS = 604800000;
+    private static final String TAG = "History";
 
     private HistoryViewModel historyViewModel;
 
@@ -73,10 +76,9 @@ public class HistoryFragment extends Fragment {
         picker = setupDateSelectorBuilder().build();
         picker.addOnPositiveButtonClickListener(selection -> {
             selectionDates = selection;
-            StringBuilder calendarButtonText = new StringBuilder()
-                    .append(getString(R.string.selectRangeToShow))
-                    .append(picker.getHeaderText());
-            openCalendarButton.setText(calendarButtonText.toString());
+            String calendarButtonText = getString(R.string.selectRangeToShow) +
+                    picker.getHeaderText();
+            openCalendarButton.setText(calendarButtonText);
             getLogs();
         });
         openCalendarButton = root.findViewById(R.id.openCalendarButton);
@@ -90,7 +92,7 @@ public class HistoryFragment extends Fragment {
         historyViewModel.getVisits(Session.getInstance(getContext()).getSessionId(), selectionDates).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null)
-                    dailyLogAdapter.setData((List<Log>) apiResponse.getContent());
+                    dailyLogAdapter.setData((List<LoggedAction>) apiResponse.getContent());
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                     handleErrors(apiResponse.getErrorMessage());
             }
@@ -100,6 +102,7 @@ public class HistoryFragment extends Fragment {
     private void handleErrors(String errorMessage) {
         switch (errorMessage) {
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
+                Log.d(TAG, ERROR_MISSING_REQUIRED_PARAMETERS);
                 break;
             }
             case ERROR_EXPIRED_SESSION_ID: {
@@ -107,6 +110,7 @@ public class HistoryFragment extends Fragment {
                 break;
             }
             case ERROR_DATABASE_ERROR: {
+                Toast.makeText(getContext(), getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
                 break;
             }
         }

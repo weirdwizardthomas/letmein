@@ -13,7 +13,7 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
     public static final int PORT = 8085;
     public static final String PAYLOAD = "REAC";
 
-    private IpListener ipListenerListener;
+    private final IpListener ipListenerListener;
 
     public IPListenAsyncTask(IpListener ipListenerListener) {
         this.ipListenerListener = ipListenerListener;

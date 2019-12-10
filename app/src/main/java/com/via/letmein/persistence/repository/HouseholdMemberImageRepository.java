@@ -52,6 +52,18 @@ public class HouseholdMemberImageRepository {
     }
 
     /**
+     * Retrieves all the user's images urls
+     *
+     * @param username  Username of the logged in user
+     * @param sessionId Generated sessionID from server
+     * @return {@see ApiResponse} having {@see ApiResponse#content} of {@see List} of URL {@see String} if there was no {@see ApiResponse#error}, 0 otherwise
+     */
+    public LiveData<ApiResponse> getImagePaths(String username, String sessionId) {
+        refresh(username, sessionId);
+        return data;
+    }
+
+    /**
      * Sends an asynchronous call to the server to retrieve user's images urls
      *
      * @param username  Username of the logged in user
@@ -87,19 +99,4 @@ public class HouseholdMemberImageRepository {
         });
 
     }
-
-    //TODO SEND ID?
-
-    /**
-     * Retrieves all the user's images urls
-     *
-     * @param username  Username of the logged in user
-     * @param sessionId Generated sessionID from server
-     * @return {@see ApiResponse} having {@see ApiResponse#content} of {@see List} of URL {@see String} if there was no {@see ApiResponse#error}, 0 otherwise
-     */
-    public LiveData<ApiResponse> getImagePaths(String username, String sessionId) {
-        refresh(username, sessionId);
-        return data;
-    }
-
 }

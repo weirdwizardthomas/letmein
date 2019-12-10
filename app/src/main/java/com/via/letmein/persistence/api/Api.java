@@ -58,5 +58,5 @@ public interface Api {
     Call<ApiResponse> getNotificationLog(@Query(SESSION_ID) String sessionId);
 
     @PUT("notification")
-    Call<ApiResponse> markNotificationAsRead();
+    Call<ApiResponse> markNotificationAsRead(@Query(SESSION_ID) String sessionId);
 }

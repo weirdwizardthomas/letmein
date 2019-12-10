@@ -59,7 +59,7 @@ public class LiveFragment extends Fragment {
 
         final ArrayList<String> args = new ArrayList<>();
         args.add("-vvv");
-        libVLC = new LibVLC(getContext(), args);
+        libVLC = new LibVLC(Objects.requireNonNull(getContext()), args);
         mediaPlayer = new MediaPlayer(libVLC);
         initialiseLayout(root);
         return root;
@@ -116,14 +116,11 @@ public class LiveFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case PIN_REQUEST_CODE: {
-                if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
-                    Toast.makeText(getActivity(), "Request cancelled", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
-                }
-                break;
+        if (requestCode == PIN_REQUEST_CODE) {
+            if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
+                Toast.makeText(getActivity(), "Request cancelled", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
             }
         }
     }

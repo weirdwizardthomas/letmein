@@ -212,11 +212,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
-        switch (requestCode) {
-            // Make sure the request was successful
-            case REGISTER_REQUEST_CODE:
-                if (resultCode == RESULT_OK)
-                    login();
+        // Make sure the request was successful
+        if (requestCode == REGISTER_REQUEST_CODE) {
+            if (resultCode == RESULT_OK)
+                login();
         }
     }
 

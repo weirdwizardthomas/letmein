@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
-import com.via.letmein.persistence.model.Log;
+import com.via.letmein.persistence.model.LoggedAction;
 import com.via.letmein.persistence.model.DailyLog;
 
 import java.sql.Timestamp;
@@ -59,7 +59,7 @@ public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.ViewHo
                 context,
                 LinearLayoutManager.HORIZONTAL,
                 false));
-        holder.visitsList.setAdapter(new LogAdapter(dayEntry.getLogs(), context));
+        holder.visitsList.setAdapter(new LogAdapter(dayEntry.getLoggedActions(), context));
     }
 
     @Override
@@ -67,30 +67,30 @@ public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.ViewHo
         return data.size();
     }
 
-    public void setData(List<Log> content) {
-        Map<Timestamp, List<Log>> groupLogsByDate = groupLogsByDate(content);
+    public void setData(List<LoggedAction> content) {
+        Map<Timestamp, List<LoggedAction>> groupLogsByDate = groupLogsByDate(content);
         updateData(groupLogsByDate);
         notifyDataSetChanged();
     }
 
-    private void updateData(Map<Timestamp, List<Log>> days) {
+    private void updateData(Map<Timestamp, List<LoggedAction>> days) {
         data = new ArrayList<>();
-        for (HashMap.Entry<Timestamp, List<Log>> entry : days.entrySet())
+        for (HashMap.Entry<Timestamp, List<LoggedAction>> entry : days.entrySet())
             data.add(new DailyLog(entry.getKey(), entry.getValue()));
     }
 
-    private static Map<Timestamp, List<Log>> groupLogsByDate(List<Log> content) {
-        Map<Timestamp, List<Log>> days = new HashMap<>();
+    private static Map<Timestamp, List<LoggedAction>> groupLogsByDate(List<LoggedAction> content) {
+        Map<Timestamp, List<LoggedAction>> days = new HashMap<>();
 
-        for (Log log : content) {
-            Timestamp timestamp = log.getTimestamp(Log.DATE_FORMAT_DATE_ONLY);
+        for (LoggedAction loggedAction : content) {
+            Timestamp timestamp = loggedAction.getTimestamp(LoggedAction.DATE_FORMAT_DATE_ONLY);
 
             if (days.containsKey(timestamp))
-                Objects.requireNonNull(days.get(timestamp)).add(log);
+                Objects.requireNonNull(days.get(timestamp)).add(loggedAction);
             else {
-                List<Log> logList = new ArrayList<>();
-                logList.add(log);
-                days.put(timestamp, logList);
+                List<LoggedAction> loggedActionList = new ArrayList<>();
+                loggedActionList.add(loggedAction);
+                days.put(timestamp, loggedActionList);
             }
         }
         return days;

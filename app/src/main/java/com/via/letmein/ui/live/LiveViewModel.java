@@ -12,8 +12,8 @@ import com.via.letmein.persistence.repository.CameraStreamRepository;
 import com.via.letmein.persistence.repository.LockRepository;
 
 public class LiveViewModel extends AndroidViewModel {
-    private LockRepository lockRepository;
-    private CameraStreamRepository cameraStreamRepository;
+    private final LockRepository lockRepository;
+    private final CameraStreamRepository cameraStreamRepository;
 
     public LiveViewModel(@NonNull Application application) {
         super(application);

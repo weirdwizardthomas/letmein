@@ -6,20 +6,20 @@ import java.util.List;
 
 public class DailyLog {
 
-    private Timestamp timestamp;
+    private final Timestamp timestamp;
 
-    private List<Log> logs;
+    private final List<LoggedAction> loggedActions;
 
-    public DailyLog(Timestamp timestamp, List<Log> logs) {
+    public DailyLog(Timestamp timestamp, List<LoggedAction> loggedActions) {
         this.timestamp = timestamp;
-        this.logs = logs;
+        this.loggedActions = loggedActions;
     }
 
     public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public List<Log> getLogs() {
-        return logs;
+    public List<LoggedAction> getLoggedActions() {
+        return loggedActions;
     }
 }

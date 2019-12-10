@@ -4,6 +4,8 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
+import java.util.Objects;
+
 public class App extends Application {
     public static final String CHANNEL_ID = "Door opening notification channel";
 
@@ -22,6 +24,6 @@ public class App extends Application {
         notificationChannel.setDescription("This is a notification channel.");
 
         NotificationManager manager = getSystemService(NotificationManager.class);
-        manager.createNotificationChannel(notificationChannel);
+        Objects.requireNonNull(manager).createNotificationChannel(notificationChannel);
     }
 }

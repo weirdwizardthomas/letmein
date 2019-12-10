@@ -4,8 +4,9 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
-public class Log {
+public class LoggedAction {
     public static final String DATE_FORMAT_DATE_ONLY = "dd/MM/yyyy";
     public static final String DATE_FORMAT_FULL = "dd/MM/yyyy HH:mm:ss";
 
@@ -19,14 +20,14 @@ public class Log {
     private static final String PRETTY_INFO_DEFAULT = "";
     private static final String DATE_TIME_DELIMITER = " ";
 
-    private int logID;
-    private int userID;
-    private String name;
-    private String profilePhoto;
-    private String date;
-    private String info;
+    private final int logID;
+    private final int userID;
+    private final String name;
+    private final String profilePhoto;
+    private final String date;
+    private final String info;
 
-    public Log(int logID, int userID, String name, String profilePhoto, String date, String info) {
+    public LoggedAction(int logID, int userID, String name, String profilePhoto, String date, String info) {
         this.logID = logID;
         this.userID = userID;
         this.name = name;
@@ -67,7 +68,7 @@ public class Log {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return new Timestamp(parsedDate.getTime());
+        return new Timestamp(Objects.requireNonNull(parsedDate).getTime());
     }
 
     public String getHours(String format) {

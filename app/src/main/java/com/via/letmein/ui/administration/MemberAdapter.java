@@ -28,7 +28,7 @@ import static com.via.letmein.persistence.api.Api.SESSION_ID;
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
     private List<HouseholdMember> data;
-    private Context context;
+    private final Context context;
     private final OnItemClickListener onItemClickListener;
 
     MemberAdapter(Context context, OnItemClickListener onItemClickListener) {
@@ -49,17 +49,15 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     public void onBindViewHolder(@NonNull MemberAdapter.ViewHolder holder, int position) {
         HouseholdMember householdMember = data.get(position);
         holder.name.setText(householdMember.getName());
-        String url = new StringBuilder()
-                .append(HTTP)
-                .append(Session.getInstance(context).getIpAddress())
-                .append(ADDRESS_PORT_DELIMITER)
-                .append(PORT)
-                .append(householdMember.getProfilePhoto())
-                .append(QUERY_DELIMITER)
-                .append(SESSION_ID)
-                .append(PARAMETER_DELIMITER)
-                .append(Session.getInstance(context).getSessionId())
-                .toString();
+        String url = HTTP +
+                Session.getInstance(context).getIpAddress() +
+                ADDRESS_PORT_DELIMITER +
+                PORT +
+                householdMember.getProfilePhoto() +
+                QUERY_DELIMITER +
+                SESSION_ID +
+                PARAMETER_DELIMITER +
+                Session.getInstance(context).getSessionId();
         Picasso.get()
                 .load(url)
                 .placeholder(R.drawable.profile_icon_placeholder_background)

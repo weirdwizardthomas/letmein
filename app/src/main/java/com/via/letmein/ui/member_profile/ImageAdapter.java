@@ -63,17 +63,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ImageAdapter.ViewHolder holder, int position) {
         ImageContainer imageContainer = data.get(position);
 
-        String url = new StringBuilder()
-                .append(HTTP)
-                .append(Session.getInstance(context).getIpAddress())
-                .append(ADDRESS_PORT_DELIMITER)
-                .append(PORT)
-                .append(imageContainer.getPath())
-                .append(QUERY_DELIMITER)
-                .append(SESSION_ID)
-                .append(PARAMETER_DELIMITER)
-                .append(Session.getInstance(context).getSessionId())
-                .toString();
+        String url = HTTP +
+                Session.getInstance(context).getIpAddress() +
+                ADDRESS_PORT_DELIMITER +
+                PORT +
+                imageContainer.getPath() +
+                QUERY_DELIMITER +
+                SESSION_ID +
+                PARAMETER_DELIMITER +
+                Session.getInstance(context).getSessionId();
 
         Picasso.get()
                 .load(url)

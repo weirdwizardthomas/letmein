@@ -68,19 +68,16 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         return root;
     }
 
-    //todo can generalise by passing the path & the target image view - maybe even extend imageView?
     private void getProfilePicture() {
-        String url = new StringBuilder()
-                .append(HTTP)
-                .append(Session.getInstance(getContext()).getIpAddress())
-                .append(ADDRESS_PORT_DELIMITER)
-                .append(PORT)
-                .append(memberProfileViewModel.getHouseholdMember().getProfilePhoto())
-                .append(QUERY_DELIMITER)
-                .append(SESSION_ID)
-                .append(PARAMETER_DELIMITER)
-                .append(Session.getInstance(getContext()).getSessionId())
-                .toString();
+        String url = HTTP +
+                Session.getInstance(getContext()).getIpAddress() +
+                ADDRESS_PORT_DELIMITER +
+                PORT +
+                memberProfileViewModel.getHouseholdMember().getProfilePhoto() +
+                QUERY_DELIMITER +
+                SESSION_ID +
+                PARAMETER_DELIMITER +
+                Session.getInstance(getContext()).getSessionId();
         Picasso.get()
                 .load(url)
                 .placeholder(R.drawable.profile_icon_placeholder_background)
