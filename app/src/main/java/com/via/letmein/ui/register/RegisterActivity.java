@@ -25,8 +25,9 @@ import static com.via.letmein.persistence.api.Errors.ERROR_WRONG_SERIAL_ID;
 /**
  * An activity that handles device registration and pairing with this application.
  */
-public class RegisterActivity extends AppCompatActivity implements IPListenAsyncTask.onTaskCompleted {
+public class RegisterActivity extends AppCompatActivity implements IPListenAsyncTask.IpListener {
 
+    public static final String TAG = "RegisterActivity";
     private RegisterViewModel registerViewModel;
 
     private EditText usernameTextView;
@@ -137,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                 break;
             }
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
-                Log.i("RegisterActivity", getString(R.string.missingParameters));
+                Log.d(TAG, getString(R.string.missingParameters));
                 break;
             }
             case ERROR_DATABASE_ERROR: {

@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.persistence.repository.HouseholdMemberRepository;
 
 /**

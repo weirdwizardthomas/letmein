@@ -11,4 +11,6 @@ public class Errors {
     public static final String ERROR_EXPIRED_SESSION_ID = "expired_session_id";
     public static final String ERROR_UNABLE_GET_IP_ADDRESS = "unable_get_ipaddress";
     public static final String ERROR_USERNAME_TOO_SHORT = "short_username_length";
+    public static final String ERROR_NO_LIVE_IMAGE_AVAILABLE = "no_live_image_available";
+    public static final String ERROR_LOCKING_DEVICE_NOT_FOUND = "locker_device_not_found";
 }

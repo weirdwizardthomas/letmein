@@ -37,6 +37,7 @@ import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class AddMemberFragment extends Fragment {
+    public static final String TAG = "AddMemberFragment";
     //TODO nice to have add a button to upload a custom picture
 
     private ArrayAdapter<String> roleSpinnerAdapter;
@@ -85,7 +86,7 @@ public class AddMemberFragment extends Fragment {
                 break;
             }
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
-                Log.i("AddMemberFragment", ERROR_MISSING_REQUIRED_PARAMETERS);
+                Log.d(TAG, ERROR_MISSING_REQUIRED_PARAMETERS);
                 break;
             }
             case ERROR_USERNAME_TOO_SHORT: {
@@ -97,7 +98,7 @@ public class AddMemberFragment extends Fragment {
                 break;
             }
             case ERROR_DATABASE_ERROR: {
-                Toast.makeText(getContext(), "Database error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, ERROR_DATABASE_ERROR);
                 break;
             }
         }

@@ -103,7 +103,7 @@ public class HistoryFragment extends Fragment {
                 break;
             }
             case ERROR_EXPIRED_SESSION_ID: {
-                ((MainActivity) getActivity()).login();
+                ((MainActivity) Objects.requireNonNull(getActivity())).login();
                 break;
             }
             case ERROR_DATABASE_ERROR: {

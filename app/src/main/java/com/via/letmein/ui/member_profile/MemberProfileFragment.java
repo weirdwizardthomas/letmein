@@ -1,6 +1,7 @@
 package com.via.letmein.ui.member_profile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.via.letmein.R;
+import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
 
 /**
  *
@@ -28,6 +35,9 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     public static final String BUNDLE_ROLE_KEY = "role";
     public static final String BUNDLE_IMAGEID_KEY = "imageID";
     public static final String BUNDLE_ID_KEY = "id";
+
+    private static final String TAG = "MemberProfile";
+    public static final int GRID_SPAN = 3;
 
     private ImageView profilePicture;
     private TextView name;
@@ -45,12 +55,12 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         String username = getArguments() != null ? getArguments().getString(BUNDLE_NAME_KEY) : "";
 
         initialiseLayout(root, getArguments());
-        observeData(username);
+        getImages(username);
 
         return root;
     }
 
-    private void observeData(String username) {
+    private void getImages(String username) {
         memberProfileViewModel.getImagePaths(username, "").observe(this, response -> {
             if (response != null) {
 
@@ -74,35 +84,48 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
 
     /**
      * Handles server's error messages
+     *
      * @param errorMessage Error message to be handled
      */
     private void handleErrors(String errorMessage) {
-        switch(errorMessage){
-
+        switch (errorMessage) {
+            case ERROR_MISSING_REQUIRED_PARAMETERS: {
+                Log.d(TAG, ERROR_MISSING_REQUIRED_PARAMETERS);
+                break;
+            }
+            case ERROR_EXPIRED_SESSION_ID: {
+                ((MainActivity) Objects.requireNonNull(getActivity())).login();
+                break;
+            }
+            case ERROR_DATABASE_ERROR: {
+                Log.i(TAG, ERROR_DATABASE_ERROR);
+                break;
+            }
         }
     }
 
     /**
      * Initialises the fragment's layout
+     *
      * @param root
      * @param extras
      */
     private void initialiseLayout(View root, Bundle extras) {
         String username = extras != null ? extras.getString(BUNDLE_NAME_KEY) : "";
-        String role = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";
+        String userRole = extras != null ? extras.getString(BUNDLE_ROLE_KEY) : "";
 
         name = root.findViewById(R.id.name);
-        this.role = root.findViewById(R.id.action);
+        role = root.findViewById(R.id.action);
 
         name.setText(username);
-        this.role.setText(role);
+        role.setText(userRole);
 
 
         profilePicture = root.findViewById(R.id.portrait);
 
         imageGallery = root.findViewById(R.id.recentEntries);
         imageGallery.setHasFixedSize(true);
-        imageGallery.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        imageGallery.setLayoutManager(new GridLayoutManager(getContext(), GRID_SPAN));
         imagesAdapter = new ImageAdapter(this);
         imageGallery.setAdapter(imagesAdapter);
 

@@ -13,10 +13,10 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
     public static final int PORT = 8085;
     public static final String PAYLOAD = "REAC";
 
-    private onTaskCompleted onTaskCompletedListener;
+    private IpListener ipListenerListener;
 
-    public IPListenAsyncTask(IPListenAsyncTask.onTaskCompleted onTaskCompletedListener) {
-        this.onTaskCompletedListener = onTaskCompletedListener;
+    public IPListenAsyncTask(IpListener ipListenerListener) {
+        this.ipListenerListener = ipListenerListener;
     }
 
     @Override
@@ -50,10 +50,10 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        onTaskCompletedListener.onTaskCompleted(s);
+        ipListenerListener.onTaskCompleted(s);
     }
 
-    public interface onTaskCompleted {
+    public interface IpListener {
         void onTaskCompleted(String ipAddress);
     }
 }

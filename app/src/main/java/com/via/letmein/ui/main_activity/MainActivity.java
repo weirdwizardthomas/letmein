@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
             }
             case ERROR_EXPIRED_SESSION_ID: {
                 login();
+                break;
             }
         }
     }
