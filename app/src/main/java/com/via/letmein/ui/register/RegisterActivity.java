@@ -15,12 +15,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
 
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_ADMIN_ALREADY_EXISTS;
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_DATABASE_ERROR;
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_NAME_ALREADY_IN_USE;
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_SHORT_USERNAME;
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRONG_SERIAL_ID;
+import static com.via.letmein.persistence.api.Errors.ERROR_ADMIN_ALREADY_EXISTS;
+import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Errors.ERROR_NAME_ALREADY_IN_USE;
+import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
+import static com.via.letmein.persistence.api.Errors.ERROR_WRONG_SERIAL_ID;
 
 /**
  * An activity that handles device registration and pairing with this application.
@@ -132,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
     private void handleError(String errorMessage) {
 
         switch (errorMessage) {
-            case ERROR_SHORT_USERNAME: {
+            case ERROR_USERNAME_TOO_SHORT: {
                 usernameTextView.setVisibility(View.VISIBLE);
                 break;
             }

@@ -24,11 +24,12 @@ import com.via.letmein.ui.main_activity.MainActivity;
 import java.util.List;
 import java.util.Objects;
 
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_DATABASE_ERROR;
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_NAME_IN_USE;
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_USERNAME_TOO_SHORT;
+import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Errors.ERROR_NAME_ALREADY_IN_USE;
+import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
+
 
 /**
  * Fragment for creation of a new member record.
@@ -91,7 +92,7 @@ public class AddMemberFragment extends Fragment {
                 Toast.makeText(getContext(), "Username too short", Toast.LENGTH_SHORT).show();
                 break;
             }
-            case ERROR_NAME_IN_USE: {
+            case ERROR_NAME_ALREADY_IN_USE: {
                 Toast.makeText(getContext(), "Username already in use", Toast.LENGTH_SHORT).show();
                 break;
             }

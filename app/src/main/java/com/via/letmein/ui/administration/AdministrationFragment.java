@@ -24,9 +24,9 @@ import com.via.letmein.ui.main_activity.MainActivity;
 import java.util.List;
 import java.util.Objects;
 
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_DATABASE_ERROR;
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.repository.HouseholdMemberRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
 import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ID_KEY;
 import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_NAME_KEY;
 import static com.via.letmein.ui.member_profile.MemberProfileFragment.BUNDLE_ROLE_KEY;

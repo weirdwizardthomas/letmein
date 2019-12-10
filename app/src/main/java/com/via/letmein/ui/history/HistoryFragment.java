@@ -26,6 +26,10 @@ import com.via.letmein.ui.main_activity.MainActivity;
 import java.util.List;
 import java.util.Objects;
 
+import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
+
 public class HistoryFragment extends Fragment {
 
     public static final int WEEK_IN_MILISECONDS = 604800000;
@@ -95,14 +99,14 @@ public class HistoryFragment extends Fragment {
 
     private void handleErrors(String errorMessage) {
         switch (errorMessage) {
-            case "missing_request_parameters": {
+            case ERROR_MISSING_REQUIRED_PARAMETERS: {
                 break;
             }
-            case "expired_session_id": {
+            case ERROR_EXPIRED_SESSION_ID: {
                 ((MainActivity) getActivity()).login();
                 break;
             }
-            case "database_error": {
+            case ERROR_DATABASE_ERROR: {
                 break;
             }
         }

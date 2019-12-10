@@ -26,12 +26,6 @@ import retrofit2.Response;
  */
 public class HouseholdMemberRepository {
 
-    public static final String ERROR_MISSING_REQUIRED_PARAMETERS = "missing_request_parameters";
-    public static final String ERROR_EXPIRED_SESSION_ID = "expired_session_id";
-    public static final String ERROR_DATABASE_ERROR = "database_error";
-    public static final String ERROR_USERNAME_TOO_SHORT = "short_username_length";
-    public static final String ERROR_NAME_IN_USE = "name_already_in_use";
-
     /**
      * Single instance of the class.
      */

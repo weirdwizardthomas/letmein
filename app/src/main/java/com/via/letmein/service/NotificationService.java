@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -19,6 +20,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.via.letmein.persistence.api.Errors.ERROR_UNABLE_GET_IP_ADDRESS;
 
 /**
  * Background service that listens to the server for updates and shows them as notifications.
@@ -56,7 +59,8 @@ public class NotificationService extends JobService {
 
                         for (int i = 0; i < messages.size(); ++i)
                             sendNotification(messages.get(i), i);
-                    }
+                    } else
+                        Log.d(TAG, ERROR_UNABLE_GET_IP_ADDRESS);
                 }
             }
 

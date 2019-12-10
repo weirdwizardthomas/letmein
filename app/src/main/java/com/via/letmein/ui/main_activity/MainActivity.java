@@ -27,9 +27,10 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.service.NotificationService;
 import com.via.letmein.ui.register.RegisterActivity;
 
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_SHORT_USERNAME;
-import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRONG_USER_PASSWORD;
+import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
+import static com.via.letmein.persistence.api.Errors.ERROR_WRONG_USER_PASSWORD;
 
 /**
  * Application's main activity.
@@ -37,9 +38,10 @@ import static com.via.letmein.persistence.repository.SessionRepository.ERROR_WRO
 public class MainActivity extends AppCompatActivity {
 
     public static final int REGISTER_REQUEST_CODE = 1;
-    private static final String TAG = "MainActivity";
     public static final int INTERVAL_MILLIS = 900000;
     public static final int JOB_ID = 123;
+
+    private static final String TAG = "MainActivity";
 
     private AppBarConfiguration appBarConfiguration;
     private MainActivityViewModel mainActivityViewModel;
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i(TAG, ERROR_MISSING_REQUIRED_PARAMETERS);
                 break;
             }
-            case ERROR_SHORT_USERNAME: {
+            case ERROR_USERNAME_TOO_SHORT: {
                 Toast.makeText(this, getString(R.string.messageUsernameTooShort), Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -129,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.registerActivity);
                 finish();
                 break;
+            }
+            case ERROR_EXPIRED_SESSION_ID: {
+                login();
             }
         }
     }
