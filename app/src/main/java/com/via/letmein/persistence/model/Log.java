@@ -71,7 +71,6 @@ public class Log {
     }
 
     public String getHours(String format) {
-        //todo non static indices
         String timestamp = getTimestamp(format).toString();
         int startingIndex = timestamp.indexOf(DATE_TIME_DELIMITER());
         int endingIndex = timestamp.lastIndexOf(TIME_DELIMITER);

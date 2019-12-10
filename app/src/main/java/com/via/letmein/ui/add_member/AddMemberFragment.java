@@ -88,12 +88,10 @@ public class AddMemberFragment extends Fragment {
                 break;
             }
             case ERROR_USERNAME_TOO_SHORT: {
-                //todo add a textview? or a snackbar
                 Toast.makeText(getContext(), "Username too short", Toast.LENGTH_SHORT).show();
                 break;
             }
             case ERROR_NAME_IN_USE: {
-                //todo add a textview? or a snackbar
                 Toast.makeText(getContext(), "Username already in use", Toast.LENGTH_SHORT).show();
                 break;
             }

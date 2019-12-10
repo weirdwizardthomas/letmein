@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.ui.main_activity.MainActivity;
@@ -145,7 +143,6 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     public void onItemClick(HouseholdMember item) {
 
         Bundle extras = new Bundle();
-        //TODO change to household member
         extras.putString(BUNDLE_NAME_KEY, item.getName());
         extras.putString(BUNDLE_ROLE_KEY, item.getRole());
         extras.putInt(BUNDLE_ID_KEY, item.getId());

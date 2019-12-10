@@ -50,13 +50,12 @@ public class MainActivity extends AppCompatActivity {
         initialiseToolbar();
         initialiseNavigation();
 
-        //todo reenable
-        // openPin();
+        openPin();
 
-      /*  if (isRegistered())
+        if (isRegistered())
             login();
         else
-            register();*/
+            register();
 
     }
 
@@ -120,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case ERROR_SHORT_USERNAME: {
-                //todo snackbar
                 Toast.makeText(this, getString(R.string.messageUsernameTooShort), Toast.LENGTH_SHORT).show();
                 break;
             }

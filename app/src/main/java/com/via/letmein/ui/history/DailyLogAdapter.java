@@ -49,7 +49,6 @@ public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.ViewHo
     }
 
     private static void formatDate(@NonNull ViewHolder holder, DailyLog dayEntry) {
-        //TODO make universal, extract constant
         DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         holder.date.setText(format.format(dayEntry.getTimestamp()));
     }
