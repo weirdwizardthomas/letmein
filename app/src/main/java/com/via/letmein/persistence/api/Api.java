@@ -31,7 +31,6 @@ public interface Api {
     @GET("user/{username}/images")
     Call<ApiResponse> getUserImagesList(@Query(USER_NAME) String username, @Query(SESSION_ID) String sessionId);
 
-
     @GET("login")
     Call<ApiResponse> loginAdministrator(@Query(USER_NAME) String username, @Query(PASSWORD) String password);
 
@@ -45,7 +44,7 @@ public interface Api {
     Call<ApiResponse> getStreamUrl(@Query(SESSION_ID) String sessionId);
 
     @GET("logs")
-    Call<ApiResponse> getLog(@Query(SESSION_ID) String sessionId);
+    Call<ApiResponse> getLog(@Query(SESSION_ID) String sessionId, @Query("begin_date") String startingDate, @Query("end_date") String endingDate);
 
     @GET("notifications")
     Call<ApiResponse> getNotificationLog(@Query(SESSION_ID) String sessionId);

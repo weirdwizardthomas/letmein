@@ -13,6 +13,8 @@ import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.Log;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,6 +23,7 @@ import retrofit2.Response;
 
 public class LogRepository {
 
+    public static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
     private static LogRepository instance;
 
     private final Api api;
@@ -45,7 +48,17 @@ public class LogRepository {
     }
 
     private void refresh(String sessionId, Pair<Long, Long> dateRange) {
-        Call<ApiResponse> call = api.getLog(sessionId);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        Pair<Timestamp, Timestamp> timestampRange = new Pair<>(
+                new Timestamp(dateRange.first),
+                new Timestamp(dateRange.second));
+
+
+        Call<ApiResponse> call = api.getLog(
+                sessionId,
+                sdf.format(timestampRange.first),
+                sdf.format(timestampRange.second));
+
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -74,4 +87,5 @@ public class LogRepository {
             }
         });
     }
+
 }
