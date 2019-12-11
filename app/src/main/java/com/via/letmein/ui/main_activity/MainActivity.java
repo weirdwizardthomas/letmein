@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
         openPin();
 
-    /*    if (isRegistered())
+        if (isRegistered())
             login();
         else
-            register();*/
+            register();
 
     }
 
