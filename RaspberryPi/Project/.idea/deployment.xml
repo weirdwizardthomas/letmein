@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData">
+    <serverData>
+      <paths name="BBRemote (c96dd362-a25a-4c1c-94d4-48400fac5809)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="RaspberryPi (bcb45088-0c13-45bc-adb4-324546e72070)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.huMFdJgfHQ" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-raspberrypi" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-raspberrypi" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="Project2" targetName="Project2" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug-RaspberryPi" CONFIG_NAME="Debug" TOOLCHAIN_NAME="RaspberryPi" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="342b312b-76b6-49e4-80a5-fbc29aeb5a95" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-RaspberryPi" />
+  <component name="FavoritesManager">
+    <favorites_list name="Project2" />
+  </component>
+  <component name="ProjectId" id="1UcFByZAINf4bIKyuRnSJUfZofA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Dawid Raszka\CLionProjects\Project2" />
+      <recent name="C:\Users\Dawid Raszka\CLionProjects\Project2\data" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Project2" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Project2" TARGET_NAME="Project2" CONFIG_NAME="Debug-RaspberryPi" RUN_TARGET_PROJECT_NAME="Project2" RUN_TARGET_NAME="Project2">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="342b312b-76b6-49e4-80a5-fbc29aeb5a95" name="Default Changelist" comment="" />
+      <created>1575647844957</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1575647844957</updated>
+      <workItem from="1575647848418" duration="15200000" />
+      <workItem from="1576054761213" duration="733000" />
+      <workItem from="1576055609496" duration="444000" />
+      <workItem from="1576056472381" duration="26194000" />
+      <workItem from="1576176134597" duration="6698000" />
+      <workItem from="1576183997304" duration="1702000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1034" y="2" width="501" height="594" key="#xdebugger.evaluate" timestamp="1576071203179">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="1034" y="2" width="501" height="594" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1576071203179" />
+    <state width="1493" height="323" key="GridCell.Tab.0.bottom" timestamp="1576082910379">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="323" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1576082910379" />
+    <state width="1493" height="323" key="GridCell.Tab.0.center" timestamp="1576082910378">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="323" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1576082910378" />
+    <state width="1493" height="323" key="GridCell.Tab.0.left" timestamp="1576082910378">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="323" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1576082910378" />
+    <state width="1493" height="323" key="GridCell.Tab.0.right" timestamp="1576082910379">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="323" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1576082910379" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1576071354592">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1576071354592" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1576071354592">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1576071354592" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1576071354592">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1576071354592" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1576071354592">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1576071354592" />
+    <state x="277" y="54" key="SettingsEditor" timestamp="1576083179376">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="54" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1576083179376" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1576056476338">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1576056476338" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1576067215065">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1576067215065" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1576083153250">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1576083153250" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Camera.cpp</url>
+          <line>172</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
