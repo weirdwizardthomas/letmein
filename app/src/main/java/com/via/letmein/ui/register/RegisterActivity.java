@@ -45,8 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
         setContentView(R.layout.activity_register);
 
         initialiseLayout();
-        //listenForIp();
-        onTaskCompleted("abcd");
+        listenForIp();
+
     }
 
     /**

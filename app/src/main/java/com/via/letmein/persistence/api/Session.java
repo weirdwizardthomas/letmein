@@ -84,7 +84,7 @@ public class Session {
     }
 
     /**
-     * Removes all stored records of the sesssion
+     * Removes all stored records of the session
      */
     public void wipeSession() {
         preferences.edit().clear().apply();

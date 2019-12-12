@@ -79,7 +79,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         switch (errorMessage) {
             case ERROR_EXPIRED_SESSION_ID: {
                 ((MainActivity) Objects.requireNonNull(getActivity())).login();
-                Toast.makeText(getContext(), "Loging in", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Logging in", Toast.LENGTH_SHORT).show();
                 break;
             }
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
