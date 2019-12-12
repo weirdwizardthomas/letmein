@@ -29,18 +29,19 @@ public interface Api {
     String API_PATH = "/api/";
     String QUERY_DELIMITER = "?";
     String PARAMETER_DELIMITER = "=";
+    String NOTIFICATION_ID = "notification_id";
 
     @POST("register")
-    Call<ApiResponse> registerAdministrator(@Body RegisterJson registerJson);
+    Call<ApiResponse> register(@Body RegisterJson registerJson);
+
+    @GET("login")
+    Call<ApiResponse> login(@Query(USER_NAME) String username, @Query(PASSWORD) String password);
 
     @GET("users")
     Call<ApiResponse> getUserList(@Query(SESSION_ID) String sessionId);
 
-    @GET("user/{" + USER_ID + "}/images")
+    @GET("user/{userid}/images")
     Call<ApiResponse> getUserImagesList(@Path(USER_ID) String username, @Query(SESSION_ID) String sessionId);
-
-    @GET("login")
-    Call<ApiResponse> loginAdministrator(@Query(USER_NAME) String username, @Query(PASSWORD) String password);
 
     @POST("user")
     Call<ApiResponse> createUser(@Body CreateMemberJson createMemberJson);
@@ -57,6 +58,6 @@ public interface Api {
     @GET("notifications")
     Call<ApiResponse> getNotificationLog(@Query(SESSION_ID) String sessionId);
 
-    @PUT("notification")
-    Call<ApiResponse> markNotificationAsRead(@Query(SESSION_ID) String sessionId);
+    @PUT("notification/{notification_id}")
+    Call<ApiResponse> markNotificationAsRead(@Query(SESSION_ID) String sessionId, @Path(NOTIFICATION_ID) int notificationId);
 }

@@ -1,5 +1,6 @@
 package com.via.letmein.ui.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
+import com.via.letmein.ui.main_activity.MainActivity;
 
 import static com.via.letmein.persistence.api.Errors.ERROR_ADMIN_ALREADY_EXISTS;
 import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
@@ -43,8 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
         setContentView(R.layout.activity_register);
 
         initialiseLayout();
-        listenForIp();
-
+        //listenForIp();
+        onTaskCompleted("abcd");
     }
 
     /**
@@ -115,14 +117,19 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                             .setUsername(name) //save the chosen usernameTextView
                             .setPassword(password) //save the received password
                             .setRegistered(); //set registered to true
-
-                    finish();
+                    openMainActivity();
                 }
 
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                     handleError(apiResponse.getErrorMessage());
             }
         });
+    }
+
+    private void openMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+
     }
 
     /**

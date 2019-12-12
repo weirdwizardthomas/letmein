@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -65,7 +63,7 @@ public class LiveFragment extends Fragment {
         return root;
     }
 
-    @Override
+   /* @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "OnViewCreated");
@@ -83,7 +81,7 @@ public class LiveFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
     @Override
     public void onPause() {

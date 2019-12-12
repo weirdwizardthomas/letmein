@@ -53,13 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialiseToolbar();
         initialiseNavigation();
-
-        openPin();
-
-        if (isRegistered())
-            login();
-        else
-            register();
+        login();
 
     }
 

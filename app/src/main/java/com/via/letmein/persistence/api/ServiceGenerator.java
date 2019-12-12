@@ -31,6 +31,4 @@ public class ServiceGenerator {
     public static Api getApi(String baseUrl) {
         return getRetrofitInstance(baseUrl).create(Api.class);
     }
-
-
 }

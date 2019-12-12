@@ -16,7 +16,6 @@ import com.via.letmein.persistence.model.LoggedAction;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,16 +47,16 @@ public class LogRepository {
     }
 
     private void refresh(String sessionId, Pair<Long, Long> dateRange) {
-         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        Pair<Timestamp, Timestamp> timestampRange = new Pair<>(
-                new Timestamp(dateRange.first),
-                new Timestamp(dateRange.second));
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        Pair<String, String> timestampRange = new Pair<>(
+                sdf.format(new Timestamp(dateRange.first)),
+                sdf.format(new Timestamp(dateRange.second)));
 
 
         Call<ApiResponse> call = api.getLog(
                 sessionId,
-                sdf.format(Objects.requireNonNull(timestampRange.first)),
-                sdf.format(Objects.requireNonNull(timestampRange.second)));
+                timestampRange.first,
+                timestampRange.second);
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override

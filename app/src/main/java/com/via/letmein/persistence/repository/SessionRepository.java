@@ -36,13 +36,13 @@ public class SessionRepository {
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
-        refresh(api.registerAdministrator(new RegisterJson(username, serialNumber)), registrationData);
+        refresh(api.register(new RegisterJson(username, serialNumber)), registrationData);
         return registrationData;
     }
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
-         refresh(api.loginAdministrator(username, password), loginData);
+        refresh(api.login(username, password), loginData);
         return loginData;
     }
 
@@ -59,8 +59,9 @@ public class SessionRepository {
                     } else {
                         TypeToken<String> responseTypeToken = new TypeToken<String>() {
                         };
-                        String content = gson
-                                .fromJson(gson.toJson(dummy.getContent()), responseTypeToken.getType());
+                        String content = gson.fromJson(
+                                gson.toJson(dummy.getContent()),
+                                responseTypeToken.getType());
                         dummy.setContent(content);
                     }
 

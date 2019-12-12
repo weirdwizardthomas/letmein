@@ -16,7 +16,7 @@ public class LoggedAction {
     private static final String BUTTON_OPEN_DOOR = "button_open_door";
     private static final String REMOTE_DOOR_ACCESS = "Remote door access";
     private static final String PROMOTED_TO_ADMINISTRATOR = "Promoted to administrator.";
-    private static final String DOOR_ACCESS = "Door access.";
+    private static final String DOOR_ACCESS = "Door access";
     private static final String PRETTY_INFO_DEFAULT = "";
     private static final String DATE_TIME_DELIMITER = " ";
 

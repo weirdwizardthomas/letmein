@@ -8,12 +8,16 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.via.letmein.App;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.model.LoggedAction;
 
 import java.util.List;
 
@@ -21,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.via.letmein.persistence.api.Errors.ERROR_UNABLE_GET_IP_ADDRESS;
+import static com.via.letmein.persistence.model.LoggedAction.DATE_FORMAT_FULL;
 
 /**
  * Background service that listens to the server for updates and shows them as notifications.
@@ -54,13 +58,21 @@ public class NotificationService extends JobService {
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse dummy = response.body();
-                    if (!dummy.isError() && dummy.getContent() != null) {
-                        List<String> messages = (List<String>) dummy.getContent();
+                    Gson gson = new GsonBuilder().create();
 
-                        for (int i = 0; i < messages.size(); ++i)
-                            sendNotification(messages.get(i), i);
-                    } else
-                        Log.d(TAG, ERROR_UNABLE_GET_IP_ADDRESS);
+                    //Check for error & resolve
+                    if (dummy.isError())
+                        Log.d(TAG, "Notification request error.");
+                    else {
+                        TypeToken<List<LoggedAction>> responseTypeToken = new TypeToken<List<LoggedAction>>() {
+                        };
+                        List<LoggedAction> token = gson.fromJson(
+                                gson.toJson(dummy.getContent()),
+                                responseTypeToken.getType());
+                        dummy.setContent(token);
+
+                        sendNotifications((List<LoggedAction>) dummy.getContent());
+                    }
                 }
             }
 
@@ -77,19 +89,49 @@ public class NotificationService extends JobService {
         return false;
     }
 
-    private void sendNotification(String message, int i) {
-        Notification notification = buildNotification(message);
-        notificationManager.notify(i, notification);
+    private void sendNotifications(List<LoggedAction> loggedActions) {
+        for (LoggedAction loggedAction : loggedActions)
+            sendNotification(loggedAction);
+    }
 
+    private void sendNotification(LoggedAction loggedAction) {
+        Notification notification = buildNotification(loggedAction);
+        notificationManager.notify(loggedAction.getLogID(), notification);
+        markNotifcationAsRead(loggedAction);
         //TODO enqueue a request to acknowledge showing the notification
     }
 
-    private Notification buildNotification(String message) {
+    private void markNotifcationAsRead(LoggedAction loggedAction) {
+        Call<ApiResponse> call = api.markNotificationAsRead(Session.getInstance(this).getSessionId(), loggedAction.getLogID());
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+
+                    //Check for error & resolve
+                    if (dummy.isError())
+                        Log.d(TAG, "Notification marking error");
+                    else
+                        Log.i(TAG, "Notification marking successful");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private Notification buildNotification(LoggedAction loggedAction) {
         return new NotificationCompat.Builder(this, App.CHANNEL_ID)
-                .setContentTitle("Somebody's at the door!")
-                .setContentText(message)
+                .setContentTitle(loggedAction.getTimestamp(DATE_FORMAT_FULL).toString() + "  " + loggedAction.getInfoPretty())
+                .setContentText(loggedAction.getName())
                 .setSmallIcon(R.drawable.ic_door_closed_lock_black_24dp)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
     }
+
 }
