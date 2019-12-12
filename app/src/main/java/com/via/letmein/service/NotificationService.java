@@ -97,11 +97,10 @@ public class NotificationService extends JobService {
     private void sendNotification(LoggedAction loggedAction) {
         Notification notification = buildNotification(loggedAction);
         notificationManager.notify(loggedAction.getLogID(), notification);
-        markNotifcationAsRead(loggedAction);
-        //TODO enqueue a request to acknowledge showing the notification
+        markNotificationAsRead(loggedAction);
     }
 
-    private void markNotifcationAsRead(LoggedAction loggedAction) {
+    private void markNotificationAsRead(LoggedAction loggedAction) {
         Call<ApiResponse> call = api.markNotificationAsRead(Session.getInstance(this).getSessionId(), loggedAction.getLogID());
         call.enqueue(new Callback<ApiResponse>() {
             @Override

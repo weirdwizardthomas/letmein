@@ -38,7 +38,6 @@ import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
  */
 public class AddMemberFragment extends Fragment {
     public static final String TAG = "AddMemberFragment";
-    //TODO nice to have add a button to upload a custom picture
 
     private ArrayAdapter<String> roleSpinnerAdapter;
     private Spinner roleSpinner;
