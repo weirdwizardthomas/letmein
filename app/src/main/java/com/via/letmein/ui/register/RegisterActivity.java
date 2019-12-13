@@ -129,7 +129,6 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
     private void openMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
-
     }
 
     /**

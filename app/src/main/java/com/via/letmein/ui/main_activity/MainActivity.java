@@ -20,12 +20,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.service.NotificationService;
-import com.via.letmein.ui.register.RegisterActivity;
 
 import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
@@ -53,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialiseToolbar();
         initialiseNavigation();
-        login();
 
+        login();
     }
 
     private void initialiseNavigation() {
@@ -131,32 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-    }
-
-    /**
-     * Opens {@see RegisterActivity} for new administrator's registration
-     */
-    private void register() {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivityForResult(intent, REGISTER_REQUEST_CODE);
-    }
-
-    /**
-     * Determines whether an administrator has already been paired and registered
-     *
-     * @return true if is registered, false otherwise
-     */
-    private boolean isRegistered() {
-        Session session = Session.getInstance(getApplicationContext());
-        return session.isRegistered();
-    }
-
-    /**
-     * Opens a new activity that handles application unlocking
-     */
-    private void openPin() {
-        Intent intent = new Intent(getApplicationContext(), EnterPinActivity.class);
-        startActivity(intent);
     }
 
     /**
