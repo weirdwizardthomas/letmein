@@ -8,6 +8,7 @@ import java.io.Serializable;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class HouseholdMember implements Serializable {
+
     private int id;
     private boolean isAdministrator;
     private String name;

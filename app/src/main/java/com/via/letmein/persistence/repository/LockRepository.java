@@ -16,17 +16,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Repository to handle requests for door unlocking
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class LockRepository {
     /**
      * Single instance of the class.
      */
     private static LockRepository instance;
-
     /**
      * Retrieved memberListLiveData.
      */
-    private final MutableLiveData<ApiResponse> responseData;
-
+    private final MutableLiveData<ApiResponse> data;
     /**
      * API to which requests are sent.
      */
@@ -34,7 +37,7 @@ public class LockRepository {
 
     private LockRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        responseData = new MutableLiveData<>(new ApiResponse());
+        data = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -48,10 +51,9 @@ public class LockRepository {
         return instance;
     }
 
-
     public LiveData<ApiResponse> openDoor(String sessionId) {
         refresh(sessionId);
-        return responseData;
+        return data;
     }
 
     private void refresh(String sessionId) {
@@ -68,7 +70,7 @@ public class LockRepository {
                 else
                     dummy.setContent("");
 
-                responseData.setValue(dummy);
+                data.setValue(dummy);
             }
 
             @Override

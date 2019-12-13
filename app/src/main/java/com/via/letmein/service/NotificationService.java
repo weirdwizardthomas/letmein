@@ -39,7 +39,6 @@ public class NotificationService extends JobService {
     public static final boolean IS_RUNNING_IN_BACKGROUND = true;
 
     private NotificationManager notificationManager;
-
     Api api;
 
     @Override
@@ -89,17 +88,32 @@ public class NotificationService extends JobService {
         return false;
     }
 
+    /**
+     * Displays notifications in a bulk
+     *
+     * @param loggedActions Notifications to display
+     */
     private void sendNotifications(List<LoggedAction> loggedActions) {
         for (LoggedAction loggedAction : loggedActions)
             sendNotification(loggedAction);
     }
 
+    /**
+     * Displays a single notification in a notification channel
+     *
+     * @param loggedAction Log to be shown as a notification
+     */
     private void sendNotification(LoggedAction loggedAction) {
         Notification notification = buildNotification(loggedAction);
         notificationManager.notify(loggedAction.getLogID(), notification);
         markNotificationAsRead(loggedAction);
     }
 
+    /**
+     * Sends a query to the server to mark the log as read
+     *
+     * @param loggedAction Log to be marked as read by Admin
+     */
     private void markNotificationAsRead(LoggedAction loggedAction) {
         Call<ApiResponse> call = api.markNotificationAsRead(Session.getInstance(this).getSessionId(), loggedAction.getLogID());
         call.enqueue(new Callback<ApiResponse>() {
@@ -124,6 +138,12 @@ public class NotificationService extends JobService {
         });
     }
 
+    /**
+     * Builds the notification based on retrieved log data
+     *
+     * @param loggedAction Data to be displayed
+     * @return Notification based on the retrieved log
+     */
     private Notification buildNotification(LoggedAction loggedAction) {
         return new NotificationCompat.Builder(this, App.CHANNEL_ID)
                 .setContentTitle(loggedAction.getTimestamp(DATE_FORMAT_FULL).toString() + "  " + loggedAction.getInfoPretty())

@@ -11,6 +11,8 @@ import static android.content.Context.MODE_PRIVATE;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class Session {
+
+    //Field names in the sharedpreferences file
     private static final String SESSION = "session";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
@@ -32,7 +34,6 @@ public class Session {
      *
      * @return Singleton instance of this class.
      */
-
     public static synchronized Session getInstance(Context context) {
         if (instance == null)
             instance = new Session(context);

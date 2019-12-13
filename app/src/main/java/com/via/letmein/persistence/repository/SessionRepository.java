@@ -17,9 +17,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SessionRepository {
+
+    /**
+     * Single instance of the class.
+     */
     private static SessionRepository instance;
+    /**
+     * Retrieved registration response.
+     */
     private final MutableLiveData<ApiResponse> registrationData;
+    /**
+     * Retrieved login response.
+     */
     private final MutableLiveData<ApiResponse> loginData;
+    /**
+     * Application's session data
+     */
     private final Session session;
 
     private SessionRepository(Session session) {

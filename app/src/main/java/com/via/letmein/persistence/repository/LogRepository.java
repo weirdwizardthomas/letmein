@@ -21,14 +21,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Repository for retrieving logs from the server
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class LogRepository {
 
     public static final String DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
+
+    /**
+     * Single instance of the class.
+     */
     private static LogRepository instance;
-
-    private final Api api;
-
+    /**
+     * Retrieved memberListLiveData.
+     */
     private final MutableLiveData<ApiResponse> data;
+    /**
+     * API to which requests are sent.
+     */
+    private final Api api;
 
     private LogRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
@@ -86,5 +99,4 @@ public class LogRepository {
             }
         });
     }
-
 }

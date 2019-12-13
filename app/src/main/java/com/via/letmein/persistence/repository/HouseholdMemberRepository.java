@@ -30,14 +30,14 @@ public class HouseholdMemberRepository {
      * Single instance of the class.
      */
     private static HouseholdMemberRepository instance;
-
     /**
      * Retrieved memberListLiveData.
      */
     private final MutableLiveData<ApiResponse> memberListLiveData;
-
+    /**
+     * Retrieved response from user creation.
+     */
     private final MutableLiveData<ApiResponse> createMemberLiveData;
-
     /**
      * API to which requests are sent.
      */

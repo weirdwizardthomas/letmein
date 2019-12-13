@@ -1,5 +1,10 @@
 package com.via.letmein.persistence.api.request;
 
+/**
+ * Json body for {@see Api#createUser}
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class CreateMemberJson {
     final String user_name;
     final String user_role;

@@ -19,6 +19,8 @@ import retrofit2.Response;
 
 /**
  * Repository for the image URLs of images on the server.
+ *
+ * @author Tomas Koristka: 291129@via.dk
  */
 public class HouseholdMemberImageRepository {
 
