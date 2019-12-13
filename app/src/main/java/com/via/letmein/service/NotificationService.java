@@ -34,23 +34,23 @@ import static com.via.letmein.persistence.model.LoggedAction.DATE_FORMAT_FULL;
  */
 public class NotificationService extends JobService {
 
-    public static final String TAG = "NOTIFICATION THREAD";
+    public static final String TAG = "NotificationService";
 
     public static final boolean IS_RUNNING_IN_BACKGROUND = true;
 
     private NotificationManager notificationManager;
-    Api api;
+    private Api api;
 
     @Override
     public boolean onStartJob(JobParameters params) {
         api = ServiceGenerator.getApi(Session.getInstance(this).getIpAddress());
         notificationManager = getSystemService(NotificationManager.class);
 
-        doBackgroundWork(params);
+        doBackgroundWork();
         return IS_RUNNING_IN_BACKGROUND;
     }
 
-    private void doBackgroundWork(JobParameters params) {
+    private void doBackgroundWork() {
         Call<ApiResponse> call = api.getNotificationLog(Session.getInstance(this).getSessionId());
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -152,5 +152,4 @@ public class NotificationService extends JobService {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
     }
-
 }

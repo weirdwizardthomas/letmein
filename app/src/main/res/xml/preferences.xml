@@ -3,5 +3,11 @@
     <Preference
         app:key="reset_pin"
         app:title="Change pin code" />
+    <Preference
+        app:key="reset_session_id"
+        app:title="Reset session ID" />
+    <Preference
+        app:key="reset_app"
+        app:title="Start over" />
 
 </PreferenceScreen>

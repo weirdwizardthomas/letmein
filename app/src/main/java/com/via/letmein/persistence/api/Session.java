@@ -12,7 +12,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class Session {
 
-    //Field names in the sharedpreferences file
+    //Field names in the shared preferences file
     private static final String SESSION = "session";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
@@ -90,4 +90,6 @@ public class Session {
     public void wipeSession() {
         preferences.edit().clear().apply();
     }
+
+
 }
