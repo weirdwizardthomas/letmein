@@ -25,6 +25,11 @@ import static com.via.letmein.persistence.api.Api.PORT;
 import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
 import static com.via.letmein.persistence.api.Api.SESSION_ID;
 
+/**
+ * Adapter for {@See AdministrationFragment#membersRecyclerView}
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> {
 
     private List<HouseholdMember> data;

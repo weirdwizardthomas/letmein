@@ -12,7 +12,13 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.main_activity.MainActivity;
 import com.via.letmein.ui.register.RegisterActivity;
 
+/**
+ * Opening activity that handles registration and application unlocking
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class OpeningActivity extends AppCompatActivity {
+
     private static final int PIN_REQUEST_CODE = 1;
 
     @Override
@@ -21,13 +27,11 @@ public class OpeningActivity extends AppCompatActivity {
         setContentView(R.layout.activity_opening);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
         openPin();
     }
-
 
     /**
      * Opens a new activity that handles application unlocking
@@ -43,8 +47,7 @@ public class OpeningActivity extends AppCompatActivity {
      * @return true if is registered, false otherwise
      */
     private boolean isRegistered() {
-        Session session = Session.getInstance(getApplicationContext());
-        return session.isRegistered();
+        return Session.getInstance(getApplicationContext()).isRegistered();
     }
 
     @Override
@@ -54,8 +57,6 @@ public class OpeningActivity extends AppCompatActivity {
         if (requestCode == PIN_REQUEST_CODE) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
                 startActivity(new Intent(this, isRegistered() ? MainActivity.class : RegisterActivity.class));
                 finish();
                 // Do something with the contact here (bigger example below)

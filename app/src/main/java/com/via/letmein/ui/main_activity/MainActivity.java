@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         login();
     }
 
+    /**
+     * Initialises the navigation components
+     */
     private void initialiseNavigation() {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -69,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    /**
+     * Requests a new session ID from the server by providing a username and a password
+     */
     public void login() {
         Session session = Session.getInstance(getApplicationContext());
         String username = session.getUsername();

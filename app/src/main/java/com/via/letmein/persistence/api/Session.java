@@ -43,12 +43,16 @@ public class Session {
         preferences = context.getSharedPreferences(SESSION, MODE_PRIVATE);
     }
 
-    public void setSessionId(String id) {
-        preferences.edit().putString(SESSION, id).apply();
+    public String getIpAddress() {
+        return preferences.getString(IP_ADDRESS, null);
     }
 
-    public void setUsername(String username) {
-        preferences.edit().putString(USERNAME, username).apply();
+    public void setIpAddress(String ipAddress) {
+        preferences.edit().putString(IP_ADDRESS, ipAddress).apply();
+    }
+
+    public String getPassword() {
+        return preferences.getString(PASSWORD, null);
     }
 
     public void setPassword(String password) {
@@ -59,28 +63,24 @@ public class Session {
         return preferences.getString(SESSION, null);
     }
 
-    public String getUsername() {
-        return preferences.getString(USERNAME, null);
+    public void setSessionId(String id) {
+        preferences.edit().putString(SESSION, id).apply();
     }
 
-    public String getPassword() {
-        return preferences.getString(PASSWORD, null);
-    }
-
-    public void setIpAddress(String ipAddress) {
-        preferences.edit().putString(IP_ADDRESS, ipAddress).apply();
-    }
-
-    public String getIpAddress() {
-        return preferences.getString(IP_ADDRESS, null);
+    public boolean isRegistered() {
+        return preferences.getBoolean(REGISTERED_KEY, false);
     }
 
     public void setRegistered(boolean registered) {
         preferences.edit().putBoolean(REGISTERED_KEY, registered).apply();
     }
 
-    public boolean isRegistered() {
-        return preferences.getBoolean(REGISTERED_KEY, false);
+    public String getUsername() {
+        return preferences.getString(USERNAME, null);
+    }
+
+    public void setUsername(String username) {
+        preferences.edit().putString(USERNAME, username).apply();
     }
 
     /**

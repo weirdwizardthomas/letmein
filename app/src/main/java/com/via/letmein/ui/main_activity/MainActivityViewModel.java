@@ -10,6 +10,9 @@ import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.SessionRepository;
 
+/**
+ * ViewModel for {@See MainActivity}
+ */
 public class MainActivityViewModel extends AndroidViewModel {
 
     private final SessionRepository repository;

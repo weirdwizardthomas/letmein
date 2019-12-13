@@ -35,14 +35,16 @@ import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
 
 /**
+ * Fragment showing details of a household member
  *
+ * @author Tomas Koristka: 291129@via.dk
  */
 public class MemberProfileFragment extends Fragment implements ImageAdapter.OnItemClickListener {
 
+    private static final String TAG = "MemberProfile";
+
     public static final String BUNDLE_MEMBER_KEY = "MEMBER";
     public static final int GRID_SPAN = 3;
-
-    private static final String TAG = "MemberProfile";
 
     private ImageView profilePicture;
     private TextView name;
@@ -68,7 +70,11 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         return root;
     }
 
+    /**
+     * Retrieves a picture from the server and displays it in {@See MemberProfileFragment#profilePicture}
+     */
     private void getProfilePicture() {
+        //Construct the url path
         String url = HTTP +
                 Session.getInstance(getContext()).getIpAddress() +
                 ADDRESS_PORT_DELIMITER +
@@ -78,6 +84,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
                 SESSION_ID +
                 PARAMETER_DELIMITER +
                 Session.getInstance(getContext()).getSessionId();
+        //Retrieve and display the picture
         Picasso.get()
                 .load(url)
                 .placeholder(R.drawable.profile_icon_placeholder_background)
@@ -85,8 +92,11 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
 
     }
 
+    /**
+     * Retrieves all household member's images and displays them in {@See MemberProfileFragment#imageGallery}
+     */
     private void getImages() {
-        memberProfileViewModel.getImagePaths("").observe(this, response -> {
+        memberProfileViewModel.getImagePaths(Session.getInstance(getContext()).getSessionId()).observe(this, response -> {
             if (response != null) {
 
                 if (!response.isError() && response.getContent() != null)

@@ -42,8 +42,12 @@ import static com.via.letmein.persistence.api.Errors.ERROR_UNABLE_GET_IP_ADDRESS
  */
 public class LiveFragment extends Fragment {
 
-    public static final int PIN_REQUEST_CODE = 1;
     private static final String TAG = "Live";
+
+    public static final int PIN_REQUEST_CODE = 1;
+    /**
+     * Miliseconds in between calls for a new live feed image
+     */
     public static final int REFRESH_RATE = 500;
 
     private LiveViewModel liveViewModel;
@@ -61,7 +65,6 @@ public class LiveFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_live, container, false);
 
         initialiseLayout(root);
-
 
         //Create a background thread that can update the UI
         handler = new Handler();
@@ -121,8 +124,11 @@ public class LiveFragment extends Fragment {
         }
     }
 
+    /**
+     * Initialises the fragment's layout
+     * @param root Parent element of the fragment
+     */
     private void initialiseLayout(View root) {
-
         liveCameraFeed = root.findViewById(R.id.cameraFeed);
         openButton = root.findViewById(R.id.openButton);
         openButton.setOnClickListener(v -> {
@@ -181,6 +187,4 @@ public class LiveFragment extends Fragment {
             }
         }
     }
-
-
 }

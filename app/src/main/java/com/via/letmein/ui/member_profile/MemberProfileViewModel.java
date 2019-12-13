@@ -11,6 +11,11 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.persistence.repository.HouseholdMemberImageRepository;
 
+/**
+ * ViewModel for {@See MemberProfileFragment}
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class MemberProfileViewModel extends AndroidViewModel {
     private final HouseholdMemberImageRepository repository;
     private HouseholdMember householdMember;

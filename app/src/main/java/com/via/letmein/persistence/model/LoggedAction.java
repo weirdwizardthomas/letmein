@@ -6,6 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * A single log retrieved from the server.
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class LoggedAction {
     public static final String DATE_FORMAT_DATE_ONLY = "dd/MM/yyyy";
     public static final String DATE_FORMAT_FULL = "dd/MM/yyyy HH:mm:ss";

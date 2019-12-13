@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * Viewmodel for {@see AddMemberFragment}
+ *
+ * @author Tomas Koristka: 291129@via.dk
  */
 public class AddMemberViewModel extends AndroidViewModel {
 

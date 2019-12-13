@@ -1,5 +1,10 @@
 package com.via.letmein.persistence.api;
 
+/**
+ * Collection of errors the {@See Api} can provide.
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class Errors {
     public static final String ERROR_MISSING_REQUIRED_PARAMETERS = "missing_request_parameters";
     public static final String ERROR_DATABASE_ERROR = "database_error";

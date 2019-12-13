@@ -30,6 +30,7 @@ import static com.via.letmein.persistence.api.Errors.ERROR_WRONG_SERIAL_ID;
 public class RegisterActivity extends AppCompatActivity implements IPListenAsyncTask.IpListener {
 
     public static final String TAG = "RegisterActivity";
+
     private RegisterViewModel registerViewModel;
 
     private EditText usernameTextView;

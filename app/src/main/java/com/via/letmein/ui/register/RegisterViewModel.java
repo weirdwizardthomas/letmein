@@ -10,6 +10,11 @@ import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.SessionRepository;
 
+/**
+ * ViewModel for {@See RegisterActivity}
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class RegisterViewModel extends AndroidViewModel {
     private final SessionRepository repository;
 

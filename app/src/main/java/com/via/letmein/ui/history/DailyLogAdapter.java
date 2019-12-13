@@ -23,6 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Adapter for {@See HistoryFragment#dayEntryRecyclerView} that displays all logs within a single day
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class DailyLogAdapter extends RecyclerView.Adapter<DailyLogAdapter.ViewHolder> {
 
     private List<DailyLog> data;

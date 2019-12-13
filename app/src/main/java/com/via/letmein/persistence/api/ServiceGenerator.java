@@ -15,7 +15,6 @@ import static com.via.letmein.persistence.api.Api.PORT;
  */
 public class ServiceGenerator {
 
-
     private static Retrofit getRetrofitInstance(String ipAddress) {
         String baseUrl = HTTP + ipAddress + ADDRESS_PORT_DELIMITER + PORT + API_PATH;
 

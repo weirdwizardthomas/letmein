@@ -32,6 +32,11 @@ import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
 import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
 
+/**
+ * Fragment to show {@See DailyLog} to the user.
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class HistoryFragment extends Fragment {
 
     public static final int WEEK_IN_MILISECONDS = 604800000;

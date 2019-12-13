@@ -21,7 +21,6 @@ import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.main_activity.MainActivity;
 
-import java.util.List;
 import java.util.Objects;
 
 import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
@@ -59,25 +58,55 @@ public class AddMemberFragment extends Fragment {
     /**
      * Initialises the fragment's layout
      *
-     * @param root Parent view of the fragment.
+     * @param root Parent view of the fragment
      */
     private void initialiseLayout(View root) {
-        initialiseButtons(root);
-        initaliseRoleAdapter();
-        initaliseInput(root);
+        nameInput = root.findViewById(R.id.nameTextView);
+        roleSpinner = root.findViewById(R.id.roleSpinner);
+        addFaceAndFingerprintButton = root.findViewById(R.id.addFingerprintButton);
+        saveMemberFloatingActionButton = root.findViewById(R.id.saveMemberButton);
+
+        roleSpinner.setAdapter(roleSpinnerAdapter);
+
+        addFaceAndFingerprintButton.setOnClickListener(v -> {
+            //todo send request to the server to take pictures and fingerprints
+        });
+
+        saveMemberFloatingActionButton.setOnClickListener(v -> {
+            String name = nameInput.getText().toString();
+            String role = roleSpinner.getSelectedItem().toString();
+
+            addMemberViewModel
+                    .createMember(name, role, Session.getInstance(getContext()).getSessionId())
+                    .observe(this, apiResponse -> {
+                        if (apiResponse != null) {
+
+                            if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                                Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
+                                // Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
+                            }
+
+                            if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                                handleErrors(apiResponse.getErrorMessage());
+                        }
+                    });
+
+
+        });
+
+        roleSpinnerAdapter = new ArrayAdapter<>(
+                Objects.requireNonNull(getContext()),
+                android.R.layout.simple_spinner_item,
+                Objects.requireNonNull(addMemberViewModel.getRoles().getValue()));
+        roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
     }
 
     /**
-     * Initialises input elements.
+     * Handles error received from the Api
      *
-     * @param root Parent view.
+     * @param errorMessage Error message to be handled
      */
-    private void initaliseInput(View root) {
-        nameInput = root.findViewById(R.id.nameTextView);
-        roleSpinner = root.findViewById(R.id.roleSpinner);
-        roleSpinner.setAdapter(roleSpinnerAdapter);
-    }
-
     private void handleErrors(String errorMessage) {
         switch (errorMessage) {
             case ERROR_EXPIRED_SESSION_ID: {
@@ -102,51 +131,4 @@ public class AddMemberFragment extends Fragment {
             }
         }
     }
-
-    /**
-     * Initialises the buttons.
-     *
-     * @param root Parent view
-     */
-    private void initialiseButtons(final View root) {
-
-        addFaceAndFingerprintButton = root.findViewById(R.id.addFingerprintButton);
-        addFaceAndFingerprintButton.setOnClickListener(v -> {
-            //todo send request to the server to take pictures and fingerprints
-        });
-
-        saveMemberFloatingActionButton = root.findViewById(R.id.saveMemberButton);
-        saveMemberFloatingActionButton.setOnClickListener(v -> {
-            String name = nameInput.getText().toString();
-            String role = roleSpinner.getSelectedItem().toString();
-
-            addMemberViewModel
-                    .createMember(name, role, Session.getInstance(getContext()).getSessionId())
-                    .observe(this, apiResponse -> {
-                        if (apiResponse != null) {
-
-                            if (!apiResponse.isError() && apiResponse.getContent() != null) {
-                                Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
-                                // Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
-                            }
-
-                            if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
-                                handleErrors(apiResponse.getErrorMessage());
-                        }
-                    });
-
-
-        });
-    }
-
-    /**
-     * Initialises the {@see AddMemberFragment#roleSpinner}.
-     */
-    private void initaliseRoleAdapter() {
-        List<String> roles = addMemberViewModel.getRoles().getValue();
-
-        roleSpinnerAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, Objects.requireNonNull(roles));
-        roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    }
-
 }

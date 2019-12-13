@@ -8,10 +8,17 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+/**
+ * Async task that listens to the local network's broadcast on a specific port to retrieve the server's ip address
+ *
+ * @author Tomas Koristka: 291129@via.dk
+ */
 public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
     private static final String TAG = "IPListen async";
+
     public static final int PORT = 8085;
     public static final String PAYLOAD = "REAC";
+    public static final int BUFFER_SIZE = 2048;
 
     private final IpListener ipListenerListener;
 
@@ -32,7 +39,7 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
             while (true) {
                 Log.i(TAG, "listening");
                 //Receive a packet
-                byte[] receiveBuffer = new byte[2048];
+                byte[] receiveBuffer = new byte[BUFFER_SIZE];
                 DatagramPacket packet = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 socket.receive(packet);
                 //Packet received
@@ -53,6 +60,9 @@ public class IPListenAsyncTask extends AsyncTask<Void, Void, String> {
         ipListenerListener.onTaskCompleted(s);
     }
 
+    /**
+     * Callback listener that gets invoked upon successful acquisition of the ip address
+     */
     public interface IpListener {
         void onTaskCompleted(String ipAddress);
     }
