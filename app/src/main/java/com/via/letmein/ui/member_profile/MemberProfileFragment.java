@@ -63,7 +63,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         if (getArguments() != null)
             memberProfileViewModel.setHouseholdMember((HouseholdMember) getArguments().getSerializable(BUNDLE_MEMBER_KEY));
 
-        initialiseLayout(root, getArguments());
+        initialiseLayout(root);
         getProfilePicture();
         getImages();
 
@@ -71,7 +71,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     }
 
     /**
-     * Retrieves a picture from the server and displays it in {@See MemberProfileFragment#profilePicture}
+     * Retrieves a picture from the server and displays it in {@see MemberProfileFragment#profilePicture}
      */
     private void getProfilePicture() {
         //Construct the url path
@@ -93,7 +93,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     }
 
     /**
-     * Retrieves all household member's images and displays them in {@See MemberProfileFragment#imageGallery}
+     * Retrieves all household member's images and displays them in {@see MemberProfileFragment#imageGallery}
      */
     private void getImages() {
         memberProfileViewModel.getImagePaths(Session.getInstance(getContext()).getSessionId()).observe(this, response -> {
@@ -134,10 +134,9 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     /**
      * Initialises the fragment's layout
      *
-     * @param root
-     * @param extras
+     * @param root Fragment's root element
      */
-    private void initialiseLayout(View root, Bundle extras) {
+    private void initialiseLayout(View root) {
 
         name = root.findViewById(R.id.name);
         role = root.findViewById(R.id.action);

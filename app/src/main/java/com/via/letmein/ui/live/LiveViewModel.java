@@ -11,7 +11,7 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.LockRepository;
 
 /**
- * ViewModel for the {@See LiveFragment}
+ * ViewModel for the {@see LiveFragment}
  *
  * @author Tomas Koristka: 291129@via.dk
  */

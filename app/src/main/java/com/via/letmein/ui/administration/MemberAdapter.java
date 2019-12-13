@@ -26,7 +26,7 @@ import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
 import static com.via.letmein.persistence.api.Api.SESSION_ID;
 
 /**
- * Adapter for {@See AdministrationFragment#membersRecyclerView}
+ * Adapter for {@see AdministrationFragment#membersRecyclerView}
  *
  * @author Tomas Koristka: 291129@via.dk
  */

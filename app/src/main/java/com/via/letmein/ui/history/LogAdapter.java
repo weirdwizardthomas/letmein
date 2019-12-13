@@ -25,7 +25,7 @@ import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
 import static com.via.letmein.persistence.api.Api.SESSION_ID;
 
 /**
- * Adapter for {@See LoggedAction} within a single unit of day
+ * Adapter for {@see LoggedAction} within a single unit of day
  *
  * @author Tomas Koristka: 291129@via.dk
  */

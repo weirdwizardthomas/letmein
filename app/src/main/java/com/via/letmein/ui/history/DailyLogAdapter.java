@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Adapter for {@See HistoryFragment#dayEntryRecyclerView} that displays all logs within a single day
+ * Adapter for {@see HistoryFragment#dayEntryRecyclerView} that displays all logs within a single day
  *
  * @author Tomas Koristka: 291129@via.dk
  */

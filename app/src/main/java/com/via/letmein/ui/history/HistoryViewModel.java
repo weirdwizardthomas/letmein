@@ -12,7 +12,7 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.LogRepository;
 
 /**
- * ViewModel for {@See HistoryFragment}
+ * ViewModel for {@see HistoryFragment}
  *
  * @author Tomas Koristka: 291129@via.dk
  */

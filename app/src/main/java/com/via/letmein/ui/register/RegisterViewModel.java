@@ -11,7 +11,7 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.SessionRepository;
 
 /**
- * ViewModel for {@See RegisterActivity}
+ * ViewModel for {@see RegisterActivity}
  *
  * @author Tomas Koristka: 291129@via.dk
  */

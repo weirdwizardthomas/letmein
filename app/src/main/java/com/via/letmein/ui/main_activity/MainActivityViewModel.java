@@ -11,7 +11,7 @@ import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.SessionRepository;
 
 /**
- * ViewModel for {@See MainActivity}
+ * ViewModel for {@see MainActivity}
  */
 public class MainActivityViewModel extends AndroidViewModel {
 

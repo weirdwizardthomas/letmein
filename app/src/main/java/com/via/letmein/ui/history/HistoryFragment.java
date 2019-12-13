@@ -33,7 +33,7 @@ import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
 
 /**
- * Fragment to show {@See DailyLog} to the user.
+ * Fragment to show {@see DailyLog} to the user.
  *
  * @author Tomas Koristka: 291129@via.dk
  */

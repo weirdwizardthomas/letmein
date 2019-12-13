@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Viewmodel for {@see AddMemberFragment}
+ * ViewModel for {@see AddMemberFragment}
  *
  * @author Tomas Koristka: 291129@via.dk
  */

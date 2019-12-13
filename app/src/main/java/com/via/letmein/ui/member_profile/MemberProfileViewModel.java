@@ -12,7 +12,7 @@ import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.persistence.repository.HouseholdMemberImageRepository;
 
 /**
- * ViewModel for {@See MemberProfileFragment}
+ * ViewModel for {@see MemberProfileFragment}
  *
  * @author Tomas Koristka: 291129@via.dk
  */

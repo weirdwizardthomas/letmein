@@ -1,7 +1,7 @@
 package com.via.letmein.persistence.api;
 
 /**
- * Collection of errors the {@See Api} can provide.
+ * Collection of errors the {@see Api} can provide.
  *
  * @author Tomas Koristka: 291129@via.dk
  */

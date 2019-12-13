@@ -70,7 +70,7 @@ public class LiveFragment extends Fragment {
         handler = new Handler();
         imageFetcher = new Runnable() {
             //construct base url
-            String baseUrl = HTTP +
+            final String baseUrl = HTTP +
                     Session.getInstance(getContext()).getIpAddress() +
                     ADDRESS_PORT_DELIMITER +
                     PORT +
