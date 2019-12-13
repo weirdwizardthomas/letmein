@@ -49,9 +49,6 @@ public interface Api {
     @GET("door")
     Call<ApiResponse> openDoor(@Query(SESSION_ID) String sessionId);
 
-    @GET("video")
-    Call<ApiResponse> getStreamUrl(@Query(SESSION_ID) String sessionId);
-
     @GET("logs")
     Call<ApiResponse> getLog(@Query(SESSION_ID) String sessionId, @Query("begin_date") String startingDate, @Query("end_date") String endingDate);
 

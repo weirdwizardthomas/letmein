@@ -1,31 +1,34 @@
 package com.via.letmein.ui.live;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
+import com.squareup.picasso.Picasso;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.main_activity.MainActivity;
 
-import org.videolan.libvlc.LibVLC;
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.MediaPlayer;
-import org.videolan.libvlc.util.VLCVideoLayout;
-
-import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.via.letmein.persistence.api.Api.ADDRESS_PORT_DELIMITER;
+import static com.via.letmein.persistence.api.Api.API_PATH;
+import static com.via.letmein.persistence.api.Api.HTTP;
+import static com.via.letmein.persistence.api.Api.PARAMETER_DELIMITER;
+import static com.via.letmein.persistence.api.Api.PORT;
+import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
+import static com.via.letmein.persistence.api.Api.SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
 import static com.via.letmein.persistence.api.Errors.ERROR_LOCKING_DEVICE_NOT_FOUND;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
@@ -41,74 +44,69 @@ public class LiveFragment extends Fragment {
 
     public static final int PIN_REQUEST_CODE = 1;
     private static final String TAG = "Live";
+    public static final int REFRESH_RATE = 500;
 
     private LiveViewModel liveViewModel;
 
+    private ImageView liveCameraFeed;
     private Button openButton;
 
-    private LibVLC libVLC;
-    private VLCVideoLayout vlcVideoLayout;
-    private MediaPlayer mediaPlayer;
+    Handler handler;
+
+    private Runnable imageFetcher;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         liveViewModel = ViewModelProviders.of(this).get(LiveViewModel.class);
         View root = inflater.inflate(R.layout.fragment_live, container, false);
 
-        final ArrayList<String> args = new ArrayList<>();
-        args.add("-vvv");
-        libVLC = new LibVLC(Objects.requireNonNull(getContext()), args);
-        mediaPlayer = new MediaPlayer(libVLC);
         initialiseLayout(root);
-        return root;
-    }
 
-   /* @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "OnViewCreated");
-        String sessionId = Session.getInstance(getContext()).getSessionId();
-        liveViewModel.getStreamUrl(sessionId).observe(this, apiResponse -> {
-            if (apiResponse != null) {
-                if (!apiResponse.isError() && apiResponse.getContent() != null) {
-                    String url = (String) apiResponse.getContent();
-                    Toast.makeText(getContext(), url, Toast.LENGTH_SHORT).show();
-                    initialiseStream(url);
-                }
-                if (apiResponse.isError() && apiResponse.getErrorMessage() != null) {
-                    handleErrors(apiResponse.getErrorMessage());
-                }
+
+        //Create a background thread that can update the UI
+        handler = new Handler();
+        imageFetcher = new Runnable() {
+            //construct base url
+            String baseUrl = HTTP +
+                    Session.getInstance(getContext()).getIpAddress() +
+                    ADDRESS_PORT_DELIMITER +
+                    PORT +
+                    API_PATH +
+                    "video" +
+                    QUERY_DELIMITER +
+                    SESSION_ID +
+                    PARAMETER_DELIMITER;
+
+            /*  private int i = 0;*/
+            @Override
+            public void run() {
+
+              /*mockup
+                ++i;
+                        Picasso.get()
+                        .load(
+                        (i % 2 == 0)
+                        ? "https://image.shutterstock.com/image-vector/woman-avatar-isolated-on-white-260nw-1472212124.jpg"
+                        : "https://picsum.photos/id/866/536/354")
+                        .placeholder(R.drawable.profile_icon_placeholder_background)
+                        .into(liveCameraFeed);
+              */
+
+                String imagePath = baseUrl + Session.getInstance(getContext()).getSessionId();
+
+                //todo add callback and check for errors
+                Picasso.get()
+                        .load(imagePath)
+                        .placeholder(R.drawable.profile_icon_placeholder_background)
+                        .into(liveCameraFeed);
+                //wait in between fetches
+                handler.postDelayed(this, REFRESH_RATE);
             }
-        });
+        };
 
-    }*/
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "pause");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mediaPlayer.stop();
-        mediaPlayer.detachViews();
-        Log.d(TAG, "stop");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "destroyView");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mediaPlayer.release();
-        libVLC.release();
-        Log.d(TAG, "destroy");
+        //Add the runnable to activity's handler
+        handler.post(imageFetcher);
+        return root;
     }
 
     @Override
@@ -123,23 +121,9 @@ public class LiveFragment extends Fragment {
         }
     }
 
-    private void initialiseStream(String url) {
-        Log.d(TAG, "initialiseStream");
-        try {
-            mediaPlayer.attachViews(vlcVideoLayout, null, false, false);
-
-            final Media media = new Media(libVLC, Uri.parse(url));
-            mediaPlayer.setMedia(media);
-            media.release();
-            mediaPlayer.play();
-        } catch (Exception e) {
-            //todo figure this shit out - attaching and detaching when swapping fragments causes crashes
-        }
-    }
-
     private void initialiseLayout(View root) {
 
-        vlcVideoLayout = root.findViewById(R.id.videoView);
+        liveCameraFeed = root.findViewById(R.id.cameraFeed);
         openButton = root.findViewById(R.id.openButton);
         openButton.setOnClickListener(v -> {
             //authenticate
@@ -164,8 +148,7 @@ public class LiveFragment extends Fragment {
      * Opens the application's pin lock screen
      */
     private void openPin() {
-        Intent intent = new Intent(getContext(), EnterPinActivity.class);
-        startActivity(intent);
+        startActivityForResult(new Intent(getContext(), EnterPinActivity.class), PIN_REQUEST_CODE);
     }
 
     /**
@@ -198,5 +181,6 @@ public class LiveFragment extends Fragment {
             }
         }
     }
+
 
 }
