@@ -1,5 +1,6 @@
 package com.via.letmein.persistence.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,6 +11,7 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.api.request.BiometricJson;
 import com.via.letmein.persistence.api.request.CreateMemberJson;
 import com.via.letmein.persistence.model.HouseholdMember;
 
@@ -38,6 +40,10 @@ public class HouseholdMemberRepository {
      * Retrieved response from user creation.
      */
     private final MutableLiveData<ApiResponse> createMemberLiveData;
+    /**
+     * Retrieved repsonse from biometric data's query
+     */
+    private LiveData<ApiResponse> biometricDataResponse;
     /**
      * API to which requests are sent.
      */
@@ -81,7 +87,7 @@ public class HouseholdMemberRepository {
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse dummy = response.body();
                     Gson gson = new GsonBuilder().create();
@@ -104,7 +110,7 @@ public class HouseholdMemberRepository {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
 
             }
         });
@@ -120,7 +126,7 @@ public class HouseholdMemberRepository {
         Call<ApiResponse> call = api.createUser(new CreateMemberJson(name, role, sessionId));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse dummy = response.body();
 
@@ -141,9 +147,41 @@ public class HouseholdMemberRepository {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
 
             }
         });
+    }
+
+    public LiveData<ApiResponse> addBiometricData(String userId, String sessionId) {
+        Call<ApiResponse> call = api.startBiometricData(new BiometricJson(userId, sessionId));
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+
+                    Gson gson = new GsonBuilder().create();
+
+                    //Check for error & resolve
+                    if (dummy.isError())
+                        dummy.setContent(0);
+                    else {
+                        TypeToken<String> responseTypeToken = new TypeToken<String>() {
+                        };
+                        String responseString = gson.fromJson(gson.toJson(dummy.getContent()), responseTypeToken.getType());
+                        dummy.setContent(responseString);
+                    }
+                    //save the value
+                    createMemberLiveData.setValue(dummy);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
+
+            }
+        });
+        return biometricDataResponse;
     }
 }

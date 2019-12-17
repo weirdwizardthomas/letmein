@@ -1,5 +1,6 @@
 package com.via.letmein.persistence.api;
 
+import com.via.letmein.persistence.api.request.BiometricJson;
 import com.via.letmein.persistence.api.request.CreateMemberJson;
 import com.via.letmein.persistence.api.request.RegisterJson;
 
@@ -57,4 +58,7 @@ public interface Api {
 
     @PUT("notification/{notification_id}")
     Call<ApiResponse> markNotificationAsRead(@Query(SESSION_ID) String sessionId, @Path(NOTIFICATION_ID) int notificationId);
+
+    @POST("user/biometric")
+    Call<ApiResponse> startBiometricData(@Body BiometricJson biometricJson);
 }

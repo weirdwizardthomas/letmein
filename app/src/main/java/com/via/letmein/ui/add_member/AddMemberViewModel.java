@@ -28,9 +28,14 @@ public class AddMemberViewModel extends AndroidViewModel {
         super(application);
         repository = HouseholdMemberRepository.getInstance(Session.getInstance(application));
 
-        List<String> dummy = Arrays.asList("Member", "Owner", "Postman", "Cleaning lady");
         roles = new MutableLiveData<>();
-        roles.setValue(dummy);
+        roles.setValue(Arrays.asList(
+                "Member",
+                "Owner",
+                "Postman",
+                "Cleaner",
+                "Baby sitter",
+                "Family"));
     }
 
 
@@ -48,5 +53,10 @@ public class AddMemberViewModel extends AndroidViewModel {
      */
     public LiveData<ApiResponse> createMember(String name, String role, String sessionId) {
         return repository.createMember(name, role, sessionId);
+    }
+
+    public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
+        //todo fix addBiometric data by requesting an id in registration and using int instead of string everywhere
+        return repository.addBiometricData(Integer.toString(userId), sessionId);
     }
 }

@@ -19,6 +19,8 @@ import com.via.letmein.ui.main_activity.MainActivity;
 
 import static com.via.letmein.persistence.api.Errors.ERROR_ADMIN_ALREADY_EXISTS;
 import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Errors.ERROR_LOCKING_DEVICE_NOT_FOUND;
 import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
 import static com.via.letmein.persistence.api.Errors.ERROR_NAME_ALREADY_IN_USE;
 import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
@@ -118,14 +120,49 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                             .setUsername(name) //save the chosen usernameTextView
                             .setPassword(password) //save the received password
                             .setRegistered(); //set registered to true
-                    openMainActivity();
+                    login();
                 }
 
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
-                    handleError(apiResponse.getErrorMessage());
+                    handleErrors(apiResponse.getErrorMessage());
             }
         });
     }
+
+    private void addBiometricData() {
+        String username = registerViewModel.getUsername();
+        String sessionId = registerViewModel.getPassword();
+
+        registerViewModel.addBiometricData(username, sessionId).observe(this, apiResponse -> {
+            if (apiResponse != null) {
+                if (!apiResponse.isError() && apiResponse.getContent() != null)
+                    openMainActivity();
+
+                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                    handleErrors(apiResponse.getErrorMessage());
+
+            }
+        });
+    }
+
+    private void login() {
+        String username = registerViewModel.getUsername();
+        String password = registerViewModel.getPassword();
+
+        registerViewModel.getSessionID(username, password).observe(this, apiResponse -> {
+            if (apiResponse != null) {
+                if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                    registerViewModel.setSessionID((String) apiResponse.getContent());
+                    addBiometricData();
+                }
+
+                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                    handleErrors(apiResponse.getErrorMessage());
+
+            }
+        });
+    }
+
 
     private void openMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
@@ -137,9 +174,17 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
      *
      * @param errorMessage Error message received from the server
      */
-    private void handleError(String errorMessage) {
+    private void handleErrors(String errorMessage) {
 
         switch (errorMessage) {
+            case ERROR_EXPIRED_SESSION_ID: {
+                login();
+                break;
+            }
+            case ERROR_LOCKING_DEVICE_NOT_FOUND: {
+                Toast.makeText(getApplicationContext(), "Could not contact the lock", Toast.LENGTH_SHORT).show();
+                break;
+            }
             case ERROR_USERNAME_TOO_SHORT: {
                 usernameTextView.setVisibility(View.VISIBLE);
                 break;
@@ -149,7 +194,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                 break;
             }
             case ERROR_DATABASE_ERROR: {
-                Toast.makeText(this, getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, ERROR_DATABASE_ERROR);
                 break;
             }
             case ERROR_ADMIN_ALREADY_EXISTS: {
@@ -180,7 +225,8 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
         registerButton.setEnabled(true);
         //show ip address
         ipAddressTextView.setVisibility(View.VISIBLE);
-        ipAddressTextView.setText(getString(R.string.labelIpAddressFound) + ipAddress);
+        String ipAddressLabel = getString(R.string.labelIpAddressFound) + ipAddress;
+        ipAddressTextView.setText(ipAddressLabel);
 
     }
 }

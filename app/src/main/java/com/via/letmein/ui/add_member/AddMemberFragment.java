@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.via.letmein.R;
@@ -36,7 +37,7 @@ import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class AddMemberFragment extends Fragment {
-    public static final String TAG = "AddMemberFragment";
+    private static final String TAG = "AddMemberFragment";
 
     private ArrayAdapter<String> roleSpinnerAdapter;
     private Spinner roleSpinner;
@@ -81,10 +82,8 @@ public class AddMemberFragment extends Fragment {
                     .observe(this, apiResponse -> {
                         if (apiResponse != null) {
 
-                            if (!apiResponse.isError() && apiResponse.getContent() != null) {
-                                Toast.makeText(v.getContext(), "Saved a new member", Toast.LENGTH_SHORT).show();
-                                // Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
-                            }
+                            if (!apiResponse.isError() && apiResponse.getContent() != null)
+                                addBiometricData((Integer) apiResponse.getContent());
 
                             if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                                 handleErrors(apiResponse.getErrorMessage());
@@ -99,6 +98,25 @@ public class AddMemberFragment extends Fragment {
                 android.R.layout.simple_spinner_item,
                 Objects.requireNonNull(addMemberViewModel.getRoles().getValue()));
         roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+    }
+
+    private void addBiometricData(int userId) {
+
+        addMemberViewModel
+                .addBiometricData(userId, Session.getInstance(getContext()).getSessionId())
+                .observe(this, apiResponse -> {
+                    if (apiResponse != null) {
+
+                        if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                            Toast.makeText(getContext(), "Added a new member.", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(Objects.requireNonNull(getActivity()), R.id.nav_host_fragment).popBackStack();
+                        }
+
+                        if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                            handleErrors(apiResponse.getErrorMessage());
+                    }
+                });
 
     }
 

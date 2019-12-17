@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.repository.HouseholdMemberRepository;
 import com.via.letmein.persistence.repository.SessionRepository;
 
 /**
@@ -16,34 +17,56 @@ import com.via.letmein.persistence.repository.SessionRepository;
  * @author Tomas Koristka: 291129@via.dk
  */
 public class RegisterViewModel extends AndroidViewModel {
-    private final SessionRepository repository;
+    private final SessionRepository sessionRepository;
+    private final HouseholdMemberRepository householdMemberRepository;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        repository = SessionRepository.getInstance(Session.getInstance(application));
+        sessionRepository = SessionRepository.getInstance(Session.getInstance(application));
+        householdMemberRepository = HouseholdMemberRepository.getInstance(Session.getInstance(application));
     }
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
-        return repository.register(username, serialNumber);
+        return sessionRepository.register(username, serialNumber);
     }
 
     public RegisterViewModel setIpAddress(String ipAddress) {
-        repository.setIpAddress(ipAddress);
-        return this;
-    }
-
-    public RegisterViewModel setPassword(String password) {
-        repository.setPassword(password);
+        sessionRepository.setIpAddress(ipAddress);
         return this;
     }
 
     public RegisterViewModel setRegistered() {
-        repository.setRegistered();
+        sessionRepository.setRegistered();
         return this;
     }
 
+    public LiveData<ApiResponse> getSessionID(String username, String password) {
+        return sessionRepository.getSessionID(username, password);
+    }
+
+    public void setSessionID(String sessionID) {
+        sessionRepository.setSessionID(sessionID);
+    }
+
+    public LiveData<ApiResponse> addBiometricData(String username, String sessionId) {
+        return householdMemberRepository.addBiometricData(username, sessionId);
+    }
+
+    public String getUsername() {
+        return sessionRepository.getUsername();
+    }
+
     public RegisterViewModel setUsername(String username) {
-        repository.setUsername(username);
+        sessionRepository.setUsername(username);
+        return this;
+    }
+
+    public String getPassword() {
+        return sessionRepository.getPassword();
+    }
+
+    public RegisterViewModel setPassword(String password) {
+        sessionRepository.setPassword(password);
         return this;
     }
 }

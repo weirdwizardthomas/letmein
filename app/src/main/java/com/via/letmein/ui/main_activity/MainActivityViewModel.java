@@ -30,6 +30,15 @@ public class MainActivityViewModel extends AndroidViewModel {
         repository.setSessionID(sessionID);
     }
 
+
+    public String getUsername() {
+        return repository.getUsername();
+    }
+
+    public String getPassword() {
+        return repository.getPassword();
+    }
+
     /**
      * Removes all session related data
      */

@@ -22,7 +22,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.Session;
 import com.via.letmein.service.NotificationService;
 
 import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
@@ -76,9 +75,8 @@ public class MainActivity extends AppCompatActivity {
      * Requests a new session ID from the server by providing a username and a password
      */
     public void login() {
-        Session session = Session.getInstance(getApplicationContext());
-        String username = session.getUsername();
-        String password = session.getPassword();
+        String username = mainActivityViewModel.getUsername();
+        String password = mainActivityViewModel.getPassword();
 
         mainActivityViewModel.getSessionID(username, password).observe(this, apiResponse -> {
             if (apiResponse != null) {

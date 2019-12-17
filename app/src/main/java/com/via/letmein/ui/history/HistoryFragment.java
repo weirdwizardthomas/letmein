@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
@@ -39,7 +38,7 @@ import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARA
  */
 public class HistoryFragment extends Fragment {
 
-    public static final int WEEK_IN_MILISECONDS = 604800000;
+    private static final int WEEK_IN_MILISECONDS = 604800000;
     private static final String TAG = "History";
 
     private HistoryViewModel historyViewModel;
@@ -115,7 +114,7 @@ public class HistoryFragment extends Fragment {
                 break;
             }
             case ERROR_DATABASE_ERROR: {
-                Toast.makeText(getContext(), getString(R.string.databaseError), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, ERROR_DATABASE_ERROR);
                 break;
             }
         }

@@ -1,5 +1,6 @@
 package com.via.letmein.persistence.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -62,7 +63,7 @@ public class SessionRepository {
     private void refresh(Call<ApiResponse> call, final MutableLiveData<ApiResponse> target) {
         call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse dummy = response.body();
                     Gson gson = new GsonBuilder().create();
@@ -83,7 +84,7 @@ public class SessionRepository {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
             }
         });
 
@@ -112,5 +113,13 @@ public class SessionRepository {
 
     public void wipeSession() {
         session.wipeSession();
+    }
+
+    public String getUsername() {
+        return session.getUsername();
+    }
+
+    public String getPassword() {
+        return session.getPassword();
     }
 }
