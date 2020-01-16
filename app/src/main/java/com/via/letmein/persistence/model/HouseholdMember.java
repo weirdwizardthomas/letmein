@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class HouseholdMember implements Serializable {
 
     private int id;
-    private boolean isAdministrator;
+    private boolean isOwner;
     private String name;
     private String role;
     /**
@@ -21,9 +21,9 @@ public class HouseholdMember implements Serializable {
     public HouseholdMember() {
     }
 
-    public HouseholdMember(int id, boolean isAdministrator, String name, String role, String profilePhoto) {
+    public HouseholdMember(int id, boolean isOwner, String name, String role, String profilePhoto) {
         this.id = id;
-        this.isAdministrator = isAdministrator;
+        this.isOwner = isOwner;
         this.name = name;
         this.role = role;
         this.profilePhoto = profilePhoto;
@@ -37,12 +37,12 @@ public class HouseholdMember implements Serializable {
         this.id = id;
     }
 
-    public boolean isAdministrator() {
-        return isAdministrator;
+    public boolean isOwner() {
+        return isOwner;
     }
 
-    public void setAdministrator(boolean administrator) {
-        isAdministrator = administrator;
+    public void setOwner(boolean isAdministrator) {
+        this.isOwner = isAdministrator;
     }
 
     public String getName() {

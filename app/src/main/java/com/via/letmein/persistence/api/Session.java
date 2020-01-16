@@ -18,6 +18,7 @@ public class Session {
     private static final String PASSWORD = "password";
     private static final String IP_ADDRESS = "ip_address";
     private static final String REGISTERED_KEY = "registered";
+    public static final String ADMIN_ID = "admin_id";
 
     /**
      * Saving and loading of the session id and username.
@@ -91,5 +92,12 @@ public class Session {
         preferences.edit().clear().apply();
     }
 
+    public void setId(int id) {
+        preferences.edit().putInt(ADMIN_ID, id).apply();
+    }
+
+    public int getId() {
+        return preferences.getInt(ADMIN_ID, 0);
+    }
 
 }

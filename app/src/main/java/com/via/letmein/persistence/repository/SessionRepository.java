@@ -12,6 +12,7 @@ import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.api.request.RegisterJson;
+import com.via.letmein.persistence.model.Admin;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,13 +51,95 @@ public class SessionRepository {
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
-        refresh(api.register(new RegisterJson(username, serialNumber)), registrationData);
+
+        Call<ApiResponse> call = api.register(new RegisterJson(username, serialNumber));
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+                    Gson gson = new GsonBuilder().create();
+
+                    if (dummy.isError()) {
+                        dummy.setContent(0);
+                    } else {
+                        TypeToken<String> responseTypeToken = new TypeToken<String>() {
+                        };
+                        String content = gson.fromJson(
+                                gson.toJson(dummy.getContent()),
+                                responseTypeToken.getType());
+                        dummy.setContent(content);
+                    }
+
+                    registrationData.setValue(dummy);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
+            }
+        });
+        /*
+        Call<ApiResponse> call = api.register(new RegisterJson(username, serialNumber));
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+                    Gson gson = new GsonBuilder().create();
+
+                    if (dummy.isError()) {
+                        dummy.setContent(0);
+                    } else {
+                        TypeToken<Admin> responseTypeToken = new TypeToken<Admin>() {
+                        };
+                        Admin content = gson.fromJson(
+                                gson.toJson(dummy.getContent()),
+                                responseTypeToken.getType());
+                        dummy.setContent(content);
+                    }
+
+                    registrationData.setValue(dummy);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
+            }
+        });*/
         return registrationData;
     }
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
-        refresh(api.login(username, password), loginData);
+        Call<ApiResponse> call = api.login(username, password);
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+                    Gson gson = new GsonBuilder().create();
+
+                    if (dummy.isError()) {
+                        dummy.setContent(0);
+                    } else {
+                        TypeToken<String> responseTypeToken = new TypeToken<String>() {
+                        };
+                        String content = gson.fromJson(
+                                gson.toJson(dummy.getContent()),
+                                responseTypeToken.getType());
+                        dummy.setContent(content);
+                    }
+
+                    loginData.setValue(dummy);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
+            }
+        });
+
         return loginData;
     }
 
@@ -91,6 +174,22 @@ public class SessionRepository {
 
     }
 
+    public String getUsername() {
+        return session.getUsername();
+    }
+
+    public String getPassword() {
+        return session.getPassword();
+    }
+
+    public int getId() {
+        return session.getId();
+    }
+
+    public void setId(int id) {
+        session.setId(id);
+    }
+
     public void setIpAddress(String ipAddress) {
         session.setIpAddress(ipAddress);
     }
@@ -103,23 +202,15 @@ public class SessionRepository {
         session.setRegistered(true);
     }
 
-    public void setUsername(String username) {
-        session.setUsername(username);
-    }
-
     public void setSessionID(String sessionID) {
         session.setSessionId(sessionID);
     }
 
+    public void setUsername(String username) {
+        session.setUsername(username);
+    }
+
     public void wipeSession() {
         session.wipeSession();
-    }
-
-    public String getUsername() {
-        return session.getUsername();
-    }
-
-    public String getPassword() {
-        return session.getPassword();
     }
 }

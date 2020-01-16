@@ -53,6 +53,7 @@ public class HouseholdMemberRepository {
         api = ServiceGenerator.getApi(session.getIpAddress());
         memberListLiveData = new MutableLiveData<>(new ApiResponse());
         createMemberLiveData = new MutableLiveData<>(new ApiResponse());
+        biometricDataResponse = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -153,7 +154,7 @@ public class HouseholdMemberRepository {
         });
     }
 
-    public LiveData<ApiResponse> addBiometricData(String userId, String sessionId) {
+    public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
         Call<ApiResponse> call = api.startBiometricData(new BiometricJson(userId, sessionId));
         call.enqueue(new Callback<ApiResponse>() {
             @Override

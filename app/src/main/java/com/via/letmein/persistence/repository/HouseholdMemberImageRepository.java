@@ -10,6 +10,7 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
+import com.via.letmein.persistence.api.request.PromotionJson;
 
 import java.util.List;
 
@@ -31,7 +32,8 @@ public class HouseholdMemberImageRepository {
     /**
      * Retrieved data
      */
-    private final MutableLiveData<ApiResponse> data;
+    private final MutableLiveData<ApiResponse> imagePathsData;
+    private final MutableLiveData<ApiResponse> promotionData;
     /**
      * API to which requests are sent.
      */
@@ -39,7 +41,8 @@ public class HouseholdMemberImageRepository {
 
     private HouseholdMemberImageRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        data = new MutableLiveData<>(new ApiResponse());
+        imagePathsData = new MutableLiveData<>(new ApiResponse());
+        promotionData = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -61,18 +64,6 @@ public class HouseholdMemberImageRepository {
      * @return {@see ApiResponse} having {@see ApiResponse#content} of {@see List} of URL {@see String} if there was no {@see ApiResponse#error}, 0 otherwise
      */
     public LiveData<ApiResponse> getImagePaths(String username, String sessionId) {
-        refresh(username, sessionId);
-        return data;
-    }
-
-    /**
-     * Sends an asynchronous call to the server to retrieve user's images urls
-     *
-     * @param username  Username of the logged in user
-     * @param sessionId Generated sessionID from server
-     */
-    private void refresh(String username, String sessionId) {
-
         Call<ApiResponse> call = api.getUserImagesList(username, sessionId);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -90,7 +81,7 @@ public class HouseholdMemberImageRepository {
                     } else
                         dummy.setContent(0);
 
-                    data.setValue(dummy);
+                    imagePathsData.setValue(dummy);
                 }
             }
 
@@ -100,5 +91,8 @@ public class HouseholdMemberImageRepository {
             }
         });
 
+        return imagePathsData;
     }
+
+
 }
