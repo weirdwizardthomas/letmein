@@ -18,51 +18,31 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/nameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/name"
-        android:text="@string/labelName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/portrait" />
-
-    <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/viewPadding"
         android:text="@string/placeholderName"
-        app:layout_constraintBottom_toBottomOf="@+id/nameLabel"
-        app:layout_constraintStart_toEndOf="@+id/nameLabel"
-        app:layout_constraintTop_toTopOf="@+id/nameLabel" />
-
-    <TextView
-        android:id="@+id/roleLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:labelFor="@id/action"
-        android:text="@string/labelRole"
+        android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintTop_toBottomOf="@+id/portrait" />
 
     <TextView
         android:id="@+id/action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/viewPadding"
         android:text="@string/placeholderRole"
-        app:layout_constraintBottom_toBottomOf="@+id/roleLabel"
-        app:layout_constraintStart_toEndOf="@+id/roleLabel"
-        app:layout_constraintTop_toTopOf="@+id/roleLabel" />
+        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintTop_toTopOf="@+id/name" />
 
     <TextView
         android:id="@+id/imageGalleryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/labelStoredPictures"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/action" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recentEntries"
@@ -72,5 +52,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageGalleryLabel" />
+
+    <ImageButton
+        android:id="@+id/promoteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/round_button"
+        android:src="@drawable/ic_arrow_upward_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/action"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/action" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

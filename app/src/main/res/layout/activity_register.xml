@@ -64,7 +64,7 @@
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/labelRegister"
         app:layout_constraintBottom_toBottomOf="parent"
