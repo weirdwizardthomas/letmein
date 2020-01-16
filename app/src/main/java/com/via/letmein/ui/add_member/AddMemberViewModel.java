@@ -11,6 +11,7 @@ import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.repository.HouseholdMemberRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,6 +44,16 @@ public class AddMemberViewModel extends AndroidViewModel {
         return roles;
     }
 
+    public List<String> getRolesAsList() {
+        return new ArrayList<>(Arrays.asList(
+                "Member",
+                "Owner",
+                "Postman",
+                "Cleaner",
+                "Baby sitter",
+                "Family"));
+    }
+
     /**
      * Creates a new household member and saves it to the server
      *
@@ -57,6 +68,6 @@ public class AddMemberViewModel extends AndroidViewModel {
 
     public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
         //todo fix addBiometric data by requesting an id in registration and using int instead of string everywhere
-        return repository.addBiometricData(Integer.toString(userId), sessionId);
+        return repository.addBiometricData(userId, sessionId);
     }
 }

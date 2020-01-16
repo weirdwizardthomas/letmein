@@ -1,6 +1,7 @@
 package com.via.letmein.ui.register;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,12 +19,12 @@ import com.via.letmein.persistence.repository.SessionRepository;
  */
 public class RegisterViewModel extends AndroidViewModel {
     private final SessionRepository sessionRepository;
-    private final HouseholdMemberRepository householdMemberRepository;
+    private HouseholdMemberRepository householdMemberRepository;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
         sessionRepository = SessionRepository.getInstance(Session.getInstance(application));
-        householdMemberRepository = HouseholdMemberRepository.getInstance(Session.getInstance(application));
+        householdMemberRepository = null/*HouseholdMemberRepository.getInstance(Session.getInstance(application))*/;
     }
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
@@ -48,12 +49,16 @@ public class RegisterViewModel extends AndroidViewModel {
         sessionRepository.setSessionID(sessionID);
     }
 
-    public LiveData<ApiResponse> addBiometricData(String username, String sessionId) {
-        return householdMemberRepository.addBiometricData(username, sessionId);
+    public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
+        return householdMemberRepository.addBiometricData(userId, sessionId);
     }
 
     public String getUsername() {
         return sessionRepository.getUsername();
+    }
+
+    public int getId() {
+        return sessionRepository.getId();
     }
 
     public RegisterViewModel setUsername(String username) {
@@ -67,6 +72,15 @@ public class RegisterViewModel extends AndroidViewModel {
 
     public RegisterViewModel setPassword(String password) {
         sessionRepository.setPassword(password);
+        return this;
+    }
+
+    public void addHouseholdRepository(Context context) {
+        householdMemberRepository = HouseholdMemberRepository.getInstance(Session.getInstance(context));
+    }
+
+    public RegisterViewModel setId(int id) {
+        sessionRepository.setId(id);
         return this;
     }
 }

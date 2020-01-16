@@ -40,6 +40,7 @@
     <string name="labelCheckbox">checkbox</string>
     <string name="placeholderIpAddress">/10.0.0.1</string>
     <string name="messageUsernameTooShort">The username is too short!</string>
+    <string name="labelPromoteToAdmin">Promote to administrator</string>
 
 
 </resources>

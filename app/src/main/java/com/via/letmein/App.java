@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import java.util.Objects;
 
 public class App extends Application {
+
     public static final String CHANNEL_ID = "Door opening notification channel";
 
     @Override

@@ -43,7 +43,7 @@ import static com.via.letmein.persistence.api.Errors.ERROR_UNABLE_GET_IP_ADDRESS
  */
 public class LiveFragment extends Fragment {
 
-    private static final String TAG = "Live";
+    private static final String TAG = "LiveFragment";
 
     public static final int PIN_REQUEST_CODE = 1;
     /**
@@ -70,6 +70,21 @@ public class LiveFragment extends Fragment {
         //Create a background thread that can update the UI
         initialiseCameraFeed();
         return root;
+    }
+
+    /**
+     * Initialises the fragment's layout
+     *
+     * @param root Parent element of the fragment
+     */
+    private void initialiseLayout(View root) {
+        liveCameraFeed = root.findViewById(R.id.cameraFeed);
+        openButton = root.findViewById(R.id.openButton);
+        openButton.setOnClickListener(v -> {
+            //authenticate
+            openPin();
+
+        });
     }
 
     private void initialiseCameraFeed() {
@@ -106,7 +121,7 @@ public class LiveFragment extends Fragment {
 
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, e.getLocalizedMessage());
                     }
                 };
 
@@ -124,59 +139,6 @@ public class LiveFragment extends Fragment {
         //Add the runnable to activity's handler
         handler.post(imageFetcher);
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PIN_REQUEST_CODE) {
-            if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
-                Toast.makeText(getActivity(), "Request cancelled", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    /**
-     * Initialises the fragment's layout
-     *
-     * @param root Parent element of the fragment
-     */
-    private void initialiseLayout(View root) {
-        liveCameraFeed = root.findViewById(R.id.cameraFeed);
-        openButton = root.findViewById(R.id.openButton);
-        openButton.setOnClickListener(v -> {
-            //authenticate
-            openPin();
-            //make the call
-            liveViewModel
-                    .openDoor(Session.getInstance(getContext()).getSessionId())
-                    .observe(this, apiResponse -> {
-                        if (apiResponse != null) {
-                            if (!apiResponse.isError() && apiResponse.getContent() != null)
-                                Toast.makeText(getContext(), "Opening door...", Toast.LENGTH_SHORT).show();
-
-                            if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
-                                handleErrors(apiResponse.getErrorMessage());
-
-                        }
-                    });
-        });
-    }
-
-    /**
-     * Opens the application's pin lock screen
-     */
-    private void openPin() {
-        startActivityForResult(new Intent(getContext(), EnterPinActivity.class), PIN_REQUEST_CODE);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacks(imageFetcher);
-    }
-
 
     /**
      * Handles error responses from the server
@@ -207,5 +169,43 @@ public class LiveFragment extends Fragment {
                 break;
             }
         }
+    }
+
+    /**
+     * Opens the application's pin lock screen
+     */
+    private void openPin() {
+        startActivityForResult(new Intent(getContext(), EnterPinActivity.class), PIN_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PIN_REQUEST_CODE) {
+            if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
+                Toast.makeText(getActivity(), "Request cancelled", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
+                //make the call
+                liveViewModel
+                        .openDoor(Session.getInstance(getContext()).getSessionId())
+                        .observe(this, apiResponse -> {
+                            if (apiResponse != null) {
+                                if (!apiResponse.isError() && apiResponse.getContent() != null)
+                                    Toast.makeText(getContext(), "Opening door...", Toast.LENGTH_SHORT).show();
+
+                                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                                    handleErrors(apiResponse.getErrorMessage());
+
+                            }
+                        });
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(imageFetcher);
     }
 }

@@ -112,13 +112,17 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
         registerViewModel.register(name, serialId).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
-
                     String password = (String) apiResponse.getContent();
+                    //Admin admin = (Admin) apiResponse.getContent();
 
                     //save the credentials
                     registerViewModel
                             .setUsername(name) //save the chosen usernameTextView
-                            .setPassword(password) //save the received password
+                            .setPassword(password)
+                            //todo replace with this once the api gets fixed
+                            //todo once the admin is registered start biometric
+                            //.setPassword(admin.getPassword())
+                            //.setId(admin.getId())//save the received password
                             .setRegistered(); //set registered to true
                     login();
                 }
@@ -130,10 +134,10 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
     }
 
     private void addBiometricData() {
-        String username = registerViewModel.getUsername();
+        int id = registerViewModel.getId();
         String sessionId = registerViewModel.getPassword();
 
-        registerViewModel.addBiometricData(username, sessionId).observe(this, apiResponse -> {
+        registerViewModel.addBiometricData(id, sessionId).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null)
                     openMainActivity();
@@ -162,7 +166,6 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
             }
         });
     }
-
 
     private void openMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
@@ -228,5 +231,6 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
         String ipAddressLabel = getString(R.string.labelIpAddressFound) + ipAddress;
         ipAddressTextView.setText(ipAddressLabel);
 
+        registerViewModel.addHouseholdRepository(getApplicationContext());
     }
 }

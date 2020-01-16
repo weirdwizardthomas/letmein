@@ -108,24 +108,6 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
         membersRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-       /* //Swipe to delete item
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView,
-                                  @NonNull RecyclerView.ViewHolder viewHolder,
-                                  @NonNull RecyclerView.ViewHolder target) {
-                return false; //no move functionality
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                HouseholdMember memberToDelete = membersAdapter.getMemberAt(viewHolder.getAdapterPosition());
-            }
-        }).attachToRecyclerView(membersRecyclerView);*/
-
         //Floating button
         addMemberButton = root.findViewById(R.id.addMemberButton);
         addMemberButton.setOnClickListener(v -> {

@@ -64,9 +64,15 @@ public class AddMemberFragment extends Fragment {
     private void initialiseLayout(View root) {
         nameInput = root.findViewById(R.id.nameTextView);
         roleSpinner = root.findViewById(R.id.roleSpinner);
+
         addFaceAndFingerprintButton = root.findViewById(R.id.addFingerprintButton);
         saveMemberFloatingActionButton = root.findViewById(R.id.saveMemberButton);
 
+        roleSpinnerAdapter = new ArrayAdapter<>(
+                Objects.requireNonNull(getContext()),
+                android.R.layout.simple_spinner_item,
+                Objects.requireNonNull(addMemberViewModel.getRoles().getValue()));
+        roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roleSpinner.setAdapter(roleSpinnerAdapter);
 
         addFaceAndFingerprintButton.setOnClickListener(v -> {
@@ -93,11 +99,6 @@ public class AddMemberFragment extends Fragment {
 
         });
 
-        roleSpinnerAdapter = new ArrayAdapter<>(
-                Objects.requireNonNull(getContext()),
-                android.R.layout.simple_spinner_item,
-                Objects.requireNonNull(addMemberViewModel.getRoles().getValue()));
-        roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
     }
 

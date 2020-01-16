@@ -1,22 +1,29 @@
 package com.via.letmein.ui.member_profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.squareup.picasso.Picasso;
 import com.via.letmein.R;
+import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.HouseholdMember;
 import com.via.letmein.ui.main_activity.MainActivity;
@@ -45,12 +52,15 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
 
     public static final String BUNDLE_MEMBER_KEY = "MEMBER";
     public static final int GRID_SPAN = 3;
+    public static final String NEW_SESSION_ID_KEY = "newSessionId";
+    private static final int PIN_REQUEST_CODE = 1;
 
     private ImageView profilePicture;
     private TextView name;
     private TextView role;
     private RecyclerView imageGallery;
     private ImageAdapter imageAdapter;
+    private ImageButton promoteButton;
 
     private MemberProfileViewModel memberProfileViewModel;
 
@@ -61,7 +71,9 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         View root = inflater.inflate(R.layout.fragment_member_profile, container, false);
 
         if (getArguments() != null)
-            memberProfileViewModel.setHouseholdMember((HouseholdMember) getArguments().getSerializable(BUNDLE_MEMBER_KEY));
+            memberProfileViewModel
+                    .setHouseholdMember(
+                            (HouseholdMember) getArguments().getSerializable(BUNDLE_MEMBER_KEY));
 
         initialiseLayout(root);
         getProfilePicture();
@@ -69,6 +81,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
 
         return root;
     }
+
 
     /**
      * Retrieves a picture from the server and displays it in {@see MemberProfileFragment#profilePicture}
@@ -89,7 +102,6 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
                 .load(url)
                 .placeholder(R.drawable.profile_icon_placeholder_background)
                 .into(profilePicture);
-
     }
 
     /**
@@ -139,24 +151,91 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     private void initialiseLayout(View root) {
 
         name = root.findViewById(R.id.name);
-        role = root.findViewById(R.id.action);
+        name.setText(memberProfileViewModel
+                .getHouseholdMember()
+                .getName());
 
-        name.setText(memberProfileViewModel.getHouseholdMember().getName());
-        role.setText(memberProfileViewModel.getHouseholdMember().getRole());
+        role = root.findViewById(R.id.action);
+        role.setText(memberProfileViewModel
+                .getHouseholdMember()
+                .getRole());
 
         profilePicture = root.findViewById(R.id.portrait);
 
+        imageAdapter = new ImageAdapter(this, getContext());
 
         imageGallery = root.findViewById(R.id.recentEntries);
         imageGallery.setHasFixedSize(true);
         imageGallery.setLayoutManager(new GridLayoutManager(getContext(), GRID_SPAN));
-        imageAdapter = new ImageAdapter(this, getContext());
         imageGallery.setAdapter(imageAdapter);
 
+
+        promoteButton = root.findViewById(R.id.promoteButton);
+        //Create the instance of PopupMenu
+        PopupMenu popupMenu = new PopupMenu(getContext(), promoteButton);
+
+        //Inflate the Popup using xml file
+        popupMenu.getMenuInflater().inflate(R.menu.promotion_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.promoteConfirm)
+                openPin();
+
+            return true;
+        });
+        promoteButton.setOnClickListener(v -> popupMenu.show());
+
+        //Disable the button if the user is already admin
+        if (memberProfileViewModel.getHouseholdMember().isOwner()) {
+            promoteButton.setEnabled(false);
+            promoteButton.setAlpha(.5f);
+        }
+
     }
+
+    private void openPin() {
+        startActivityForResult(new Intent(getContext(), EnterPinActivity.class), PIN_REQUEST_CODE);
+    }
+
+    private void startPromotion(ApiResponse apiResponse) {
+        String newSessionId = (String) apiResponse.getContent();
+        HouseholdMember householdMember = memberProfileViewModel.getHouseholdMember();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString(NEW_SESSION_ID_KEY, newSessionId);
+        bundle.putSerializable(BUNDLE_MEMBER_KEY, householdMember);
+
+        Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                .navigate(R.id.member_to_promotion);
+    }
+
 
     @Override
     public void onItemClick(String item) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PIN_REQUEST_CODE) {
+            if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED)
+                Toast.makeText(getActivity(), "Request cancelled", Toast.LENGTH_SHORT).show();
+            else {
+                memberProfileViewModel
+                        .promoteAdmin(Session.getInstance(getContext()).getSessionId())
+                        .observe(this, apiResponse -> {
+                            if (apiResponse != null) {
+
+                                if (!apiResponse.isError() && apiResponse.getContent() != null)
+                                    startPromotion(apiResponse);
+
+                                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                                    handleErrors(apiResponse.getErrorMessage());
+
+                            }
+                        });
+            }
+        }
     }
 }
