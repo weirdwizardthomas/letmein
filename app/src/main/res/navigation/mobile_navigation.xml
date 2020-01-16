@@ -45,7 +45,11 @@
         android:id="@+id/nav_view_member"
         android:name="com.via.letmein.ui.member_profile.MemberProfileFragment"
         android:label="Member details"
-        tools:layout="@layout/fragment_member_profile" />
+        tools:layout="@layout/fragment_member_profile" >
+        <action
+            android:id="@+id/member_to_promotion"
+            app:destination="@+id/nav_promote_member" />
+    </fragment>
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.via.letmein.ui.settings.SettingsFragment"
@@ -55,6 +59,11 @@
         android:name="com.via.letmein.ui.register.RegisterActivity"
         android:label="activity_register"
         tools:layout="@layout/activity_register" />
+    <fragment
+        android:id="@+id/nav_promote_member"
+        android:name="com.via.letmein.ui.promotion.PromotionFragment"
+        android:label="Member promotion"
+        tools:layout="@layout/fragment_promotion" />
 
 
 </navigation>
