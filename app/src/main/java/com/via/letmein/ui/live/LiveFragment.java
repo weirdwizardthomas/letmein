@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
@@ -67,6 +68,11 @@ public class LiveFragment extends Fragment {
         initialiseLayout(root);
 
         //Create a background thread that can update the UI
+        initialiseCameraFeed();
+        return root;
+    }
+
+    private void initialiseCameraFeed() {
         handler = new Handler();
         imageFetcher = new Runnable() {
             //construct base url
@@ -80,28 +86,36 @@ public class LiveFragment extends Fragment {
                     SESSION_ID +
                     PARAMETER_DELIMITER;
 
-            /*  private int i = 0;*/
+            /*          private int i = 0;             */
             @Override
             public void run() {
-
-              /*mockup
-                ++i;
-                        Picasso.get()
+                /*++i;
+                //mockup
+                Picasso.get()
                         .load(
                         (i % 2 == 0)
                         ? "https://image.shutterstock.com/image-vector/woman-avatar-isolated-on-white-260nw-1472212124.jpg"
                         : "https://picsum.photos/id/866/536/354")
                         .placeholder(R.drawable.profile_icon_placeholder_background)
                         .into(liveCameraFeed);
-              */
+*/
+                Callback callback = new Callback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                };
 
                 String imagePath = baseUrl + Session.getInstance(getContext()).getSessionId();
-
                 //todo add callback and check for errors
                 Picasso.get()
                         .load(imagePath)
                         .placeholder(R.drawable.profile_icon_placeholder_background)
-                        .into(liveCameraFeed);
+                        .into(liveCameraFeed, callback);
                 //wait in between fetches
                 handler.postDelayed(this, REFRESH_RATE);
             }
@@ -109,7 +123,6 @@ public class LiveFragment extends Fragment {
 
         //Add the runnable to activity's handler
         handler.post(imageFetcher);
-        return root;
     }
 
     @Override
@@ -126,6 +139,7 @@ public class LiveFragment extends Fragment {
 
     /**
      * Initialises the fragment's layout
+     *
      * @param root Parent element of the fragment
      */
     private void initialiseLayout(View root) {
@@ -156,6 +170,13 @@ public class LiveFragment extends Fragment {
     private void openPin() {
         startActivityForResult(new Intent(getContext(), EnterPinActivity.class), PIN_REQUEST_CODE);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(imageFetcher);
+    }
+
 
     /**
      * Handles error responses from the server
