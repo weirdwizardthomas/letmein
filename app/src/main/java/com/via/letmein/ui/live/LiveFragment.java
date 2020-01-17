@@ -1,6 +1,8 @@
 package com.via.letmein.ui.live;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,7 +18,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.main_activity.MainActivity;
@@ -30,11 +34,11 @@ import static com.via.letmein.persistence.api.Api.PARAMETER_DELIMITER;
 import static com.via.letmein.persistence.api.Api.PORT;
 import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
 import static com.via.letmein.persistence.api.Api.SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_LOCKING_DEVICE_NOT_FOUND;
-import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.persistence.api.Errors.ERROR_NO_LIVE_IMAGE_AVAILABLE;
-import static com.via.letmein.persistence.api.Errors.ERROR_UNABLE_GET_IP_ADDRESS;
+import static com.via.letmein.persistence.api.Error.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Error.ERROR_LOCKING_DEVICE_NOT_FOUND;
+import static com.via.letmein.persistence.api.Error.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Error.ERROR_NO_LIVE_IMAGE_AVAILABLE;
+import static com.via.letmein.persistence.api.Error.ERROR_UNABLE_GET_IP_ADDRESS;
 
 /**
  * Fragment displaying the live feed from the camera and allowing remote door unlocking.
@@ -101,36 +105,44 @@ public class LiveFragment extends Fragment {
                     SESSION_ID +
                     PARAMETER_DELIMITER;
 
-            /*          private int i = 0;             */
+            private int i = 0;
+
             @Override
             public void run() {
-                /*++i;
+                ++i;
                 //mockup
-                Picasso.get()
+                /*Picasso.get()
                         .load(
                         (i % 2 == 0)
                         ? "https://image.shutterstock.com/image-vector/woman-avatar-isolated-on-white-260nw-1472212124.jpg"
                         : "https://picsum.photos/id/866/536/354")
                         .placeholder(R.drawable.profile_icon_placeholder_background)
-                        .into(liveCameraFeed);
-*/
-                Callback callback = new Callback() {
+                        .into(liveCameraFeed);*/
+
+
+                Target target = new Target() {
                     @Override
-                    public void onSuccess() {
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        liveCameraFeed.setImageBitmap(bitmap);
                     }
 
                     @Override
-                    public void onError(Exception e) {
-                        Log.i(TAG, e.getLocalizedMessage());
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
                     }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
                 };
-
+Log.d("LOOK HERE FUKKO",String.valueOf(i));
                 String imagePath = baseUrl + Session.getInstance(getContext()).getSessionId();
-                //todo add callback and check for errors
                 Picasso.get()
                         .load(imagePath)
-                        .placeholder(R.drawable.profile_icon_placeholder_background)
-                        .into(liveCameraFeed, callback);
+                        .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                        .into(target);
+
+
+
                 //wait in between fetches
                 handler.postDelayed(this, REFRESH_RATE);
             }
@@ -207,5 +219,11 @@ public class LiveFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacks(imageFetcher);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.post(imageFetcher);
     }
 }

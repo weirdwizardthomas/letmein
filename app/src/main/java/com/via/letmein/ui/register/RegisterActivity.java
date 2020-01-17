@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,16 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.via.letmein.R;
+import com.via.letmein.persistence.model.Admin;
 import com.via.letmein.ui.main_activity.MainActivity;
 
-import static com.via.letmein.persistence.api.Errors.ERROR_ADMIN_ALREADY_EXISTS;
-import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
-import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_LOCKING_DEVICE_NOT_FOUND;
-import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.persistence.api.Errors.ERROR_NAME_ALREADY_IN_USE;
-import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
-import static com.via.letmein.persistence.api.Errors.ERROR_WRONG_SERIAL_ID;
+import static com.via.letmein.persistence.api.Error.ERROR_ADMIN_ALREADY_EXISTS;
+import static com.via.letmein.persistence.api.Error.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Error.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Error.ERROR_LOCKING_DEVICE_NOT_FOUND;
+import static com.via.letmein.persistence.api.Error.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Error.ERROR_NAME_ALREADY_IN_USE;
+import static com.via.letmein.persistence.api.Error.ERROR_USERNAME_TOO_SHORT;
+import static com.via.letmein.persistence.api.Error.ERROR_WRONG_SERIAL_ID;
 
 /**
  * An activity that handles device registration and pairing with this application.
@@ -38,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
     private EditText usernameTextView;
     private EditText serialIdTextView;
     private Button registerButton;
+    private ImageButton menu;
     private TextView ipAddressTextView;
     private TextView nameTooShortTextView;
 
@@ -100,6 +105,23 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
             if (!name.isEmpty())
                 register(name, serial);
         });
+
+        menu = findViewById(R.id.menu);
+        menu.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(this, menu);
+            popupMenu.getMenuInflater().inflate(R.menu.alternate_register_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId() == R.id.alternateRegister) {
+                        startActivity(new Intent(RegisterActivity.this, AlternateRegisterActivity.class));
+                        RegisterActivity.this.finish();
+                    }
+                    return true;
+                }
+            });
+            popupMenu.show();
+        });
     }
 
     /**
@@ -112,17 +134,13 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
         registerViewModel.register(name, serialId).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
-                    String password = (String) apiResponse.getContent();
-                    //Admin admin = (Admin) apiResponse.getContent();
+                    Admin admin = (Admin) apiResponse.getContent();
 
                     //save the credentials
                     registerViewModel
                             .setUsername(name) //save the chosen usernameTextView
-                            .setPassword(password)
-                            //todo replace with this once the api gets fixed
-                            //todo once the admin is registered start biometric
-                            //.setPassword(admin.getPassword())
-                            //.setId(admin.getId())//save the received password
+                            .setPassword(admin.getPassword())
+                            .setId(admin.getId())//save the received password
                             .setRegistered(); //set registered to true
                     login();
                 }
@@ -135,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
 
     private void addBiometricData() {
         int id = registerViewModel.getId();
-        String sessionId = registerViewModel.getPassword();
+        String sessionId = registerViewModel.getSessionID();
 
         registerViewModel.addBiometricData(id, sessionId).observe(this, apiResponse -> {
             if (apiResponse != null) {

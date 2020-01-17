@@ -63,9 +63,9 @@ public class SessionRepository {
                     if (dummy.isError()) {
                         dummy.setContent(0);
                     } else {
-                        TypeToken<String> responseTypeToken = new TypeToken<String>() {
+                        TypeToken<Admin> responseTypeToken = new TypeToken<Admin>() {
                         };
-                        String content = gson.fromJson(
+                        Admin content = gson.fromJson(
                                 gson.toJson(dummy.getContent()),
                                 responseTypeToken.getType());
                         dummy.setContent(content);
@@ -182,16 +182,24 @@ public class SessionRepository {
         return session.getPassword();
     }
 
-    public int getId() {
-        return session.getId();
+    public String getSessionID() {
+        return session.getSessionId();
     }
 
-    public void setId(int id) {
-        session.setId(id);
+    public String getIpAddress() {
+        return session.getIpAddress();
+    }
+
+    public int getUserID() {
+        return session.getUserID();
+    }
+
+    public void setUserID(int userID) {
+        session.setID(userID);
     }
 
     public void setIpAddress(String ipAddress) {
-        session.setIpAddress(ipAddress);
+        session.setIPAddress(ipAddress);
     }
 
     public void setPassword(String password) {
@@ -203,14 +211,16 @@ public class SessionRepository {
     }
 
     public void setSessionID(String sessionID) {
-        session.setSessionId(sessionID);
+        session.setSessionID(sessionID);
     }
 
     public void setUsername(String username) {
         session.setUsername(username);
     }
 
+
     public void wipeSession() {
         session.wipeSession();
     }
+
 }

@@ -5,7 +5,7 @@ package com.via.letmein.persistence.api;
  *
  * @author Tomas Koristka: 291129@via.dk
  */
-public class Errors {
+public class Error {
     public static final String ERROR_MISSING_REQUIRED_PARAMETERS = "missing_request_parameters";
     public static final String ERROR_DATABASE_ERROR = "database_error";
     public static final String ERROR_ADMIN_ALREADY_EXISTS = "admin_already_exists";
@@ -18,4 +18,6 @@ public class Errors {
     public static final String ERROR_USERNAME_TOO_SHORT = "short_username_length";
     public static final String ERROR_NO_LIVE_IMAGE_AVAILABLE = "no_live_image_available";
     public static final String ERROR_LOCKING_DEVICE_NOT_FOUND = "locker_device_not_found";
+    public static final String ERROR_MEMBER_ID_NOT_FOUND = "member_id_not_found";
+
 }

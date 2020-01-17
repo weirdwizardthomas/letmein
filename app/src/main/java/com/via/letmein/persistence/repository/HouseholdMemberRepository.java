@@ -41,9 +41,9 @@ public class HouseholdMemberRepository {
      */
     private final MutableLiveData<ApiResponse> createMemberLiveData;
     /**
-     * Retrieved repsonse from biometric data's query
+     * Retrieved response from biometric data's query
      */
-    private LiveData<ApiResponse> biometricDataResponse;
+    private MutableLiveData<ApiResponse> biometricDataResponse;
     /**
      * API to which requests are sent.
      */
@@ -174,7 +174,7 @@ public class HouseholdMemberRepository {
                         dummy.setContent(responseString);
                     }
                     //save the value
-                    createMemberLiveData.setValue(dummy);
+                    biometricDataResponse.setValue(dummy);
                 }
             }
 

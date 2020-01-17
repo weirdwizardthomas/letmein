@@ -14,7 +14,7 @@ import java.util.Objects;
 public class LoggedAction {
 
     public static final String DATE_FORMAT_DATE_ONLY = "dd/MM/yyyy";
-    public static final String DATE_FORMAT_FULL = "dd/MM/yyyy HH:mm:ss";
+    public static final String DATE_FORMAT_FULL = "dd/MM/yyyy-HH:mm:ss";
 
     private static final String TIME_DELIMITER = ":";
     private static final String OPEN_DOOR = "open_door";

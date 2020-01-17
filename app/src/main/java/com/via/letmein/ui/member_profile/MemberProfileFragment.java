@@ -37,9 +37,9 @@ import static com.via.letmein.persistence.api.Api.PARAMETER_DELIMITER;
 import static com.via.letmein.persistence.api.Api.PORT;
 import static com.via.letmein.persistence.api.Api.QUERY_DELIMITER;
 import static com.via.letmein.persistence.api.Api.SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
-import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Error.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Error.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Error.ERROR_MISSING_REQUIRED_PARAMETERS;
 
 /**
  * Fragment showing details of a household member
@@ -71,9 +71,8 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         View root = inflater.inflate(R.layout.fragment_member_profile, container, false);
 
         if (getArguments() != null)
-            memberProfileViewModel
-                    .setHouseholdMember(
-                            (HouseholdMember) getArguments().getSerializable(BUNDLE_MEMBER_KEY));
+            memberProfileViewModel.setHouseholdMember(
+                    (HouseholdMember) getArguments().getSerializable(BUNDLE_MEMBER_KEY));
 
         initialiseLayout(root);
         getProfilePicture();
@@ -169,7 +168,6 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         imageGallery.setLayoutManager(new GridLayoutManager(getContext(), GRID_SPAN));
         imageGallery.setAdapter(imageAdapter);
 
-
         promoteButton = root.findViewById(R.id.promoteButton);
         //Create the instance of PopupMenu
         PopupMenu popupMenu = new PopupMenu(getContext(), promoteButton);
@@ -185,18 +183,21 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         promoteButton.setOnClickListener(v -> popupMenu.show());
 
         //Disable the button if the user is already admin
-        if (memberProfileViewModel.getHouseholdMember().isOwner()) {
-            promoteButton.setEnabled(false);
-            promoteButton.setAlpha(.5f);
-        }
+        if (memberProfileViewModel.getHouseholdMember().isOwner())
+            disableButton();
 
+    }
+
+    private void disableButton() {
+        promoteButton.setEnabled(false);
+        promoteButton.setAlpha(.5f);
     }
 
     private void openPin() {
         startActivityForResult(new Intent(getContext(), EnterPinActivity.class), PIN_REQUEST_CODE);
     }
 
-    private void startPromotion(ApiResponse apiResponse) {
+    private void openPromotionFragment(ApiResponse apiResponse) {
         String newSessionId = (String) apiResponse.getContent();
         HouseholdMember householdMember = memberProfileViewModel.getHouseholdMember();
 
@@ -206,7 +207,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
         bundle.putSerializable(BUNDLE_MEMBER_KEY, householdMember);
 
         Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
-                .navigate(R.id.member_to_promotion);
+                .navigate(R.id.member_to_promotion,bundle);
     }
 
 
@@ -228,7 +229,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
                             if (apiResponse != null) {
 
                                 if (!apiResponse.isError() && apiResponse.getContent() != null)
-                                    startPromotion(apiResponse);
+                                    openPromotionFragment(apiResponse);
 
                                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                                     handleErrors(apiResponse.getErrorMessage());

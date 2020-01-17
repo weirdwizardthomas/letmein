@@ -45,6 +45,10 @@ public class RegisterViewModel extends AndroidViewModel {
         return sessionRepository.getSessionID(username, password);
     }
 
+    public String getSessionID() {
+        return sessionRepository.getSessionID();
+    }
+
     public void setSessionID(String sessionID) {
         sessionRepository.setSessionID(sessionID);
     }
@@ -58,7 +62,7 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public int getId() {
-        return sessionRepository.getId();
+        return sessionRepository.getUserID();
     }
 
     public RegisterViewModel setUsername(String username) {
@@ -80,7 +84,8 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public RegisterViewModel setId(int id) {
-        sessionRepository.setId(id);
+        sessionRepository.setUserID(id);
         return this;
     }
+
 }

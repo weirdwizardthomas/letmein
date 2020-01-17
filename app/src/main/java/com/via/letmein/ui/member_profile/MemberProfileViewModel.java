@@ -29,8 +29,8 @@ public class MemberProfileViewModel extends AndroidViewModel {
         householdMember = new HouseholdMember();
     }
 
-    public LiveData<ApiResponse> getImagePaths(String sessionId) {
-        return imageRepository.getImagePaths(householdMember.getName(), sessionId);
+    public LiveData<ApiResponse> getImagePaths(String sessionID) {
+        return imageRepository.getImagePaths(Integer.toString(householdMember.getUserID()), sessionID);
     }
 
     public HouseholdMember getHouseholdMember() {
@@ -42,6 +42,6 @@ public class MemberProfileViewModel extends AndroidViewModel {
     }
 
     public LiveData<ApiResponse> promoteAdmin(String sessionId) {
-        return promotionRepository.getPromoteAdmin(sessionId,householdMember.getId());
+        return promotionRepository.requestPromotion(sessionId, householdMember.getUserID());
     }
 }

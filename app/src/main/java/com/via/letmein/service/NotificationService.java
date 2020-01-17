@@ -115,7 +115,7 @@ public class NotificationService extends JobService {
      * @param loggedAction Log to be marked as read by Admin
      */
     private void markNotificationAsRead(LoggedAction loggedAction) {
-        Call<ApiResponse> call = api.markNotificationAsRead(Session.getInstance(this).getSessionId(), loggedAction.getLogID());
+        Call<ApiResponse> call = api.markNotificationAsRead(loggedAction.getLogID(),Session.getInstance(this).getSessionId());
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {

@@ -27,9 +27,9 @@ import com.via.letmein.ui.main_activity.MainActivity;
 import java.util.List;
 import java.util.Objects;
 
-import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
-import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Error.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Error.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Error.ERROR_MISSING_REQUIRED_PARAMETERS;
 
 /**
  * Fragment to show {@see DailyLog} to the user.

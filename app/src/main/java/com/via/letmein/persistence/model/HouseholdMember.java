@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class HouseholdMember implements Serializable {
 
-    private int id;
+    private int userID;
     private boolean isOwner;
     private String name;
     private String role;
@@ -22,19 +22,19 @@ public class HouseholdMember implements Serializable {
     }
 
     public HouseholdMember(int id, boolean isOwner, String name, String role, String profilePhoto) {
-        this.id = id;
+        this.userID = id;
         this.isOwner = isOwner;
         this.name = name;
         this.role = role;
         this.profilePhoto = profilePhoto;
     }
 
-    public int getId() {
-        return id;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public boolean isOwner() {

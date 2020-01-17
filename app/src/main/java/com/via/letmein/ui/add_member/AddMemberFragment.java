@@ -24,11 +24,11 @@ import com.via.letmein.ui.main_activity.MainActivity;
 
 import java.util.Objects;
 
-import static com.via.letmein.persistence.api.Errors.ERROR_DATABASE_ERROR;
-import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.persistence.api.Errors.ERROR_NAME_ALREADY_IN_USE;
-import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
+import static com.via.letmein.persistence.api.Error.ERROR_DATABASE_ERROR;
+import static com.via.letmein.persistence.api.Error.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Error.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Error.ERROR_NAME_ALREADY_IN_USE;
+import static com.via.letmein.persistence.api.Error.ERROR_USERNAME_TOO_SHORT;
 
 
 /**

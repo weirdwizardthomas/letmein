@@ -49,7 +49,7 @@ public class Session {
         return preferences.getString(IP_ADDRESS, null);
     }
 
-    public void setIpAddress(String ipAddress) {
+    public void setIPAddress(String ipAddress) {
         preferences.edit().putString(IP_ADDRESS, ipAddress).apply();
     }
 
@@ -65,7 +65,7 @@ public class Session {
         return preferences.getString(SESSION, null);
     }
 
-    public void setSessionId(String id) {
+    public void setSessionID(String id) {
         preferences.edit().putString(SESSION, id).apply();
     }
 
@@ -92,11 +92,11 @@ public class Session {
         preferences.edit().clear().apply();
     }
 
-    public void setId(int id) {
+    public void setID(int id) {
         preferences.edit().putInt(ADMIN_ID, id).apply();
     }
 
-    public int getId() {
+    public int getUserID() {
         return preferences.getInt(ADMIN_ID, 0);
     }
 

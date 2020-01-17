@@ -24,10 +24,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.via.letmein.R;
 import com.via.letmein.service.NotificationService;
 
-import static com.via.letmein.persistence.api.Errors.ERROR_EXPIRED_SESSION_ID;
-import static com.via.letmein.persistence.api.Errors.ERROR_MISSING_REQUIRED_PARAMETERS;
-import static com.via.letmein.persistence.api.Errors.ERROR_USERNAME_TOO_SHORT;
-import static com.via.letmein.persistence.api.Errors.ERROR_WRONG_USER_PASSWORD;
+import static com.via.letmein.persistence.api.Error.ERROR_EXPIRED_SESSION_ID;
+import static com.via.letmein.persistence.api.Error.ERROR_MISSING_REQUIRED_PARAMETERS;
+import static com.via.letmein.persistence.api.Error.ERROR_USERNAME_TOO_SHORT;
+import static com.via.letmein.persistence.api.Error.ERROR_WRONG_USER_PASSWORD;
 
 /**
  * Application's main activity.

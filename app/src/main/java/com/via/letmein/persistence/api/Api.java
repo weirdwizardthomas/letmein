@@ -46,7 +46,7 @@ public interface Api {
     Call<ApiResponse> promoteAdmin(@Body PromotionJson promotionJson);
 
     @GET("admin/confirm")
-    Call<ApiResponse> acceptAdminPromotion(@Query(SESSION_ID) String sessionId);
+    Call<ApiResponse> confirmPromotion(@Query(SESSION_ID) String sessionId);
 
     @POST("user")
     Call<ApiResponse> createUser(@Body CreateMemberJson createMemberJson);
@@ -58,7 +58,7 @@ public interface Api {
     Call<ApiResponse> getUserList(@Query(SESSION_ID) String sessionId);
 
     @GET("user/{userid}/images")
-    Call<ApiResponse> getUserImagesList(@Path(USER_ID) String username,
+    Call<ApiResponse> getUserImagesList(@Path(USER_ID) String userId,
                                         @Query(SESSION_ID) String sessionId);
 
     @GET("user/{userid}/face/{imageid}")
@@ -86,7 +86,6 @@ public interface Api {
     Call<ApiResponse> getNotificationLog(@Query(SESSION_ID) String sessionId);
 
     @PUT("notification/{notification_id}")
-    Call<ApiResponse> markNotificationAsRead(@Query(SESSION_ID) String sessionId,
-                                             @Path(NOTIFICATION_ID) int notificationId);
+    Call<ApiResponse> markNotificationAsRead(@Path(NOTIFICATION_ID) int notificationId,@Query(SESSION_ID) String sessionId);
 
 }

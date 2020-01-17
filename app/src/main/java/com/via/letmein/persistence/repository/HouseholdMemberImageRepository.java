@@ -59,12 +59,12 @@ public class HouseholdMemberImageRepository {
     /**
      * Retrieves all the user's images urls
      *
-     * @param username  Username of the logged in user
+     * @param userID  Username of the logged in user
      * @param sessionId Generated sessionID from server
      * @return {@see ApiResponse} having {@see ApiResponse#content} of {@see List} of URL {@see String} if there was no {@see ApiResponse#error}, 0 otherwise
      */
-    public LiveData<ApiResponse> getImagePaths(String username, String sessionId) {
-        Call<ApiResponse> call = api.getUserImagesList(username, sessionId);
+    public LiveData<ApiResponse> getImagePaths(String userID, String sessionId) {
+        Call<ApiResponse> call = api.getUserImagesList(userID, sessionId);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
