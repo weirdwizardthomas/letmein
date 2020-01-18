@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/cameraFeed"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:contentDescription="@string/labelCameraFeedDescription"
         app:layout_constraintBottom_toTopOf="@+id/openButton"
