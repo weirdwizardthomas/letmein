@@ -15,7 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.HouseholdMember;
@@ -39,7 +39,7 @@ public class AdministrationFragment extends Fragment implements MemberAdapter.On
     private RecyclerView membersRecyclerView;
     private MemberAdapter membersAdapter;
     private AdministrationViewModel administrationViewModel;
-    private FloatingActionButton addMemberButton;
+    private ExtendedFloatingActionButton addMemberButton;
 
     @Nullable
     @Override

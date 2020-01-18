@@ -15,6 +15,7 @@
     <string name="nameInUse">Name already in use.</string>
     <string name="missingParameters">Missing required parameters</string>
     <string name="username_too_short">Username too short. Please pick a name with at least 5 characters.</string>
+    <string name="messageUsernameTooShort">The username is too short!</string>
 
     <!--Labels-->
     <string name="labelIpAddressFound">Found IP Address:</string>
@@ -22,27 +23,28 @@
     <string name="labelRegisterHeader">Pair with the device</string>
     <string name="labelName">Name</string>
     <string name="labelAdminName">Administrator\'s name</string>
-    <string name="labelSerialNo">Serial number</string>
+    <string name="labelSerialNumber">Serial number</string>
     <string name="labelRegister">Register</string>
+    <string name="labelRole">Role</string>
+    <string name="labelAddPicture">Add picture</string>
+    <string name="labelPromoteToAdmin">Promote to administrator</string>
+    <string name="labelAlternateRegister">Connect to an existing device</string>
+    <string name="labelCameraFeedDescription">Container for pictures from the camera live feed</string>
+    <string name="labelAddMember">Add a member</string>
+    <string name="labelStoredPictures">Stored pictures</string>
+    <string name="labelPicturesTaken">Picture taken by the lock\'s camera</string>
+    <string name="labelSelectRangeToShow">Pick date</string>
+    <string name="labelUserPortrait">userPortrait</string>
+    <string name="labelCheckbox">checkbox</string>
+
 
     <!--Placeholders-->
     <string name="placeholderSerialNo">123456789REAC0987654321</string>
     <string name="placeholderDate">23.10.2019</string>
     <string name="placeholderName">Tomas</string>
     <string name="placeholderRole">postman</string>
-    <string name="labelRole">Role</string>
-    <string name="labelAddPicture">Add picture</string>
-    <string name="placeholderDateSpan">11.1.2019 – 21.1.2019</string>
-    <string name="labelStoredPictures">Stored pictures</string>
-    <string name="labelPicturesTaken">Picture taken by the lock\'s camera</string>
-    <string name="selectRangeToShow">Select range to show:</string>
-    <string name="labelUserPortrait">userPortrait</string>
-    <string name="labelCheckbox">checkbox</string>
+    <string name="placeholderDateSpan">Select range to pick</string>
     <string name="placeholderIpAddress">/10.0.0.1</string>
-    <string name="messageUsernameTooShort">The username is too short!</string>
-    <string name="labelPromoteToAdmin">Promote to administrator</string>
-    <string name="alternateRegister">Connect to an existing device</string>
-    <string name="cameraFeedDescription">Container for pictures from the camera live feed</string>
 
 
 </resources>

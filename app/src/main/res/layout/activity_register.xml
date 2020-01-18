@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/serialIdTextView"
-        android:text="@string/labelSerialNo"
+        android:text="@string/labelSerialNumber"
         app:layout_constraintBottom_toBottomOf="@+id/serialIdTextView"
         app:layout_constraintEnd_toStartOf="@+id/serialIdTextView"
         app:layout_constraintTop_toTopOf="@+id/serialIdTextView" />

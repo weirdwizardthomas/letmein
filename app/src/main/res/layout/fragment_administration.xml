@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/fragmentBodyPadding">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addMemberButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,9 +14,10 @@
         android:clickable="true"
         android:elevation="@dimen/elevation"
         android:focusable="true"
+        android:text="@string/labelAddMember"
+        app:icon="@drawable/ic_account_plus_white_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_account_plus_white_24dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/membersRecyclerView"

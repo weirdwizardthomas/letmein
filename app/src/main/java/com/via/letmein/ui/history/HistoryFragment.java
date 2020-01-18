@@ -7,7 +7,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.via.letmein.R;
 import com.via.letmein.persistence.api.Session;
 import com.via.letmein.persistence.model.LoggedAction;
@@ -45,7 +45,7 @@ public class HistoryFragment extends Fragment {
 
     private RecyclerView dayEntryRecyclerView;
     private DailyLogAdapter dailyLogAdapter;
-    private Button openCalendarButton;
+    private ExtendedFloatingActionButton openCalendarButton;
     private MaterialDatePicker<Pair<Long, Long>> picker;
     private Pair<Long, Long> selectionDates;
 
@@ -80,13 +80,13 @@ public class HistoryFragment extends Fragment {
         picker = setupDateSelectorBuilder().build();
         picker.addOnPositiveButtonClickListener(selection -> {
             selectionDates = selection;
-            String calendarButtonText = getString(R.string.selectRangeToShow) +
+            String calendarButtonText = getString(R.string.labelSelectRangeToShow) +
                     picker.getHeaderText();
             openCalendarButton.setText(calendarButtonText);
             getLogs();
         });
         openCalendarButton = root.findViewById(R.id.openCalendarButton);
-        openCalendarButton.setText(getString(R.string.selectRangeToShow));
+        openCalendarButton.setText(getString(R.string.labelSelectRangeToShow));
         openCalendarButton.setOnClickListener(v -> picker.show(getChildFragmentManager(), picker.toString()));
 
 

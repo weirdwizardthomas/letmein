@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -57,7 +57,7 @@ public class LiveFragment extends Fragment {
     private LiveViewModel liveViewModel;
 
     private ImageView liveCameraFeed;
-    private Button openButton;
+    private ExtendedFloatingActionButton openButton;
 
     Handler handler;
 
