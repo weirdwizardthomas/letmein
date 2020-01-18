@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -87,7 +86,6 @@ public class LiveFragment extends Fragment {
         openButton.setOnClickListener(v -> {
             //authenticate
             openPin();
-
         });
     }
 
@@ -132,15 +130,15 @@ public class LiveFragment extends Fragment {
                     }
 
                     @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    }
                 };
-Log.d("LOOK HERE FUKKO",String.valueOf(i));
+                Log.d("LIVE CAMERA", String.valueOf(i));
                 String imagePath = baseUrl + Session.getInstance(getContext()).getSessionId();
                 Picasso.get()
                         .load(imagePath)
                         .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
                         .into(target);
-
 
 
                 //wait in between fetches
@@ -194,25 +192,29 @@ Log.d("LOOK HERE FUKKO",String.valueOf(i));
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PIN_REQUEST_CODE) {
-            if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED) {
+            if (resultCode == EnterPinActivity.RESULT_BACK_PRESSED)
                 Toast.makeText(getActivity(), "Request cancelled", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
-                //make the call
-                liveViewModel
-                        .openDoor(Session.getInstance(getContext()).getSessionId())
-                        .observe(this, apiResponse -> {
-                            if (apiResponse != null) {
-                                if (!apiResponse.isError() && apiResponse.getContent() != null)
-                                    Toast.makeText(getContext(), "Opening door...", Toast.LENGTH_SHORT).show();
+            else
+                requestDoorOpening();
 
-                                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
-                                    handleErrors(apiResponse.getErrorMessage());
-
-                            }
-                        });
-            }
         }
+    }
+
+    private void requestDoorOpening() {
+        Toast.makeText(getActivity(), "Request sent", Toast.LENGTH_SHORT).show();
+        //make the call
+        liveViewModel
+                .openDoor(Session.getInstance(getContext()).getSessionId())
+                .observe(this, apiResponse -> {
+                    if (apiResponse != null) {
+                        if (!apiResponse.isError() && apiResponse.getContent() != null)
+                            Toast.makeText(getContext(), "Opening door...", Toast.LENGTH_SHORT).show();
+
+                        if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
+                            handleErrors(apiResponse.getErrorMessage());
+
+                    }
+                });
     }
 
     @Override

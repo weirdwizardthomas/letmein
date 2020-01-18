@@ -42,6 +42,7 @@
     <string name="messageUsernameTooShort">The username is too short!</string>
     <string name="labelPromoteToAdmin">Promote to administrator</string>
     <string name="alternateRegister">Connect to an existing device</string>
+    <string name="cameraFeedDescription">Container for pictures from the camera live feed</string>
 
 
 </resources>

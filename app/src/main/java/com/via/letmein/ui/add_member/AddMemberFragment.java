@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
@@ -89,7 +90,7 @@ public class AddMemberFragment extends Fragment {
                         if (apiResponse != null) {
 
                             if (!apiResponse.isError() && apiResponse.getContent() != null)
-                                addBiometricData((Integer) apiResponse.getContent());
+                                showBiometricDialog((Integer) apiResponse.getContent());
 
                             if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                                 handleErrors(apiResponse.getErrorMessage());
@@ -101,6 +102,16 @@ public class AddMemberFragment extends Fragment {
 
 
     }
+
+    private void showBiometricDialog(int userID) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Start biometric data capturing")
+                .setPositiveButton("Start", (dialog, which) -> addBiometricData(userID))
+                .setCancelable(false)
+                .create()
+                .show();
+    }
+
 
     private void addBiometricData(int userId) {
 

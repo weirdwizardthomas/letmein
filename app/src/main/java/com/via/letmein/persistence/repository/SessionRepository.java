@@ -1,5 +1,8 @@
 package com.via.letmein.persistence.repository;
 
+import android.content.Context;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -49,17 +52,24 @@ public class SessionRepository {
         return instance;
     }
 
+    public static synchronized SessionRepository getInstance(Context context) {
+        if (instance == null)
+            instance = new SessionRepository(Session.getInstance(context));
+        return instance;
+    }
+
     public LiveData<ApiResponse> register(String username, String serialNumber) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
-
+        Log.d("REQUEST", "before the call");
         Call<ApiResponse> call = api.register(new RegisterJson(username, serialNumber));
+        Log.d("REQUEST", "after the call");
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse dummy = response.body();
                     Gson gson = new GsonBuilder().create();
-
+                    Log.d("REQUEST", "handling response");
                     if (dummy.isError()) {
                         dummy.setContent(0);
                     } else {
@@ -79,34 +89,6 @@ public class SessionRepository {
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
             }
         });
-        /*
-        Call<ApiResponse> call = api.register(new RegisterJson(username, serialNumber));
-        call.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ApiResponse dummy = response.body();
-                    Gson gson = new GsonBuilder().create();
-
-                    if (dummy.isError()) {
-                        dummy.setContent(0);
-                    } else {
-                        TypeToken<Admin> responseTypeToken = new TypeToken<Admin>() {
-                        };
-                        Admin content = gson.fromJson(
-                                gson.toJson(dummy.getContent()),
-                                responseTypeToken.getType());
-                        dummy.setContent(content);
-                    }
-
-                    registrationData.setValue(dummy);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
-            }
-        });*/
         return registrationData;
     }
 
