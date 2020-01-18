@@ -20,13 +20,15 @@
         android:roundIcon="@drawable/ic_door_closed_lock_black_24dp"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.register.AlternateRegisterActivity"></activity>
+        <activity
+            android:name=".ui.register.AlternateRegisterActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="com.amirarcane.lockscreen.activity.EnterPinActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ui.main_activity.MainActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.opening_activity.OpeningActivity">
             <intent-filter>

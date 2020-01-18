@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -54,7 +54,6 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
 
         initialiseLayout();
         listenForIp();
-
     }
 
     /**
@@ -106,17 +105,19 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                 register(name, serial);
         });
 
-
         menu = findViewById(R.id.menu);
         menu.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(this, menu);
             popupMenu.getMenuInflater().inflate(R.menu.alternate_register_menu, popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(item -> {
-                if (item.getItemId() == R.id.alternateRegister) {
-                    startActivity(new Intent(RegisterActivity.this, AlternateRegisterActivity.class));
-                    RegisterActivity.this.finish();
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId() == R.id.alternateRegister) {
+                        startActivity(new Intent(RegisterActivity.this, AlternateRegisterActivity.class));
+                        RegisterActivity.this.finish();
+                    }
+                    return true;
                 }
-                return true;
             });
             popupMenu.show();
         });
@@ -140,22 +141,13 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                             .setPassword(admin.getPassword())
                             .setId(admin.getId())//save the received password
                             .setRegistered(); //set registered to true
-                    showBiometricDialog();
+                    login();
                 }
 
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                     handleErrors(apiResponse.getErrorMessage());
             }
         });
-    }
-
-    private void showBiometricDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Start biometric data capturing")
-                .setPositiveButton("Start", (dialog, which) -> login())
-                .setCancelable(false)
-                .create()
-                .show();
     }
 
     private void addBiometricData() {

@@ -15,19 +15,25 @@ import static com.via.letmein.persistence.api.Api.PORT;
  */
 public class ServiceGenerator {
 
-    private static Retrofit getRetrofitInstance(String ipAddress) {
-        String baseUrl = HTTP + ipAddress + ADDRESS_PORT_DELIMITER + PORT + API_PATH;
+    private static Retrofit instance;
 
-        Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create());
-        return retrofitBuilder.build();
+    private static synchronized Retrofit getRetrofitInstance(String ipAddress) {
+
+        if (instance == null) {
+            String baseUrl = HTTP + ipAddress + ADDRESS_PORT_DELIMITER + PORT + API_PATH;
+
+            Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create());
+            instance = retrofitBuilder.build();
+        }
+        return instance;
     }
 
     /**
      * Server's API to which requests will be sent.
      */
-    public static Api getApi(String baseUrl) {
+    public static synchronized Api getApi(String baseUrl) {
         return getRetrofitInstance(baseUrl).create(Api.class);
     }
 }

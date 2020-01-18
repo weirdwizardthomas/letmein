@@ -52,7 +52,7 @@ public class LiveFragment extends Fragment {
     /**
      * Miliseconds in between calls for a new live feed image
      */
-    public static final int REFRESH_RATE = 500;
+    public static final int REFRESH_RATE = 100;
 
     private LiveViewModel liveViewModel;
 

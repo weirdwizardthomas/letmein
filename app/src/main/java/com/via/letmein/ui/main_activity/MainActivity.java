@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getSessionID(username, password).observe(this, apiResponse -> {
             if (apiResponse != null) {
                 if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                    Log.d("Main Activity", " login");
                     mainActivityViewModel.setSessionID((String) apiResponse.getContent());
-                    startNotificationListening();
                 }
 
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
      * @param errorMessage Error response to be handled
      */
     private void handleErrors(String errorMessage) {
+        Log.d("Main Activity", "Error:" + errorMessage);
         switch (errorMessage) {
             case ERROR_MISSING_REQUIRED_PARAMETERS: {
                 Log.i(TAG, ERROR_MISSING_REQUIRED_PARAMETERS);
@@ -184,8 +185,10 @@ public class MainActivity extends AppCompatActivity {
         // Check which request we're responding to
         // Make sure the request was successful
         if (requestCode == REGISTER_REQUEST_CODE) {
-            if (resultCode == RESULT_OK)
+            if (resultCode == RESULT_OK) {
                 login();
+                startNotificationListening();
+            }
         }
     }
 
