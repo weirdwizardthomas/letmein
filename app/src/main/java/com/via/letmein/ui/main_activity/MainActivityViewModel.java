@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
@@ -23,7 +24,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {
-        return repository.getSessionID(username, password);
+        MutableLiveData<ApiResponse> liveData = new MutableLiveData<>(new ApiResponse());
+        repository.getSessionID(username, password, liveData);
+        return liveData;
     }
 
     public void setSessionID(String sessionID) {

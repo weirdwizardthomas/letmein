@@ -28,22 +28,12 @@ public class SessionRepository {
      */
     private static SessionRepository instance;
     /**
-     * Retrieved registration response.
-     */
-    private final MutableLiveData<ApiResponse> registrationData;
-    /**
-     * Retrieved login response.
-     */
-    private final MutableLiveData<ApiResponse> loginData;
-    /**
      * Application's session data
      */
     private final Session session;
 
     private SessionRepository(Session session) {
         this.session = session;
-        registrationData = new MutableLiveData<>(new ApiResponse());
-        loginData = new MutableLiveData<>(new ApiResponse());
     }
 
     public static synchronized SessionRepository getInstance(Session session) {
@@ -58,7 +48,7 @@ public class SessionRepository {
         return instance;
     }
 
-    public LiveData<ApiResponse> register(String username, String serialNumber) {
+    public void register(String username, String serialNumber, MutableLiveData<ApiResponse> liveData) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
         Log.d("REQUEST", "before the call");
         Call<ApiResponse> call = api.register(new RegisterJson(username, serialNumber));
@@ -81,7 +71,7 @@ public class SessionRepository {
                         dummy.setContent(content);
                     }
 
-                    registrationData.setValue(dummy);
+                    liveData.setValue(dummy);
                 }
             }
 
@@ -89,10 +79,9 @@ public class SessionRepository {
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
             }
         });
-        return registrationData;
     }
 
-    public LiveData<ApiResponse> getSessionID(String username, String password) {
+    public void getSessionID(String username, String password, MutableLiveData<ApiResponse> liveData) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
         Call<ApiResponse> call = api.login(username, password);
         call.enqueue(new Callback<ApiResponse>() {
@@ -113,7 +102,7 @@ public class SessionRepository {
                         dummy.setContent(content);
                     }
 
-                    loginData.setValue(dummy);
+                    liveData.setValue(dummy);
                 }
             }
 
@@ -122,7 +111,6 @@ public class SessionRepository {
             }
         });
 
-        return loginData;
     }
 
     private void refresh(Call<ApiResponse> call, final MutableLiveData<ApiResponse> target) {

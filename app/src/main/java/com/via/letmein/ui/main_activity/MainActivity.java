@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         initialiseNavigation();
 
         login();
+        startNotificationListening();
     }
 
     /**

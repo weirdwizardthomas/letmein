@@ -68,6 +68,8 @@ public class AddMemberViewModel extends AndroidViewModel {
 
     public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
         //todo fix addBiometric data by requesting an id in registration and using int instead of string everywhere
-        return repository.addBiometricData(userId, sessionId);
+        MutableLiveData<ApiResponse> liveData = new MutableLiveData<>(new ApiResponse());
+        repository.addBiometricData(userId, sessionId, liveData);
+        return liveData;
     }
 }

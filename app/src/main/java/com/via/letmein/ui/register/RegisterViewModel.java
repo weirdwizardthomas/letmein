@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.Session;
@@ -28,7 +29,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public LiveData<ApiResponse> register(String username, String serialNumber) {
-        return sessionRepository.register(username, serialNumber);
+        MutableLiveData<ApiResponse> liveData = new MutableLiveData<>(new ApiResponse());
+        sessionRepository.register(username, serialNumber, liveData);
+        return liveData;
     }
 
     public RegisterViewModel setIpAddress(String ipAddress) {
@@ -42,7 +45,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public LiveData<ApiResponse> getSessionID(String username, String password) {
-        return sessionRepository.getSessionID(username, password);
+        MutableLiveData<ApiResponse> liveData = new MutableLiveData<>(new ApiResponse());
+        sessionRepository.getSessionID(username, password, liveData);
+        return liveData;
     }
 
     public String getSessionID() {
@@ -54,7 +59,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
-        return householdMemberRepository.addBiometricData(userId, sessionId);
+        MutableLiveData<ApiResponse> liveData = new MutableLiveData<>(new ApiResponse());
+        householdMemberRepository.addBiometricData(userId, sessionId, liveData);
+        return liveData;
     }
 
     public String getUsername() {

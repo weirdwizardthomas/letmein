@@ -43,7 +43,6 @@ public class HouseholdMemberRepository {
     /**
      * Retrieved response from biometric data's query
      */
-    private MutableLiveData<ApiResponse> biometricDataResponse;
     /**
      * API to which requests are sent.
      */
@@ -53,7 +52,6 @@ public class HouseholdMemberRepository {
         api = ServiceGenerator.getApi(session.getIpAddress());
         memberListLiveData = new MutableLiveData<>(new ApiResponse());
         createMemberLiveData = new MutableLiveData<>(new ApiResponse());
-        biometricDataResponse = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -154,7 +152,7 @@ public class HouseholdMemberRepository {
         });
     }
 
-    public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
+    public void addBiometricData(int userId, String sessionId, MutableLiveData<ApiResponse> liveData) {
         Call<ApiResponse> call = api.startBiometricData(new BiometricJson(userId, sessionId));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -174,7 +172,7 @@ public class HouseholdMemberRepository {
                         dummy.setContent(responseString);
                     }
                     //save the value
-                    biometricDataResponse.setValue(dummy);
+                    liveData.setValue(dummy);
                 }
             }
 
@@ -183,6 +181,5 @@ public class HouseholdMemberRepository {
 
             }
         });
-        return biometricDataResponse;
     }
 }
