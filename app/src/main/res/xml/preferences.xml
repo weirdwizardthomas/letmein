@@ -10,4 +10,8 @@
         app:key="reset_app"
         app:title="Start over" />
 
+    <Preference
+        app:key="ip_address"
+        app:title="IP address"/>
+
 </PreferenceScreen>
