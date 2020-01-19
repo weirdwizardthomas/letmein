@@ -62,7 +62,7 @@ public class AlternateRegisterActivity extends AppCompatActivity {
                                 .setPassword(admin.getPassword()) //save the password
                                 .setUserID(admin.getId())//save the received password
                                 .setRegistered(); //set registered to true
-
+                        openMainActivity();
                     }
 
                     if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
