@@ -3,6 +3,7 @@ package com.via.letmein;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.os.Build;
 
 import java.util.Objects;
 
@@ -17,14 +18,16 @@ public class App extends Application {
     }
 
     private void createNotificationChannels() {
-        NotificationChannel notificationChannel = new NotificationChannel(
-                CHANNEL_ID,
-                "Door opening notifications",
-                NotificationManager.IMPORTANCE_HIGH);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Door opening notifications",
+                    NotificationManager.IMPORTANCE_HIGH);
 
-        notificationChannel.setDescription("This is a notification channel.");
+            notificationChannel.setDescription("This is a notification channel.");
 
-        NotificationManager manager = getSystemService(NotificationManager.class);
-        Objects.requireNonNull(manager).createNotificationChannel(notificationChannel);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            Objects.requireNonNull(manager).createNotificationChannel(notificationChannel);
+        }
     }
 }
