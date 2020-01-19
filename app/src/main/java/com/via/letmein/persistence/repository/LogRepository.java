@@ -35,17 +35,12 @@ public class LogRepository {
      */
     private static LogRepository instance;
     /**
-     * Retrieved memberListLiveData.
-     */
-    private final MutableLiveData<ApiResponse> data;
-    /**
      * API to which requests are sent.
      */
     private final Api api;
 
     private LogRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        data = new MutableLiveData<>(new ApiResponse());
     }
 
     public static synchronized LogRepository getInstance(Session session) {
@@ -55,21 +50,14 @@ public class LogRepository {
     }
 
     public LiveData<ApiResponse> getVisits(String sessionId, Pair<Long, Long> dateRange) {
-        refresh(sessionId, dateRange);
-        return data;
-    }
-
-    private void refresh(String sessionId, Pair<Long, Long> dateRange) {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         Pair<String, String> timestampRange = new Pair<>(
                 sdf.format(new Timestamp(dateRange.first)),
                 sdf.format(new Timestamp(dateRange.second)));
 
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
 
-        Call<ApiResponse> call = api.getLog(
-                sessionId,
-                timestampRange.first,
-                timestampRange.second);
+        Call<ApiResponse> call = api.getLog(sessionId, timestampRange.first, timestampRange.second);
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -98,5 +86,7 @@ public class LogRepository {
 
             }
         });
+        return data;
     }
+
 }

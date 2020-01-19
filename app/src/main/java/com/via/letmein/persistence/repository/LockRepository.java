@@ -27,17 +27,12 @@ public class LockRepository {
      */
     private static LockRepository instance;
     /**
-     * Retrieved memberListLiveData.
-     */
-    private final MutableLiveData<ApiResponse> data;
-    /**
      * API to which requests are sent.
      */
     private final Api api;
 
     private LockRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        data = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -52,11 +47,7 @@ public class LockRepository {
     }
 
     public LiveData<ApiResponse> openDoor(String sessionId) {
-        refresh(sessionId);
-        return data;
-    }
-
-    private void refresh(String sessionId) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
         Call<ApiResponse> call = api.openDoor(sessionId);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -78,5 +69,7 @@ public class LockRepository {
 
             }
         });
+        return data;
     }
+
 }

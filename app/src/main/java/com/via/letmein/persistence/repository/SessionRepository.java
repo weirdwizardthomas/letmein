@@ -48,11 +48,11 @@ public class SessionRepository {
         return instance;
     }
 
-    public void register(String username, String serialNumber, MutableLiveData<ApiResponse> liveData) {
+    public LiveData<ApiResponse> register(String username, String serialNumber) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
-        Log.d("REQUEST", "before the call");
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
+
         Call<ApiResponse> call = api.register(new RegisterJson(username, serialNumber));
-        Log.d("REQUEST", "after the call");
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
@@ -71,7 +71,7 @@ public class SessionRepository {
                         dummy.setContent(content);
                     }
 
-                    liveData.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -79,10 +79,13 @@ public class SessionRepository {
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
             }
         });
+        return data;
     }
 
-    public void getSessionID(String username, String password, MutableLiveData<ApiResponse> liveData) {
+    public LiveData<ApiResponse> getSessionID(String username, String password) {
         Api api = ServiceGenerator.getApi(session.getIpAddress());
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
+
         Call<ApiResponse> call = api.login(username, password);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -102,7 +105,7 @@ public class SessionRepository {
                         dummy.setContent(content);
                     }
 
-                    liveData.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -110,38 +113,7 @@ public class SessionRepository {
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
             }
         });
-
-    }
-
-    private void refresh(Call<ApiResponse> call, final MutableLiveData<ApiResponse> target) {
-        call.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ApiResponse dummy = response.body();
-                    Gson gson = new GsonBuilder().create();
-
-                    if (dummy.isError()) {
-                        dummy.setContent(0);
-                    } else {
-                        TypeToken<String> responseTypeToken = new TypeToken<String>() {
-                        };
-                        String content = gson.fromJson(
-                                gson.toJson(dummy.getContent()),
-                                responseTypeToken.getType());
-                        dummy.setContent(content);
-                    }
-
-                    target.setValue(dummy);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
-            }
-        });
-
-
+        return data;
     }
 
     public String getUsername() {
@@ -187,7 +159,6 @@ public class SessionRepository {
     public void setUsername(String username) {
         session.setUsername(username);
     }
-
 
     public void wipeSession() {
         session.wipeSession();

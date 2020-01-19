@@ -25,15 +25,6 @@ public class PromotionRepository {
      */
     private static PromotionRepository instance;
     /**
-     * Retrieved promote request's response.
-     */
-    private final MutableLiveData<ApiResponse> promoteRequest;
-    /**
-     * Retrieved promote confirmation's response.
-     */
-    private final MutableLiveData<ApiResponse> promoteConfirmation;
-    private MutableLiveData<ApiResponse> biometricData;
-    /**
      * API to which requests are sent.
      */
     private Api api;
@@ -41,9 +32,6 @@ public class PromotionRepository {
 
     private PromotionRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        promoteRequest = new MutableLiveData<>(new ApiResponse());
-        promoteConfirmation = new MutableLiveData<>(new ApiResponse());
-        biometricData = new MutableLiveData<>(new ApiResponse());
     }
 
     public static synchronized PromotionRepository getInstance(Session session) {
@@ -57,6 +45,7 @@ public class PromotionRepository {
     }
 
     public LiveData<ApiResponse> requestPromotion(String sessionID, int userID) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
         Call<ApiResponse> call = api.promoteAdmin(new PromotionJson(userID, sessionID));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -75,7 +64,7 @@ public class PromotionRepository {
                         dummy.setContent(content);
                     }
 
-                    promoteRequest.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -85,10 +74,12 @@ public class PromotionRepository {
             }
         });
 
-        return promoteRequest;
+        return data;
     }
 
     public LiveData<ApiResponse> confirmPromotion(String sessionID) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
+
         Call<ApiResponse> call = api.confirmPromotion(sessionID);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -107,7 +98,7 @@ public class PromotionRepository {
                         dummy.setContent(content);
                     }
 
-                    promoteRequest.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -117,10 +108,11 @@ public class PromotionRepository {
             }
         });
 
-        return promoteConfirmation;
+        return data;
     }
 
     public LiveData<ApiResponse> addBiometricData(int userID, String sessionID) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
         Call<ApiResponse> call = api.startBiometricData(new BiometricJson(userID, sessionID));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -140,7 +132,7 @@ public class PromotionRepository {
                         dummy.setContent(responseString);
                     }
                     //save the value
-                    biometricData.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -149,6 +141,7 @@ public class PromotionRepository {
 
             }
         });
-        return biometricData;
+
+        return data;
     }
 }

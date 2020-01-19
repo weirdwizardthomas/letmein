@@ -10,7 +10,6 @@ import com.via.letmein.persistence.api.Api;
 import com.via.letmein.persistence.api.ApiResponse;
 import com.via.letmein.persistence.api.ServiceGenerator;
 import com.via.letmein.persistence.api.Session;
-import com.via.letmein.persistence.api.request.PromotionJson;
 
 import java.util.List;
 
@@ -30,19 +29,12 @@ public class HouseholdMemberImageRepository {
      */
     private static HouseholdMemberImageRepository instance;
     /**
-     * Retrieved data
-     */
-    private final MutableLiveData<ApiResponse> imagePathsData;
-    private final MutableLiveData<ApiResponse> promotionData;
-    /**
      * API to which requests are sent.
      */
     private final Api api;
 
     private HouseholdMemberImageRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        imagePathsData = new MutableLiveData<>(new ApiResponse());
-        promotionData = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -59,11 +51,12 @@ public class HouseholdMemberImageRepository {
     /**
      * Retrieves all the user's images urls
      *
-     * @param userID  Username of the logged in user
+     * @param userID    Username of the logged in user
      * @param sessionId Generated sessionID from server
      * @return {@see ApiResponse} having {@see ApiResponse#content} of {@see List} of URL {@see String} if there was no {@see ApiResponse#error}, 0 otherwise
      */
     public LiveData<ApiResponse> getImagePaths(String userID, String sessionId) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
         Call<ApiResponse> call = api.getUserImagesList(userID, sessionId);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -81,7 +74,7 @@ public class HouseholdMemberImageRepository {
                     } else
                         dummy.setContent(0);
 
-                    imagePathsData.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -91,7 +84,7 @@ public class HouseholdMemberImageRepository {
             }
         });
 
-        return imagePathsData;
+        return data;
     }
 
 

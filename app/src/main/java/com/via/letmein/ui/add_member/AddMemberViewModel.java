@@ -39,7 +39,6 @@ public class AddMemberViewModel extends AndroidViewModel {
                 "Family"));
     }
 
-
     public LiveData<List<String>> getRoles() {
         return roles;
     }
@@ -50,8 +49,8 @@ public class AddMemberViewModel extends AndroidViewModel {
                 "Owner",
                 "Postman",
                 "Cleaner",
-                "Baby sitter",
-                "Family"));
+                "Babysitter",
+                "Visitor"));
     }
 
     /**
@@ -67,9 +66,6 @@ public class AddMemberViewModel extends AndroidViewModel {
     }
 
     public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
-        //todo fix addBiometric data by requesting an id in registration and using int instead of string everywhere
-        MutableLiveData<ApiResponse> liveData = new MutableLiveData<>(new ApiResponse());
-        repository.addBiometricData(userId, sessionId, liveData);
-        return liveData;
+        return repository.addBiometricData(userId, sessionId);
     }
 }

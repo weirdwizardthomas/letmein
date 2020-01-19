@@ -33,14 +33,6 @@ public class HouseholdMemberRepository {
      */
     private static HouseholdMemberRepository instance;
     /**
-     * Retrieved memberListLiveData.
-     */
-    private final MutableLiveData<ApiResponse> memberListLiveData;
-    /**
-     * Retrieved response from user creation.
-     */
-    private final MutableLiveData<ApiResponse> createMemberLiveData;
-    /**
      * Retrieved response from biometric data's query
      */
     /**
@@ -50,8 +42,6 @@ public class HouseholdMemberRepository {
 
     private HouseholdMemberRepository(Session session) {
         api = ServiceGenerator.getApi(session.getIpAddress());
-        memberListLiveData = new MutableLiveData<>(new ApiResponse());
-        createMemberLiveData = new MutableLiveData<>(new ApiResponse());
     }
 
     /**
@@ -71,17 +61,8 @@ public class HouseholdMemberRepository {
      * @param sessionId ID of the current session
      * @return {@see ApiResponse} with content of list of  if there is no error,
      */
-    public MutableLiveData<ApiResponse> getAllHouseholdMembers(String sessionId) {
-        refreshUsers(sessionId);
-        return memberListLiveData;
-    }
-
-    /**
-     * Sends an asynchronous call to the server to retrieve users
-     *
-     * @param sessionId current session ID
-     */
-    private void refreshUsers(String sessionId) {
+    public LiveData<ApiResponse> getAllHouseholdMembers(String sessionId) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
         Call<ApiResponse> call = api.getUserList(sessionId);
 
         call.enqueue(new Callback<ApiResponse>() {
@@ -104,7 +85,7 @@ public class HouseholdMemberRepository {
                         dummy.setContent(responseList);
                     }
                     //save the value
-                    memberListLiveData.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -114,14 +95,11 @@ public class HouseholdMemberRepository {
             }
         });
 
+        return data;
     }
 
     public LiveData<ApiResponse> createMember(String name, String role, String sessionId) {
-        refreshCreateUser(name, role, sessionId);
-        return createMemberLiveData;
-    }
-
-    private void refreshCreateUser(String name, String role, String sessionId) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
         Call<ApiResponse> call = api.createUser(new CreateMemberJson(name, role, sessionId));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -141,7 +119,7 @@ public class HouseholdMemberRepository {
                         dummy.setContent(responseInteger);
                     }
                     //save the value
-                    createMemberLiveData.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -150,9 +128,11 @@ public class HouseholdMemberRepository {
 
             }
         });
+        return data;
     }
 
-    public void addBiometricData(int userId, String sessionId, MutableLiveData<ApiResponse> liveData) {
+    public LiveData<ApiResponse> addBiometricData(int userId, String sessionId) {
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
         Call<ApiResponse> call = api.startBiometricData(new BiometricJson(userId, sessionId));
         call.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -172,7 +152,7 @@ public class HouseholdMemberRepository {
                         dummy.setContent(responseString);
                     }
                     //save the value
-                    liveData.setValue(dummy);
+                    data.setValue(dummy);
                 }
             }
 
@@ -181,5 +161,6 @@ public class HouseholdMemberRepository {
 
             }
         });
+        return data;
     }
 }

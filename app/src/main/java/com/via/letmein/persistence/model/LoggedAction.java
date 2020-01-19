@@ -17,12 +17,19 @@ public class LoggedAction {
     public static final String DATE_FORMAT_FULL = "dd/MM/yyyy-HH:mm:ss";
 
     private static final String TIME_DELIMITER = ":";
+
     private static final String OPEN_DOOR = "open_door";
     private static final String USER_TO_OWNER = "user_to_owner";
     private static final String BUTTON_OPEN_DOOR = "button_open_door";
+    private static final String DOOR_BELL_PRESSED = "doorbell";
+    private static final String DOOR_ATTEMPT_NOT_SUCCESSFUL = "door_not_successful";
+
     private static final String REMOTE_DOOR_ACCESS = "Remote door access";
     private static final String PROMOTED_TO_ADMINISTRATOR = "Promoted to administrator.";
     private static final String DOOR_ACCESS = "Door access";
+    private static final String DOOR_BELL = "Door bell rang!";
+    private static final String SOMEBODY_TRIED_TO_OPEN_THE_DOOR = "Somebody tried to open the door.";
+
     private static final String PRETTY_INFO_DEFAULT = "";
     private static final String DATE_TIME_DELIMITER = " ";
 
@@ -98,6 +105,16 @@ public class LoggedAction {
             }
             case BUTTON_OPEN_DOOR: {
                 prettyInfo = REMOTE_DOOR_ACCESS;
+                break;
+            }
+
+            case DOOR_BELL_PRESSED: {
+                prettyInfo = DOOR_BELL;
+                break;
+            }
+
+            case DOOR_ATTEMPT_NOT_SUCCESSFUL: {
+                prettyInfo = SOMEBODY_TRIED_TO_OPEN_THE_DOOR;
                 break;
             }
             default:
