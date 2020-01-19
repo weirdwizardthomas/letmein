@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -141,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                             .setPassword(admin.getPassword())
                             .setId(admin.getId())//save the received password
                             .setRegistered(); //set registered to true
-                    login();
+                    showStartBiometricDialog();
                 }
 
                 if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
@@ -164,6 +165,15 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
 
             }
         });
+    }
+
+    private void showStartBiometricDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Commence biometric data caption")
+                .setMessage("After the button is pressed the camera will start taking pictures. Afterwards, you will be prompted to take fingerprint scans.")
+                .setPositiveButton("Start", (dialog, which) -> login())
+                .create()
+                .show();
     }
 
     private void login() {

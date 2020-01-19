@@ -103,21 +103,9 @@ public class LiveFragment extends Fragment {
                     SESSION_ID +
                     PARAMETER_DELIMITER;
 
-            private int i = 0;
 
             @Override
             public void run() {
-                ++i;
-                //mockup
-                /*Picasso.get()
-                        .load(
-                        (i % 2 == 0)
-                        ? "https://image.shutterstock.com/image-vector/woman-avatar-isolated-on-white-260nw-1472212124.jpg"
-                        : "https://picsum.photos/id/866/536/354")
-                        .placeholder(R.drawable.profile_icon_placeholder_background)
-                        .into(liveCameraFeed);*/
-
-
                 Target target = new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -133,7 +121,6 @@ public class LiveFragment extends Fragment {
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
                     }
                 };
-                Log.d("LIVE CAMERA", String.valueOf(i));
                 String imagePath = baseUrl + Session.getInstance(getContext()).getSessionId();
                 Picasso.get()
                         .load(imagePath)

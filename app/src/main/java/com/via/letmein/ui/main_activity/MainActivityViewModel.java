@@ -42,6 +42,6 @@ public class MainActivityViewModel extends AndroidViewModel {
      * Removes all session related data
      */
     public void wipeSession() {
-        repository.wipeSession();
+        repository.resetLocalSession();
     }
 }

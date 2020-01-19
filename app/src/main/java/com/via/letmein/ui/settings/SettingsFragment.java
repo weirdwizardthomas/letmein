@@ -11,7 +11,6 @@ import androidx.preference.PreferenceScreen;
 
 import com.amirarcane.lockscreen.activity.EnterPinActivity;
 import com.via.letmein.R;
-import com.via.letmein.persistence.api.Session;
 import com.via.letmein.ui.main_activity.MainActivity;
 import com.via.letmein.ui.opening_activity.OpeningActivity;
 
@@ -51,9 +50,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference resetSession = preferenceScreen.findPreference(RESET_APP);
         if (resetSession != null)
             resetSession.setOnPreferenceClickListener(preference -> {
-                Session.getInstance(getContext()).wipeSession();
-                startActivity(new Intent(getContext(), OpeningActivity.class));
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
+
+                settingsViewModel.resetAll()
+                        .observe(this, apiResponse -> {
+                            if (apiResponse != null) {
+                                if (!apiResponse.isError() && apiResponse.getContent() != null) {
+                                    settingsViewModel.resetLocalSession();
+                                    startActivity(new Intent(getContext(), OpeningActivity.class));
+                                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
+                                }
+                            }
+                        });
                 return true;
             });
 
@@ -64,5 +71,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             ipAddress.setSelectable(false);
             ipAddress.setSummary(settingsViewModel.getIPAddress());
         }
+
     }
 }

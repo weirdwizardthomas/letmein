@@ -86,6 +86,8 @@ public interface Api {
     Call<ApiResponse> getNotificationLog(@Query(SESSION_ID) String sessionId);
 
     @PUT("notification/{notification_id}")
-    Call<ApiResponse> markNotificationAsRead(@Path(NOTIFICATION_ID) int notificationId,@Query(SESSION_ID) String sessionId);
+    Call<ApiResponse> markNotificationAsRead(@Path(NOTIFICATION_ID) int notificationId, @Query(SESSION_ID) String sessionId);
 
+    @GET("reset")
+    Call<ApiResponse> reset(@Query(SESSION_ID) String sessionId);
 }

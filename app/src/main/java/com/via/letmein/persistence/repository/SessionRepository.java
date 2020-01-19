@@ -160,8 +160,36 @@ public class SessionRepository {
         session.setUsername(username);
     }
 
-    public void wipeSession() {
+    public void resetLocalSession() {
         session.wipeSession();
     }
 
+    public LiveData<ApiResponse> resetAll() {
+        Api api = ServiceGenerator.getApi(session.getIpAddress());
+        MutableLiveData<ApiResponse> data = new MutableLiveData<>(new ApiResponse());
+        Call<ApiResponse> call = api.reset(session.getSessionId());
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse dummy = response.body();
+                    Gson gson = new GsonBuilder().create();
+
+                    if (dummy.isError()) {
+                        dummy.setContent(0);
+                    } else {
+                        dummy.setContent(dummy.getContent());
+                    }
+
+                    data.setValue(dummy);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+            }
+        });
+        return data;
+    }
 }

@@ -99,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
     private void startNotificationListening() {
         ComponentName componentName = new ComponentName(this, NotificationService.class);
         JobInfo info = new JobInfo.Builder(JOB_ID, componentName)
-                .setPeriodic(INTERVAL_MILLIS)
+                .setMinimumLatency(1000)
+                .setOverrideDeadline(2000)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
                 .build();
