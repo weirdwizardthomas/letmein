@@ -25,6 +25,7 @@
     <string name="labelAdminName">Administrator\'s name</string>
     <string name="labelSerialNumber">Serial number</string>
     <string name="labelRegister">Register</string>
+    <string name="labelScanQR">Scan QRCode</string>
     <string name="labelRole">Role</string>
     <string name="labelAddPicture">Add picture</string>
     <string name="labelPromoteToAdmin">Promote to administrator</string>

@@ -31,6 +31,15 @@
         app:layout_constraintTop_toBottomOf="@+id/ipAddressInput" />
 
     <Button
+        android:id="@+id/scanQRButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/labelScanQR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sessionIdInput" />
+
+    <Button
         android:id="@+id/registerButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

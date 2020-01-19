@@ -10,6 +10,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.zxing.client.android.Intents;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.via.letmein.R;
 import com.via.letmein.persistence.model.AdminPromotion;
 import com.via.letmein.ui.main_activity.MainActivity;
@@ -27,6 +30,7 @@ public class AlternateRegisterActivity extends AppCompatActivity {
 
     private EditText ipAddressInput;
     private EditText sessionIdInput;
+    private Button scanButton;
     private Button registerButton;
 
     private AlternateRegisterViewModel alternateRegisterViewModel;
@@ -42,6 +46,11 @@ public class AlternateRegisterActivity extends AppCompatActivity {
         ipAddressInput = findViewById(R.id.ipAddressInput);
         sessionIdInput = findViewById(R.id.sessionIdInput);
         registerButton = findViewById(R.id.registerButton);
+        scanButton = findViewById(R.id.scanQRButton);
+
+        scanButton.setOnClickListener(v -> {
+            new IntentIntegrator(this).initiateScan();
+        });
 
         registerButton.setOnClickListener(v -> {
             String ipAddress = ipAddressInput.getText().toString();
@@ -109,6 +118,37 @@ public class AlternateRegisterActivity extends AppCompatActivity {
                 Log.e(TAG, ERROR_LOCKING_DEVICE_NOT_FOUND);
                 break;
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != IntentIntegrator.REQUEST_CODE) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+
+        IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
+
+        if(result.getContents() == null) {
+            //Intent originalIntent = result.getOriginalIntent();
+            //if (originalIntent == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            //} else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
+            //    Toast.makeText(this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
+            //}
+        } else {
+            try {
+
+                String[] content = result.getContents().split("\\|");
+                ipAddressInput.setText(content[0]);
+                sessionIdInput.setText(content[1]);
+                Toast.makeText(this, "QR Code Scanned", Toast.LENGTH_LONG).show();
+            }
+            catch(Exception e) {
+
+            }
+
         }
     }
 }
