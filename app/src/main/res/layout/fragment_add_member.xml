@@ -49,16 +49,6 @@
         app:layout_constraintStart_toStartOf="@+id/nameTextView"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
-    <Button
-        android:id="@+id/addFingerprintButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/viewPadding"
-        android:text="@string/labelAddPicture"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/roleLabel"
-        app:layout_constraintTop_toBottomOf="@+id/roleSpinner" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveMemberButton"
         android:layout_width="wrap_content"

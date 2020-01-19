@@ -51,7 +51,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
     private static final String TAG = "MemberProfile";
 
     public static final String BUNDLE_MEMBER_KEY = "MEMBER";
-    public static final int GRID_SPAN = 3;
+    public static final int GRID_SPAN = 2;
     public static final String NEW_SESSION_ID_KEY = "newSessionId";
     private static final int PIN_REQUEST_CODE = 1;
 
@@ -163,7 +163,7 @@ public class MemberProfileFragment extends Fragment implements ImageAdapter.OnIt
 
         imageAdapter = new ImageAdapter(this, getContext());
 
-        imageGallery = root.findViewById(R.id.recentEntries);
+        imageGallery = root.findViewById(R.id.pictures);
         imageGallery.setHasFixedSize(true);
         imageGallery.setLayoutManager(new GridLayoutManager(getContext(), GRID_SPAN));
         imageGallery.setAdapter(imageAdapter);

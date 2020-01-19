@@ -43,7 +43,6 @@ public class AddMemberFragment extends Fragment {
     private ArrayAdapter<String> roleSpinnerAdapter;
     private Spinner roleSpinner;
     private AddMemberViewModel addMemberViewModel;
-    private Button addFaceAndFingerprintButton;
     private FloatingActionButton saveMemberFloatingActionButton;
     private TextView nameInput;
 
@@ -66,7 +65,6 @@ public class AddMemberFragment extends Fragment {
         nameInput = root.findViewById(R.id.nameTextView);
         roleSpinner = root.findViewById(R.id.roleSpinner);
 
-        addFaceAndFingerprintButton = root.findViewById(R.id.addFingerprintButton);
         saveMemberFloatingActionButton = root.findViewById(R.id.saveMemberButton);
 
         roleSpinnerAdapter = new ArrayAdapter<>(
@@ -76,9 +74,6 @@ public class AddMemberFragment extends Fragment {
         roleSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roleSpinner.setAdapter(roleSpinnerAdapter);
 
-        addFaceAndFingerprintButton.setOnClickListener(v -> {
-            //todo send request to the server to take pictures and fingerprints
-        });
 
         saveMemberFloatingActionButton.setOnClickListener(v -> {
             String name = nameInput.getText().toString();
