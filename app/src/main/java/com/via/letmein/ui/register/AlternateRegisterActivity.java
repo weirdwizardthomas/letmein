@@ -63,27 +63,12 @@ public class AlternateRegisterActivity extends AppCompatActivity {
                                 .setUserID(admin.getId())//save the received password
                                 .setRegistered(); //set registered to true
 
-                        addBiometricData();
                     }
 
                     if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
                         handleErrors(apiResponse.getErrorMessage());
                 }
             });
-        });
-    }
-
-    private void addBiometricData() {
-
-        alternateRegisterViewModel.addBiometricData().observe(this, apiResponse -> {
-            if (apiResponse != null) {
-                if (!apiResponse.isError() && apiResponse.getContent() != null)
-                    openMainActivity();
-
-                if (apiResponse.isError() && apiResponse.getErrorMessage() != null)
-                    handleErrors(apiResponse.getErrorMessage());
-
-            }
         });
     }
 

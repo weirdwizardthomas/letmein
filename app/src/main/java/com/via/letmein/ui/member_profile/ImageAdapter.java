@@ -93,12 +93,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             image = itemView.findViewById(R.id.image);
             checkbox = itemView.findViewById(R.id.checkbox);
             checkbox.setVisibility(View.INVISIBLE);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            ImageContainer dummy = data.get(getAdapterPosition());
+           /* ImageContainer dummy = data.get(getAdapterPosition());
             dummy.toggleSelected();
 
             if (dummy.isSelected()) {
@@ -107,7 +107,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             } else {
                 image.clearColorFilter();
                 checkbox.setVisibility(View.INVISIBLE);
-            }
+            }*/
         }
     }
 

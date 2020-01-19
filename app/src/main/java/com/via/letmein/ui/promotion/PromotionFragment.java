@@ -65,9 +65,7 @@ public class PromotionFragment extends Fragment {
             Intent shareIntent = Intent.createChooser(intent, null);
             startActivity(shareIntent);
         });
-        closeButton.setOnClickListener(v -> {
-            Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
-        });
+        closeButton.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack());
     }
 
     private void extractBundle() {

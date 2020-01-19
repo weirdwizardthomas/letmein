@@ -172,6 +172,7 @@ public class RegisterActivity extends AppCompatActivity implements IPListenAsync
                 .setTitle("Commence biometric data caption")
                 .setMessage("After the button is pressed the camera will start taking pictures. Afterwards, you will be prompted to take fingerprint scans.")
                 .setPositiveButton("Start", (dialog, which) -> login())
+                .setCancelable(false)
                 .create()
                 .show();
     }
